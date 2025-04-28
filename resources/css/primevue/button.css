@@ -260,7 +260,7 @@
 }
 
 .p-button-text.p-button-secondary {
-    @apply bg-transparent enabled:hover:bg-surface-50 enabled:active:bg-surface-100
+    @apply bg-transparent enabled:hover:bg-surface-100 enabled:active:bg-surface-200
         border-transparent enabled:hover:border-transparent enabled:active:border-transparent
         text-surface-500 enabled:hover:text-surface-500 enabled:active:text-surface-500
         dark:bg-transparent dark:enabled:hover:bg-surface-800 dark:enabled:active:bg-surface-700
