@@ -1,18 +1,27 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SelectOptionController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return Redirect::route('login');
 });
+
+Route::get('locale/{locale}', function ($locale) {
+    App::setLocale($locale);
+    Session::put("locale", $locale);
+
+    return redirect()->back();
+});
+
+// select option
+Route::get('/get_countries', [SelectOptionController::class, 'getCountries'])->name('getCountries');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

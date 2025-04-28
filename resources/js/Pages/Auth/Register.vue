@@ -2,18 +2,48 @@
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import { Button, Password, InputText, Select } from 'primevue'; 
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
+
+const selectedPhoneCode = ref();
+
+// country
+const countries = ref([]);
+const loadingCountries = ref(false);
+const getCountries = async () => {
+    loadingCountries.value = true;
+    try {
+        const response = await axios.get('/get_countries');
+        countries.value = response.data.countries;
+    } catch (error) {
+        console.error('Error fetching selectedCountry:', error);
+    } finally {
+        loadingCountries.value = false;
+    }
+}
+
+getCountries();
 
 const form = useForm({
-    name: '',
+    username: '',
+    first_name: '',
+    last_name: '',
+    identity_number: '',
     email: '',
+    dial_code: '',
+    phone: '',
+    phone_number: '',
     password: '',
     password_confirmation: '',
 });
 
 const submit = () => {
+    form.dial_code = selectedPhoneCode.value;
+    if(selectedPhoneCode.value){
+        form.phone_number = selectedPhoneCode.value.phone_code + form.phone;
+    }
+
     form.post(route('register'), {
         onFinish: () => form.reset('password', 'password_confirmation'),
     });
@@ -24,89 +54,214 @@ const submit = () => {
     <GuestLayout>
         <Head title="Register" />
 
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="name" value="Name" />
+        <form @submit.prevent="submit" class="w-full">
+            <div class="flex flex-col gap-4 w-full self-stretch">
+                <div class="flex flex-col gap-1 items-start self-stretch">
+                    <InputLabel 
+                        for="username"
+                        value="Username"
+                        :invalid="!!form.errors.username"
+                    />
+    
+                    <InputText
+                        id="username"
+                        type="text"
+                        class="mt-1 block w-full"
+                        v-model="form.username"
+                        autofocus
+                        placeholder="Enter Username"
+                        :invalid="!!form.errors.username"
+                    />
+    
+                    <InputError class="mt-2" :message="form.errors.username" />
+                </div>
 
-                <TextInput
-                    id="name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    v-model="form.name"
-                    required
-                    autofocus
-                    autocomplete="name"
-                />
+                <div class="flex flex-col gap-1 items-start self-stretch">
+                    <InputLabel 
+                        for="first_name"
+                        value="First Name"
+                        :invalid="!!form.errors.first_name"
+                    />
+    
+                    <InputText
+                        id="first_name"
+                        type="text"
+                        class="mt-1 block w-full"
+                        v-model="form.first_name"
+                        placeholder="Enter First Name"
+                        :invalid="!!form.errors.first_name"
+                    />
+    
+                    <InputError class="mt-2" :message="form.errors.first_name" />
+                </div>
 
-                <InputError class="mt-2" :message="form.errors.name" />
-            </div>
+                <div class="flex flex-col gap-1 items-start self-stretch">
+                    <InputLabel 
+                        for="last_name"
+                        value="Last Name"
+                        :invalid="!!form.errors.last_name"
+                    />
+    
+                    <InputText
+                        id="last_name"
+                        type="text"
+                        class="mt-1 block w-full"
+                        v-model="form.last_name"
+                        placeholder="Enter Last Name"
+                        :invalid="!!form.errors.last_name"
+                    />
+    
+                    <InputError class="mt-2" :message="form.errors.last_name" />
+                </div>
 
-            <div class="mt-4">
-                <InputLabel for="email" value="Email" />
+                
+                <div class="flex flex-col gap-1 items-start self-stretch">
+                    <InputLabel 
+                        for="identity_number"
+                        value="Identification No"
+                        :invalid="!!form.errors.identity_number"
+                    />
+    
+                    <InputText
+                        id="identity_number"
+                        type="text"
+                        class="mt-1 block w-full"
+                        v-model="form.identity_number"
+                        placeholder="Enter Identification No"
+                        :invalid="!!form.errors.identity_number"
+                    />
+    
+                    <InputError class="mt-2" :message="form.errors.identity_number" />
+                </div>
+    
+                <div class="flex flex-col gap-1 items-start self-stretch">
+                    <InputLabel 
+                        for="email" 
+                        value="Email" 
+                        :invalid="!!form.errors.email"
+                    />
+    
+                    <InputText
+                        id="email"
+                        type="email"
+                        class="mt-1 block w-full"
+                        v-model="form.email"
+                        placeholder="Enter Email"
+                        :invalid="!!form.errors.email"
+                    />
+    
+                    <InputError class="mt-2" :message="form.errors.email" />
+                </div>
 
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autocomplete="username"
-                />
+                <div class="flex flex-col gap-1 items-start self-stretch">
+                    <InputLabel 
+                        for="phone" 
+                        value="Phone Number" 
+                        :invalid="!!form.errors.phone"
+                    />
 
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
+                    <div class="flex gap-2 items-center self-stretch relative">
+                        <Select
+                            v-model="selectedPhoneCode"
+                            :options="countries"
+                            :loading="loadingCountries"
+                            optionLabel="name"
+                            placeholder="60"
+                            :invalid="!!form.errors.dial_code"
+                            filter
+                            :filterFields="['name', 'iso2', 'phone_code']"
+                        >
+                            <template #value="slotProps">
+                                <div v-if="slotProps.value" class="flex items-center">
+                                    <div>{{ slotProps.value.phone_code }}</div>
+                                </div>
+                                <span v-else class="text-surface-400 dark:text-surface-500">{{ slotProps.placeholder }}</span>
+                            </template>
+                            <template #option="slotProps">
+                                <div class="flex items-center gap-1">
+                                    <img
+                                        v-if="slotProps.option.iso2"
+                                        :src="`https://flagcdn.com/w40/${slotProps.option.iso2.toLowerCase()}.png`"
+                                        :alt="slotProps.option.iso2"
+                                        width="18"
+                                        height="12"
+                                    />
+                                    <div>{{ slotProps.option.phone_code }}</div>
+                                </div>
+                            </template>
+                        </Select>
 
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+                        <InputText 
+                            id="phone"
+                            type="text"
+                            class="mt-1 block w-full"
+                            v-model="form.phone"
+                            placeholder="1234567"
+                            :invalid="!!form.errors.phone"
+                        />
+                    </div>
+                    <InputError :message="form.errors.phone"/>
+                    <InputError :message="form.errors.dial_code"/>
+                </div>
+    
+                <div class="flex flex-col gap-1 items-start self-stretch">
+                    <InputLabel 
+                        for="password" 
+                        value="Password" 
+                        :invalid="!!form.errors.password" 
+                    />
+    
+                    <Password
+                        id="password"
+                        class="mt-1 block w-full"
+                        v-model="form.password"
+                        toggleMask
+                        :inputStyle="{'width': '100%'}"
+                        :style="{'width': '100%'}"
+                        placeholder="••••••••"
+                        :invalid="!!form.errors.password"
+                    />
+    
+                    <InputError class="mt-2" :message="form.errors.password" />
+                </div>
+    
+                <div class="flex flex-col gap-1 items-start self-stretch">
+                    <InputLabel
+                        for="password_confirmation"
+                        value="Confirm Password"
+                        :invalid="!!form.errors.password"
+                    />
+    
+                    <Password
+                        id="password_confirmation"
+                        class="mt-1 block w-full"
+                        v-model="form.password_confirmation"
+                        toggleMask
+                        :inputStyle="{'width': '100%'}"
+                        :style="{'width': '100%'}"
+                        placeholder="••••••••"
+                        :invalid="!!form.errors.password"
+                    />
+                </div>
+    
+                <div class="flex flex-col gap-1 pt-5 items-center">
+                    <Button
+                        type="submit"
+                        :class="{ 'opacity-25': form.processing }"
+                        class="w-full text-center font-semibold dark:text-surface-950 text-white"
+                        :disabled="form.processing"
+                        size="small"
+                    >
+                        Register
+                    </Button>
 
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="new-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel
-                    for="password_confirmation"
-                    value="Confirm Password"
-                />
-
-                <TextInput
-                    id="password_confirmation"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password_confirmation"
-                    required
-                    autocomplete="new-password"
-                />
-
-                <InputError
-                    class="mt-2"
-                    :message="form.errors.password_confirmation"
-                />
-            </div>
-
-            <div class="mt-4 flex items-center justify-end">
-                <Link
-                    :href="route('login')"
-                    class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
-                >
-                    Already registered?
-                </Link>
-
-                <PrimaryButton
-                    class="ms-4"
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                >
-                    Register
-                </PrimaryButton>
+                    <Link
+                        :href="route('login')"
+                       class="text-sm text-surface-600 hover:text-primary dark:hover:text-primary-500 focus:outline-none dark:text-surface-400"
+                    >
+                        Already registered?
+                    </Link>
+                </div>
             </div>
         </form>
     </GuestLayout>
