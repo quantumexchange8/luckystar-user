@@ -9,7 +9,11 @@ const user = usePage().props.auth.user;
 
 <template>
     <div 
-        class="flex-shrink-0 p-3 sticky"
+        class="flex-shrink-0 sticky bottom-0"
+        :class="{
+            'p-3': !sidebarState.isOpen,
+            'p-0': sidebarState.isHovered, 
+        }"
     >       
         <Link
             :href="route('profile.edit')"

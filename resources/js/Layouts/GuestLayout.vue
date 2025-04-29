@@ -1,4 +1,5 @@
 <script setup>
+import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import AuthPanel from "@/Components/Auth/AuthPanel.vue";
 import { isDark, toggleDarkMode } from "@/Composables/index.js";
 import { IconMoon, IconSun, IconWorld } from "@tabler/icons-vue";
@@ -47,6 +48,9 @@ import Button from "primevue/button";
             <div class="flex-1 overflow-y-auto">
                 <div class="min-h-full flex items-center justify-center p-4">
                     <div class="max-w-md w-full">
+                        <div class="flex justify-center">
+                            <ApplicationLogo class="h-16 w-fit fill-current text-primary" />
+                        </div>
                         <slot />
                     </div>
                 </div>

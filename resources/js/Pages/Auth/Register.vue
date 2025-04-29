@@ -5,6 +5,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import { Button, Password, InputText, Select } from 'primevue'; 
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import AuthHeader from '@/Components/Auth/AuthHeader.vue';
 
 const selectedPhoneCode = ref();
 
@@ -53,6 +54,11 @@ const submit = () => {
 <template>
     <GuestLayout>
         <Head title="Register" />
+
+        <AuthHeader
+            :header="'Register an account'"
+            :caption="'Please enter your details'"
+        />
 
         <form @submit.prevent="submit" class="w-full">
             <div class="flex flex-col gap-4 w-full self-stretch">
@@ -162,6 +168,7 @@ const submit = () => {
 
                     <div class="flex gap-2 items-center self-stretch relative">
                         <Select
+                            class="w-[150px]"
                             v-model="selectedPhoneCode"
                             :options="countries"
                             :loading="loadingCountries"

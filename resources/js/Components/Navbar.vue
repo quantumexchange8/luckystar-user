@@ -111,13 +111,6 @@ const handleLogOut = () => {
                     <IconLogout size="20" stroke-width="1.5" />
                 </template>
             </Button>
-
-            <Link
-                class="w-12 h-12 p-2 items-center justify-center rounded-full hover:cursor-pointer hover:bg-surface-100 hidden md:block"
-                :href="route('profile.edit')"
-            >
-<!--                <ProfilePhoto class="w-8 h-8" />-->
-            </Link>
         </div>
     </nav>
 

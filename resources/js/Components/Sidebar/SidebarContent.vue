@@ -106,9 +106,5 @@ import SidebarCategoryLabel from "@/Components/Sidebar/SidebarCategoryLabel.vue"
                 <IconClockDollar :size="20" stroke-width="1.5" />
             </template>
         </SidebarLink>
-
-
-
-        
     </nav>
 </template>

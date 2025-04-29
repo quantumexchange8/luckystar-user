@@ -4,6 +4,7 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import { Button, Checkbox, Password, InputText } from 'primevue'; 
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import AuthHeader from '@/Components/Auth/AuthHeader.vue';
 
 defineProps({
     canResetPassword: {
@@ -31,9 +32,10 @@ const submit = () => {
     <GuestLayout>
         <Head title="Log in" />
 
-        <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
-            {{ status }}
-        </div>
+        <AuthHeader
+            :header="'Welcome back to Lucky Star'"
+            :caption="'Please enter your details'"
+        />
 
         <form @submit.prevent="submit" class="w-full">
             <div class="flex flex-col gap-4 w-full self-stretch">
@@ -82,7 +84,7 @@ const submit = () => {
                     <Link
                         v-if="canResetPassword"
                         :href="route('password.request')"
-                        class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
+                        class="text-sm text-surface-600 hover:text-primary dark:hover:text-primary-500 focus:outline-none dark:text-surface-400"
                     >
                         Forgot your password?
                     </Link>
@@ -94,7 +96,6 @@ const submit = () => {
                         :class="{ 'opacity-25': form.processing }"
                         class="w-full text-center font-semibold dark:text-surface-950 text-white"
                         :disabled="form.processing"
-                        size="small"
                     >
                         Log in
                     </Button>
