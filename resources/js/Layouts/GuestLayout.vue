@@ -1,7 +1,7 @@
 <script setup>
 import AuthPanel from "@/Components/Auth/AuthPanel.vue";
 import { isDark, toggleDarkMode } from "@/Composables/index.js";
-import { IconMoon, IconSun } from "@tabler/icons-vue";
+import { IconMoon, IconSun, IconWorld } from "@tabler/icons-vue";
 import Button from "primevue/button";
 </script>
 
@@ -35,11 +35,10 @@ import Button from "primevue/button";
                     outlined
                     aria-label="Mode"
                     size="small"
-                    @click="() => { toggleDarkMode() }"
+                  
                 >
                     <template #icon>
-                        <IconSun v-if="!isDark" size="16" />
-                        <IconMoon v-if="isDark" size="16" />
+                        <IconWorld size="20" stroke-width="1.5" />
                     </template>
                 </Button>
             </div>

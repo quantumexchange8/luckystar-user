@@ -17,7 +17,7 @@ const user = usePage().props.auth.user;
                 'flex items-center gap-3 self-stretch group select-none cursor-pointer transition-colors py-3 px-7',
                 sidebarState.isOpen || sidebarState.isHovered ? 'flex-row gap-3 px-7' : 'flex-col gap-1 px-2',
                 {
-                    'text-surface-950 dark:text-white hover:text-primary hover:bg-primary-50 dark:hover:bg-surface-800 dark:hover:text-primary-500 rounded-lg': !route().current('profile.edit'),
+                    'text-surface-950 dark:text-white hover:text-primary hover:bg-primary-100 dark:hover:bg-surface-800 dark:hover:text-primary-500 rounded-lg': !route().current('profile.edit'),
                     'text-primary bg-primary-50 dark:bg-surface-800 hover:bg-primary-100 rounded-lg': route().current('profile.edit'),
                 },
             ]"

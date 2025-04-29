@@ -42,7 +42,7 @@ const submit = () => {
     
                     <InputText
                         id="email"
-                        type="email"
+                        type="text"
                         class="block w-full"
                         v-model="form.email"
                         placeholder="Email"

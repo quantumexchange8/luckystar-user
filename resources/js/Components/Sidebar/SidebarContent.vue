@@ -53,7 +53,7 @@ import SidebarCategoryLabel from "@/Components/Sidebar/SidebarCategoryLabel.vue"
     >
         <!-- Dashboard -->
         <SidebarLink
-            :title="'dashboard'"
+            :title="'Dashboard'"
             :href="route('dashboard')"
             :active="route().current('dashboard')"
         >
