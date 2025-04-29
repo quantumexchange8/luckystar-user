@@ -43,14 +43,14 @@ const submit = () => {
                     <InputText
                         id="email"
                         type="email"
-                        class="mt-1 block w-full"
+                        class="block w-full"
                         v-model="form.email"
                         placeholder="Email"
                         autofocus
                         :invalid="!!form.errors.email"
                     />
     
-                    <InputError class="mt-2" :message="form.errors.email" />
+                    <InputError :message="form.errors.email" />
                 </div>
     
                 <div class="flex flex-col gap-1 items-start self-stretch">
@@ -58,16 +58,17 @@ const submit = () => {
     
                     <Password
                         id="password"
-                        class="mt-1 block w-full"
+                        class="block w-full"
                         v-model="form.password"
                         toggleMask
                         :inputStyle="{'width': '100%'}"
                         :style="{'width': '100%'}"
                         placeholder="Password"
                         :invalid="!!form.errors.password"
+                        :feedback="false"
                     />
     
-                    <InputError class="mt-2" :message="form.errors.password" />
+                    <InputError :message="form.errors.password" />
                 </div>
     
                 <div class="flex items-center justify-between">

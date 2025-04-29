@@ -1,7 +1,7 @@
 <script setup>
 import AuthPanel from "@/Components/Auth/AuthPanel.vue";
-import {isDark, toggleDarkMode} from "@/Composables/index.js";
-import {IconMoon, IconSun} from "@tabler/icons-vue";
+import { isDark, toggleDarkMode } from "@/Composables/index.js";
+import { IconMoon, IconSun } from "@tabler/icons-vue";
 import Button from "primevue/button";
 </script>
 
@@ -13,8 +13,10 @@ import Button from "primevue/button";
         </div>
 
         <!-- Right Pane -->
-        <div class="w-full bg-surface-100 dark:bg-surface-900 lg:w-1/2 flex items-center justify-center transition-all duration-200">
-            <div class="flex items-center gap-2 self-stretch absolute top-5 right-5">
+        <div class="flex flex-col w-full lg:w-1/2 bg-surface-100 dark:bg-surface-900 transition-all duration-200 h-screen">
+        
+            <!-- Top Buttons -->
+            <div class="flex items-center justify-end gap-2 p-5 shrink-0">
                 <Button
                     severity="secondary"
                     outlined
@@ -42,8 +44,13 @@ import Button from "primevue/button";
                 </Button>
             </div>
 
-            <div class="max-w-md w-full p-5">
-                <slot />
+            <!-- Scrollable Form Area -->
+            <div class="flex-1 overflow-y-auto">
+                <div class="min-h-full flex items-center justify-center p-4">
+                    <div class="max-w-md w-full">
+                        <slot />
+                    </div>
+                </div>
             </div>
         </div>
     </div>

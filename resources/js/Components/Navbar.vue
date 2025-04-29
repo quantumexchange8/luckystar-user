@@ -62,12 +62,14 @@ const handleLogOut = () => {
             severity="secondary"
             rounded
             variant="text"
+            class="shrink-0"
             @click="sidebarState.isOpen = !sidebarState.isOpen"
         >
             <template #icon>
                 <IconMenu2 size="18" stroke-width="1.5" />
             </template>
         </Button>
+
         <div
             class="font-semibold text-surface-700 dark:text-surface-300"
         >
@@ -77,7 +79,7 @@ const handleLogOut = () => {
             <Button
                 type="button"
                 severity="secondary"
-                rounded
+                rounded-full
                 variant="text"
                 @click="() => { toggleDarkMode() }"
             >
