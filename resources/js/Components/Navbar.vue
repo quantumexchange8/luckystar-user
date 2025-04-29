@@ -79,7 +79,7 @@ const handleLogOut = () => {
             <Button
                 type="button"
                 severity="secondary"
-                rounded-full
+                rounded
                 variant="text"
                 @click="() => { toggleDarkMode() }"
             >

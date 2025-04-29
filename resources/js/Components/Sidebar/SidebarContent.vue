@@ -18,6 +18,7 @@ import {
     IconTag,
     IconClipboardData,
     IconPhotoCog,
+    IconChartPie,
 } from '@tabler/icons-vue';
 import SidebarCategoryLabel from "@/Components/Sidebar/SidebarCategoryLabel.vue";
 //
@@ -61,8 +62,53 @@ import SidebarCategoryLabel from "@/Components/Sidebar/SidebarCategoryLabel.vue"
             </template>
         </SidebarLink>
 
+        
         <SidebarCategoryLabel
-            :title="'account'"
+            :title="'Marketplace'"
         />
+
+        <SidebarLink
+            :title="'Master'"
+          
+        >
+            <template #icon>
+                <IconCoinMonero :size="20" stroke-width="1.5" />
+            </template>
+        </SidebarLink>
+
+        <SidebarLink
+            :title="'PAMM'"
+          
+        >
+            <template #icon>
+                <IconChartPie :size="20" stroke-width="1.5" />
+            </template>
+        </SidebarLink>
+
+        <SidebarLink
+            :title="'Referral Programme'"
+          
+        >
+            <template #icon>
+                <IconUsersGroup :size="20" stroke-width="1.5" />
+            </template>
+        </SidebarLink>
+
+        <SidebarCategoryLabel
+            :title="'Transaction'"
+        />
+
+        <SidebarLink
+            :title="'History'"
+          
+        >
+            <template #icon>
+                <IconClockDollar :size="20" stroke-width="1.5" />
+            </template>
+        </SidebarLink>
+
+
+
+        
     </nav>
 </template>
