@@ -4,8 +4,6 @@ import { Head } from '@inertiajs/vue3';
 </script>
 
 <template>
-    <Head title="Dashboard" />
-
     <AuthenticatedLayout title="Dashboard">
         <div class="py-12">
             <div class="mx-auto sm:px-6 lg:px-8">
