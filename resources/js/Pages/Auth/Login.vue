@@ -38,7 +38,7 @@ const submit = () => {
         />
 
         <form @submit.prevent="submit" class="w-full">
-            <div class="flex flex-col gap-4 w-full self-stretch">
+            <div class="flex flex-col gap-5 w-full self-stretch">
                 <div class="flex flex-col gap-1 items-start self-stretch">
                     <InputLabel for="email" value="Email" :invalid="!!form.errors.email"/>
     
@@ -73,6 +73,9 @@ const submit = () => {
                     <InputError :message="form.errors.password" />
                 </div>
     
+            </div>
+
+            <div class="flex flex-col gap-6 mt-6 w-full self-stretch">
                 <div class="flex items-center justify-between">
                     <label class="flex items-center">
                         <Checkbox name="remember" v-model:checked="form.remember" :binary="true"/>
@@ -80,7 +83,7 @@ const submit = () => {
                             >Remember me
                         </span>
                     </label>
-
+    
                     <Link
                         v-if="canResetPassword"
                         :href="route('password.request')"
@@ -90,7 +93,7 @@ const submit = () => {
                     </Link>
                 </div>
     
-                <div class="flex flex-col gap-1 pt-5 items-center">
+                <div class="flex flex-col items-center">
                     <Button
                         type="submit"
                         :class="{ 'opacity-25': form.processing }"
@@ -99,7 +102,7 @@ const submit = () => {
                     >
                         Log in
                     </Button>
-
+    
                     <Link
                         v-if="canResetPassword"
                         :href="route('register')"

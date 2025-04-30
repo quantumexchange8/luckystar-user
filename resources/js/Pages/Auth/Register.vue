@@ -61,7 +61,7 @@ const submit = () => {
         />
 
         <form @submit.prevent="submit" class="w-full">
-            <div class="flex flex-col gap-4 w-full self-stretch">
+            <div class="flex flex-col gap-5 w-full self-stretch">
                 <div class="flex flex-col gap-1 items-start self-stretch">
                     <InputLabel 
                         for="username"
@@ -250,18 +250,19 @@ const submit = () => {
                         :invalid="!!form.errors.password"
                     />
                 </div>
-    
-                <div class="flex flex-col gap-1 pt-5 items-center">
+            </div>
+
+            <div class="flex flex-col mt-6 w-full self-stretch">
+                <div class="flex flex-col items-center">
                     <Button
                         type="submit"
                         :class="{ 'opacity-25': form.processing }"
                         class="w-full text-center font-semibold dark:text-surface-950 text-white"
                         :disabled="form.processing"
-                        size="small"
                     >
                         Register
                     </Button>
-
+    
                     <Link
                         :href="route('login')"
                        class="text-sm text-surface-600 hover:text-primary dark:hover:text-primary-500 focus:outline-none dark:text-surface-400"
