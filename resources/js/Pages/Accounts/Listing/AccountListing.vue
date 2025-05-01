@@ -1,41 +1,45 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import AccountHeader from './AccountHeader.vue';
-import { Tab, TabList, TabPanels, Tabs } from 'primevue';
-import { onMounted, ref } from 'vue';
+import { Tab, TabList, TabPanels, Tabs, TabPanel } from 'primevue';
+import { onMounted, ref, h } from 'vue';
+import IndividualView from './Individual/IndividualView.vue';
+import ManagedView from './Managed/ManagedView.vue';
+import DemoView from './Demo/DemoView.vue';
 
 const tabs = ref([
     {
-        title: 'finance',
-       
+        title: 'Individual',
+        component: h(IndividualView),
         value: '0'
     },
     {
-        title: 'investment',
-       
+        title: 'Managed',
+        component: h(ManagedView),
         value: '1'
     },
     {
-        title: 'history',
+        title: 'Demo',
+        component: h(DemoView),
         value: '2'
     },
 ]);
 
-const selectedType = ref('finance');
+const selectedType = ref('Individual');
 const activeIndex = ref('0');
 
 onMounted(() => {
     const params = new Proxy(new URLSearchParams(window.location.search), {
         get: (searchParams, prop) => searchParams.get(prop),
     });
-    if(params.tab === 'history'){
-        selectedType.value = 'history';
+    if(params.tab === 'Demo'){
+        selectedType.value = 'Demo';
         activeIndex.value = '2';
-    } else if(params.tab === 'investment'){
-        selectedType.value = 'investment';
+    } else if(params.tab === 'Managed'){
+        selectedType.value = 'Managed';
         activeIndex.value = '1';
     } else {
-        selectedType.value = 'finance';
+        selectedType.value = 'Individual';
         activeIndex.value = '0';
     }
 });

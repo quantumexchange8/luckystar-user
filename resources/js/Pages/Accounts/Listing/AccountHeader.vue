@@ -1,6 +1,7 @@
 <script setup>
 import { IconAlertCircleFilled } from '@tabler/icons-vue';
 import { Button, Message, Card } from 'primevue';
+import AddAccount from './Partial/AddAccount.vue';
 </script>
 
 <template>
@@ -22,13 +23,7 @@ import { Button, Message, Card } from 'primevue';
                 </p>
 
                 <div class="flex flex-wrap gap-3 sm:gap-5">
-                    <Button class="px-6 w-[200px] sm:w-auto">
-                        <span>Open Live Account</span>
-                    </Button>
-
-                    <Button outlined class="px-6 w-[200px] sm:w-auto">
-                        <span>Demo Account</span>
-                    </Button>
+                    <AddAccount />
                 </div>
             </div>
         </template>
