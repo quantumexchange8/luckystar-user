@@ -8,8 +8,8 @@ import { ref } from 'vue';
 const emit = defineEmits(['update:visible']);
 
 const form = useForm({
-    wallet_id: null,
-    leverage: null,
+    wallet_id: '',
+    leverage: '',
 });
 </script>
 
@@ -35,6 +35,7 @@ const form = useForm({
 
                 <Select
                     class="w-full"
+                    :invalid="!!form.errors.leverage"
                 >
 
                 </Select>
@@ -44,8 +45,8 @@ const form = useForm({
         </div>
 
         <div class="flex justify-end items-center pt-10 md:pt-7 gap-3 md:gap-4 self-stretch">
-            <Button type="button" :label="'cancel'" severity="secondary" @click="$emit('update:visible', false)" class="flex flex-1 md:flex-none md:w-[120px]"></Button>
-            <Button type="submit" :label="'confirm'" :disabled="form.processing" class="flex flex-1 md:flex-none md:w-[120px]"></Button>
+            <Button type="button" :label="$t('public.cancel')" severity="secondary" @click="$emit('update:visible', false)" class="flex flex-1 md:flex-none md:w-[120px]"></Button>
+            <Button type="submit" :label="$t('public.confirm')" :disabled="form.processing" class="flex flex-1 md:flex-none md:w-[120px]"></Button>
         </div>
     </form>
 </template>

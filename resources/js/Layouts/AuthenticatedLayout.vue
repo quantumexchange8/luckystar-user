@@ -11,7 +11,7 @@ defineProps({
 </script>
 
 <template>
-    <Head :title="$t(`public.${title}`)"></Head>
+    <Head :title="title"></Head>
 
     <div class="min-h-screen bg-surface-50 dark:bg-surface-950 transition-colors duration-200">
         <!-- Sidebar -->
@@ -28,7 +28,7 @@ defineProps({
             ]"
         >
             <!-- Navbar -->
-            <Navbar :title="$t(`public.${title}`)" />
+            <Navbar :title="title" />
 
             <!-- Page Content -->
             <main class="flex flex-1 justify-center items-start px-3 pt-3 pb-12 md:px-5 md:pt-5">

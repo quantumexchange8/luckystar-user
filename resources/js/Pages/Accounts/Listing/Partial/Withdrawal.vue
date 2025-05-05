@@ -9,8 +9,8 @@ const emit = defineEmits(['update:visible']);
 
 const amount = ref(0);
 const form = useForm({
-    wallet_id: null,
-    amount: null,
+    wallet_id: '',
+    amount: '',
 });
 </script>
 
@@ -47,7 +47,7 @@ const form = useForm({
                     :minFractionDigits="2"
                     fluid
                     autofocus
-                    :invalid="form.errors.amount"
+                    :invalid="!!form.errors.amount"
                 />
 
                 <span
@@ -67,6 +67,7 @@ const form = useForm({
 
                 <Select
                     class="w-full"
+                    :invalid="!!form.errors.wallet_id"
                 >
 
                 </Select>
@@ -76,8 +77,8 @@ const form = useForm({
         </div>
 
         <div class="flex justify-end items-center pt-10 md:pt-7 gap-3 md:gap-4 self-stretch">
-            <Button type="button" :label="'cancel'" severity="secondary" @click="$emit('update:visible', false)" class="flex flex-1 md:flex-none md:w-[120px]"></Button>
-            <Button type="submit" :label="'confirm'" :disabled="form.processing" class="flex flex-1 md:flex-none md:w-[120px]"></Button>
+            <Button type="button" :label="$t('public.cancel')" severity="secondary" @click="$emit('update:visible', false)" class="flex flex-1 md:flex-none md:w-[120px]"></Button>
+            <Button type="submit" :label="$t('public.confirm')" :disabled="form.processing" class="flex flex-1 md:flex-none md:w-[120px]"></Button>
         </div>
     </form>
 </template>

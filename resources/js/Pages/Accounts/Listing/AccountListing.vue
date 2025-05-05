@@ -51,7 +51,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <AuthenticatedLayout title="accounts">
+    <AuthenticatedLayout :title="$t('public.accounts')">
         <div class="flex flex-col gap-5">
             <div class="flex flex-col gap-5 items-center self-stretch w-full">
                 <AccountHeader
