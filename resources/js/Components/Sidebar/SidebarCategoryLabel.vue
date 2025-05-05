@@ -16,6 +16,6 @@ defineProps({
                 !sidebarState.isOpen && !sidebarState.isHovered,
         }"
     >
-        {{ title }}
+        {{ $t(`public.${title}`) }}
     </div>
 </template>

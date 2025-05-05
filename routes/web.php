@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SelectOptionController;
+use App\Http\Controllers\StrategyController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Redirect;
@@ -40,6 +41,15 @@ Route::middleware('auth')->group(function () {
      */
     Route::prefix('account')->group(function () {
         Route::get('/', [AccountController::class, 'index'])->name('account');
+    });
+
+     /**
+     * ==============================
+     *           Account
+     * ==============================
+     */
+    Route::prefix('strategy')->group(function () {
+        Route::get('/', [StrategyController::class, 'index'])->name('strategy');
     });
 });
 

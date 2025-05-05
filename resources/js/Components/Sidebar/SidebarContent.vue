@@ -11,7 +11,6 @@ import {
     IconUsersGroup,
     IconTemplate,
     IconCategory,
-    IconCoinMonero,
     IconHistory,
     IconClockDollar,
     IconAdjustmentsDollar,
@@ -20,6 +19,7 @@ import {
     IconPhotoCog,
     IconChartPie,
     IconId,
+    IconBusinessplan,
 } from '@tabler/icons-vue';
 import SidebarCategoryLabel from "@/Components/Sidebar/SidebarCategoryLabel.vue";
 //
@@ -54,7 +54,7 @@ import SidebarCategoryLabel from "@/Components/Sidebar/SidebarCategoryLabel.vue"
     >
         <!-- Dashboard -->
         <SidebarLink
-            :title="'Dashboard'"
+            :title="'dashboard'"
             :href="route('dashboard')"
             :active="route().current('dashboard')"
         >
@@ -65,11 +65,11 @@ import SidebarCategoryLabel from "@/Components/Sidebar/SidebarCategoryLabel.vue"
 
         
         <SidebarCategoryLabel
-            :title="'Marketplace'"
+            :title="'marketplace'"
         />
 
         <SidebarLink
-            :title="'Accounts'"
+            :title="'accounts'"
             :href="route('account')"
             :active="route().current('account')"
         >
@@ -79,16 +79,17 @@ import SidebarCategoryLabel from "@/Components/Sidebar/SidebarCategoryLabel.vue"
         </SidebarLink>
 
         <SidebarLink
-            :title="'Master'"
-          
+            :title="'strategy'"
+            :href="route('strategy')"
+            :active="route().current('strategy')"
         >
             <template #icon>
-                <IconCoinMonero :size="20" stroke-width="1.5" />
+                <IconBusinessplan :size="20" stroke-width="1.5" />
             </template>
         </SidebarLink>
 
         <SidebarLink
-            :title="'Structure'"
+            :title="'investment'"
           
         >
             <template #icon>
@@ -97,11 +98,11 @@ import SidebarCategoryLabel from "@/Components/Sidebar/SidebarCategoryLabel.vue"
         </SidebarLink>
 
         <SidebarCategoryLabel
-            :title="'Transaction'"
+            :title="'transaction'"
         />
 
         <SidebarLink
-            :title="'History'"
+            :title="'history'"
           
         >
             <template #icon>

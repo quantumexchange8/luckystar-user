@@ -27,7 +27,7 @@ defineProps({
                     effortlessly grow your portfolio with expert guidance.
                 </p>
 
-                <div class="flex gap-3 sm:gap-5">
+                <div class="flex flex-col gap-3 sm:flex-row sm:gap-5">
                     <AddAccount
                         :accountTypes="accountTypes"
                         :leverageOptions="leverageOptions"

@@ -47,7 +47,7 @@ const Tag = external ? 'a' : Link
                 />
             </div>
             <div v-show="sidebarState.isOpen || sidebarState.isHovered" class="font-medium">
-                {{ title }}
+                {{ $t(`public.${title}`) }}
             </div>
             <Badge
                 v-if="pendingCounts"
