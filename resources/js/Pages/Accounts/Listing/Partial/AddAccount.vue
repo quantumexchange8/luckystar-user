@@ -1,13 +1,52 @@
 <script setup>
-import { Button } from 'primevue';
+import {
+    Button,
+    Dialog
+} from 'primevue';
+import {ref} from "vue";
+import CreateAccountForm from "@/Pages/Accounts/Listing/Partial/CreateAccountForm.vue";
+
+defineProps({
+    accountTypes: Array
+})
+
+const visible = ref(false);
+const dialogType = ref('');
+
+const openDialog = (type) => {
+    visible.value = true;
+    dialogType.value = type;
+}
+
+const closeDialog = () => {
+    visible.value = false;
+}
 </script>
 
 <template>
-    <Button class="px-4 w-[200px] sm:w-auto">
-        <span>Open Live Account</span>
-    </Button>
+    <Button
+        type="button"
+        :label="$t('public.open_trade_account')"
+        @click="openDialog('open_trade_account')"
+    />
 
-    <Button outlined class="px-4 w-[200px] sm:w-auto">
-        <span>Demo Account</span>
-    </Button>
+    <Button
+        type="button"
+        outlined
+        :label="$t('public.demo_account')"
+        @click="openDialog('demo_account')"
+    />
+
+    <Dialog
+        v-model:visible="visible"
+        modal
+        :header="$t(`public.${dialogType}`)"
+        class="dialog-xs md:dialog-sm"
+    >
+        <template v-if="dialogType === 'open_trade_account'">
+            <CreateAccountForm
+                :accountTypes="accountTypes"
+            />
+        </template>
+    </Dialog>
 </template>

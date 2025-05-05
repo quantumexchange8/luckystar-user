@@ -2,6 +2,10 @@
 import { IconAlertCircleFilled } from '@tabler/icons-vue';
 import { Button, Message, Card } from 'primevue';
 import AddAccount from './Partial/AddAccount.vue';
+
+defineProps({
+    accountTypes: Array
+})
 </script>
 
 <template>
@@ -22,8 +26,10 @@ import AddAccount from './Partial/AddAccount.vue';
                     effortlessly grow your portfolio with expert guidance.
                 </p>
 
-                <div class="flex flex-wrap gap-3 sm:gap-5">
-                    <AddAccount />
+                <div class="flex gap-3 sm:gap-5">
+                    <AddAccount
+                        :accountTypes="accountTypes"
+                    />
                 </div>
             </div>
         </template>

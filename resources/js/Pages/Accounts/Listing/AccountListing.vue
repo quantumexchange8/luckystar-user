@@ -7,6 +7,10 @@ import IndividualView from './Individual/IndividualView.vue';
 import ManagedView from './Managed/ManagedView.vue';
 import DemoView from './Demo/DemoView.vue';
 
+defineProps({
+    accountTypes: Array
+})
+
 const tabs = ref([
     {
         title: 'Individual',
@@ -49,7 +53,9 @@ onMounted(() => {
     <AuthenticatedLayout title="Accounts">
         <div class="flex flex-col gap-5">
             <div class="flex flex-col gap-5 items-center self-stretch w-full">
-                <AccountHeader />
+                <AccountHeader
+                    :accountTypes="accountTypes"
+                />
             </div>
 
             <!-- Tabs -->
