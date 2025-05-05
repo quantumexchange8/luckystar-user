@@ -57,4 +57,5 @@ return [
     "performance_fee" => "Performance Fee",
     "managed_account" => "Managed Account",
     "investment_amount" => "Investment Amount",
+    "top_up" => "Top Up",
 ];

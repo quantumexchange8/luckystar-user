@@ -4,12 +4,16 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Wallet;
+use App\Services\RunningNumberService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -26,7 +30,7 @@ class RegisteredUserController extends Controller
     /**
      * Handle an incoming registration request.
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function store(Request $request): RedirectResponse
     {
@@ -42,7 +46,7 @@ class RegisteredUserController extends Controller
         ]);
 
         $dial_code = $request->dial_code;
-        
+
         $user = User::create([
             'username' => $request->username,
             'first_name' => $request->first_name,
@@ -53,6 +57,22 @@ class RegisteredUserController extends Controller
             'phone' => $request->phone,
             'phone_number' => $request->phone_number,
             'password' => Hash::make($request->password),
+        ]);
+
+        Wallet::create([
+            'user_id' => $user->id,
+            'type' => 'cash_wallet',
+            'address' => "LS-CW-". Str::padLeft($user->id, 7, "0"),
+            'currency' => 'USD',
+            'currency_symbol' => '$'
+        ]);
+
+        Wallet::create([
+            'user_id' => $user->id,
+            'type' => 'bonus_wallet',
+            'address' => "LS-BW-". Str::padLeft($user->id, 7, "0"),
+            'currency' => 'USD',
+            'currency_symbol' => '$'
         ]);
 
         event(new Registered($user));

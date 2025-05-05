@@ -17,13 +17,13 @@ const overviews = [
         label: "group_investment_capital",
         amount: 100000,
         trend: "5.4%",
-        itemClass: "bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300"
+        itemClass: "bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-300"
     },
     {
         label: "total_profit",
         amount: 400,
         trend: "1.5%",
-        itemClass: "bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-300"
+        itemClass: "bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-300"
     },
     {
         label: "total_bonus",
@@ -40,14 +40,14 @@ const {formatAmount} = generalFormat();
     <div class="grid gap-5 w-full grid-cols-2">
         <Card
             v-for="item in overviews"
-            :class="item.itemClass"
+            :class="['border-0', item.itemClass]"
         >
             <template #content>
                 <div class="flex flex-col items-start gap-3 w-full">
                     <div class="flex items-center gap-3 justify-between w-full">
                         <span class="text-xs md:text-sm flex items-center self-stretch text-surface-950 dark:text-white">{{ $t(`public.${item.label}`) }}</span>
                         <Button
-                            severity="secondary"
+                            severity="contrast"
                             rounded
                             icon="IconArrowUpRight"
                             class="!min-w-10"
