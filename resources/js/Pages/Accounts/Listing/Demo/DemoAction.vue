@@ -1,6 +1,7 @@
 <script setup>
 import { IconTrash } from '@tabler/icons-vue';
 import { Button, useConfirm } from 'primevue';
+import {trans} from "laravel-vue-i18n";
 
 const confirm = useConfirm();
 
@@ -8,11 +9,10 @@ const requireConfirmation = (action_type) => {
     const messages = {
         delete_item: {
             group: 'headless-error',
-            header: 'public.delete_demo_account',
-            text: 'public.delete_account_demo_caption',
-            cancelButton: 'public.cancel',
-            acceptButton: 'Yes, delete it',
-           
+            header: trans('public.delete_demo_account'),
+            text: trans('public.delete_demo_account_caption'),
+            cancelButton: trans('public.cancel'),
+            acceptButton: trans('public.confirm'),
         },
     };
 

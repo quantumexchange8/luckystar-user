@@ -5,6 +5,7 @@ import { ref, h } from 'vue';
 import Withdrawal from '../Partial/Withdrawal.vue';
 import AccountReport from '../Partial/AccountReport.vue';
 import Leverage from '../Partial/Leverage.vue';
+import {trans} from "laravel-vue-i18n";
 
 const confirm = useConfirm();
 
@@ -12,19 +13,17 @@ const requireConfirmation = (action_type) => {
     const messages = {
         delete_item: {
             group: 'headless-error',
-            header: 'public.delete_account',
-            text: 'public.delete_account_caption',
-            cancelButton: 'public.cancel',
-            acceptButton: 'Yes, delete it',
-           
+            header: trans('public.delete_account'),
+            text: trans('public.delete_account_caption'),
+            cancelButton: trans('public.cancel'),
+            acceptButton: trans('public.confirm'),
         },
         revoke_pamm: {
             group: 'headless-error',
-            header: 'public.revoke_pamm',
-            text: 'public.revoke_pamm_caption',
-            cancelButton: 'public.cancel',
-            acceptButton: 'Yes, revoke',
-           
+            header: trans('public.revoke_pamm'),
+            text: trans('public.revoke_pamm_caption'),
+            cancelButton: trans('public.cancel'),
+            acceptButton: trans('public.confirm'),
         },
     };
 
@@ -58,26 +57,26 @@ const dialogType = ref();
 
 const items = ref([
     {
-        label: 'Withdrawal',
+        label: 'withdrawal',
         icon: h(IconCreditCardPay),
         command: () => {
             visible.value = true;
-            dialogType.value = 'Withdrawal'
+            dialogType.value = 'withdrawal'
         },
     },
     {
-        label: 'Revoke PAMM',
+        label: 'revoke_pamm',
         icon: h(IconDatabaseMinus),
         command: () => {
             handleRevoke();
         }
     },
     {
-        label: 'Account Report',
+        label: 'account_report',
         icon: h(IconHistory),
         command: () => {
             visible.value = true;
-            dialogType.value = 'Account Report'
+            dialogType.value = 'account_report'
         },
     },
     {
@@ -139,7 +138,7 @@ const toggle = (event) => {
                 <span
                     class="font-medium"
                     :class="{'text-red-500': item.label === 'delete'}"
-                >{{ item.label }}</span>
+                >{{ $t(`public.${item.label}`) }}</span>
                 <span v-if="hasSubmenu" class="ml-auto">
                     <IconChevronRight size="20" stroke-width="1.5" />
                 </span>
@@ -152,30 +151,30 @@ const toggle = (event) => {
         modal
         class="dialog-xs md:dialog-sm"
         :class="[
-            { 'md:dialog-md': dialogType === 'Account Report' }
+            { 'md:dialog-md': dialogType === 'account_report' }
         ]"
     >
         <template #header>
             <div class="flex items-center gap-4">
                 <div class="text-xl font-bold">
-                    {{ dialogType }}
+                    {{$t(`public.${dialogType}`)}}
                 </div>
             </div>
         </template>
 
-        <template v-if="dialogType === 'Withdrawal'">
+        <template v-if="dialogType === 'withdrawal'">
             <Withdrawal 
                 @update:visible="visible = false"
             />
         </template>
 
-        <template v-if="dialogType === 'Revoke PAMM'">
+        <template v-if="dialogType === 'revoke_pamm'">
             <Leverage 
                 @update:visible="visible = false"
             />
         </template>
 
-        <template v-if="dialogType === 'Account Report'">
+        <template v-if="dialogType === 'account_report'">
             <AccountReport />
         </template>
     </Dialog>

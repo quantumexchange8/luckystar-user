@@ -17,5 +17,14 @@ return [
     "leverage" => "Leverage",
     "select_leverage" => "Select Leverage",
     "delete_account" => "Delete Account",
-    "delete_account_caption" => "Are you sure you want to delete this account? This will permenantly delete the account."
+    "delete_account_caption" => "Are you sure you want to delete this account? This will permenantly delete the account.",
+    "withdrawal" => "Withdrawal",
+    "change_leverage" => "Change Leverage",
+    "account_report" => "Account Report",
+    "delete" => "Delete",
+    "revoke_pamm" => "Revoke PAMM",
+    "revoke_pamm_caption" => "Are you sure you want to revoke this account? This will permenantly revoke the account from PAMM",
+    "delete_demo_account" => "Delete Demo Account",
+    "delete_demo_account_caption" => "Are you sure you want to delete this demo account? This will permenantly delete the demo account.",
+
 ];

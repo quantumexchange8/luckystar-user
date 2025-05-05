@@ -17,7 +17,6 @@ const requireConfirmation = (action_type) => {
             text: trans('public.delete_account_caption'),
             cancelButton: trans('public.cancel'),
             acceptButton: trans('public.confirm'),
-           
         },
     };
 
@@ -148,7 +147,7 @@ const toggle = (event) => {
         <template #header>
             <div class="flex items-center gap-4">
                 <div class="text-xl font-bold">
-                    {{ dialogType }}
+                    {{$t(`public.${dialogType}`)}}
                 </div>
             </div>
         </template>
