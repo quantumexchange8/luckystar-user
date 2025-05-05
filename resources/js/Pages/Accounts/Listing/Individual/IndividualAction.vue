@@ -5,6 +5,7 @@ import { ref, h } from 'vue';
 import Withdrawal from '../Partial/Withdrawal.vue';
 import AccountReport from '../Partial/AccountReport.vue';
 import Leverage from '../Partial/Leverage.vue';
+import {trans} from "laravel-vue-i18n";
 
 const confirm = useConfirm();
 
@@ -12,10 +13,10 @@ const requireConfirmation = (action_type) => {
     const messages = {
         delete_item: {
             group: 'headless-error',
-            header: 'public.delete_account',
-            text: 'public.delete_account_caption',
-            cancelButton: 'public.cancel',
-            acceptButton: 'Yes, delete it',
+            header: trans('public.delete_account'),
+            text: trans('public.delete_account_caption'),
+            cancelButton: trans('public.cancel'),
+            acceptButton: trans('public.confirm'),
            
         },
     };
@@ -46,27 +47,27 @@ const dialogType = ref();
 
 const items = ref([
     {
-        label: 'Withdrawal',
+        label: 'withdrawal',
         icon: h(IconCreditCardPay),
         command: () => {
             visible.value = true;
-            dialogType.value = 'Withdrawal'
+            dialogType.value = 'withdrawal'
         },
     },
     {
-        label: 'Change Leverage',
+        label: 'change_leverage',
         icon: h(IconScale),
         command: () => {
             visible.value = true;
-            dialogType.value = 'Leverage'
+            dialogType.value = 'change_leverage'
         },
     },
     {
-        label: 'Account Report',
+        label: 'account_report',
         icon: h(IconHistory),
         command: () => {
             visible.value = true;
-            dialogType.value = 'Account Report'
+            dialogType.value = 'account_report'
         },
     },
     {
@@ -128,7 +129,7 @@ const toggle = (event) => {
                 <span
                     class="font-medium"
                     :class="{'text-red-500': item.label === 'delete'}"
-                >{{ item.label }}</span>
+                >{{ $t(`public.${item.label}`) }}</span>
                 <span v-if="hasSubmenu" class="ml-auto">
                     <IconChevronRight size="20" stroke-width="1.5" />
                 </span>
@@ -141,7 +142,7 @@ const toggle = (event) => {
         modal
         class="dialog-xs md:dialog-sm"
         :class="[
-            { 'md:dialog-md': dialogType === 'Account Report' }
+            { 'md:dialog-md': dialogType === 'account_report' }
         ]"
     >
         <template #header>
@@ -152,19 +153,19 @@ const toggle = (event) => {
             </div>
         </template>
 
-        <template v-if="dialogType === 'Withdrawal'">
+        <template v-if="dialogType === 'withdrawal'">
             <Withdrawal 
                 @update:visible="visible = false"
             />
         </template>
 
-        <template v-if="dialogType === 'Leverage'">
+        <template v-if="dialogType === 'change_leverage'">
             <Leverage 
                 @update:visible="visible = false"
             />
         </template>
 
-        <template v-if="dialogType === 'Account Report'">
+        <template v-if="dialogType === 'account_report'">
             <AccountReport />
         </template>
     </Dialog>

@@ -4,7 +4,8 @@ import { Button, Message, Card } from 'primevue';
 import AddAccount from './Partial/AddAccount.vue';
 
 defineProps({
-    accountTypes: Array
+    accountTypes: Array,
+    leverageOptions: Array
 })
 </script>
 
@@ -17,7 +18,7 @@ defineProps({
         <div class="text-sm">Complete your profile details before creating an account.</div>
     </Message>
 
-    <Card class="w-full px-6 py-5">
+    <Card class="w-full">
         <template #content>
             <div class="font-bold text-lg mb-2">Open an Account Today!</div> <!-- Added margin-bottom for gap -->
             <div class="flex flex-col gap-8">
@@ -29,6 +30,7 @@ defineProps({
                 <div class="flex gap-3 sm:gap-5">
                     <AddAccount
                         :accountTypes="accountTypes"
+                        :leverageOptions="leverageOptions"
                     />
                 </div>
             </div>

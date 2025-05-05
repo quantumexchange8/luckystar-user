@@ -13,4 +13,9 @@ return [
     "success" => "Success",
     "open_trade_account" => "Open Trade Account",
     "demo_account" => "Demo Account",
+    "select_account_type" => "Select Account Type",
+    "leverage" => "Leverage",
+    "select_leverage" => "Select Leverage",
+    "delete_account" => "Delete Account",
+    "delete_account_caption" => "Are you sure you want to delete this account? This will permenantly delete the account."
 ];

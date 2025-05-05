@@ -102,7 +102,7 @@ const closeDialog = () => {
 
             <div class="flex justify-end items-center pt-10 md:pt-7 gap-3 md:gap-4 self-stretch">
                 <Button type="button" :label="'cancel'" severity="secondary" @click="closeDialog" class="flex flex-1 md:flex-none md:w-[120px]"></Button>
-                <Button type="submit" :label="'confirm'" :disabled="form.processing" class="flex flex-1 md:flex-none md:w-[120px] text-white dark:text-surface-900"></Button>
+                <Button type="submit" :label="'confirm'" :disabled="form.processing" class="flex flex-1 md:flex-none md:w-[120px]"></Button>
             </div>
         </form>
     </Dialog>

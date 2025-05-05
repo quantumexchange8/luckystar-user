@@ -8,7 +8,8 @@ import ManagedView from './Managed/ManagedView.vue';
 import DemoView from './Demo/DemoView.vue';
 
 defineProps({
-    accountTypes: Array
+    accountTypes: Array,
+    leverageOptions: Array,
 })
 
 const tabs = ref([
@@ -55,6 +56,7 @@ onMounted(() => {
             <div class="flex flex-col gap-5 items-center self-stretch w-full">
                 <AccountHeader
                     :accountTypes="accountTypes"
+                    :leverageOptions="leverageOptions"
                 />
             </div>
 

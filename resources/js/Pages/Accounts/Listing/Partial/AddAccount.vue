@@ -7,7 +7,8 @@ import {ref} from "vue";
 import CreateAccountForm from "@/Pages/Accounts/Listing/Partial/CreateAccountForm.vue";
 
 defineProps({
-    accountTypes: Array
+    accountTypes: Array,
+    leverageOptions: Array,
 })
 
 const visible = ref(false);
@@ -18,9 +19,6 @@ const openDialog = (type) => {
     dialogType.value = type;
 }
 
-const closeDialog = () => {
-    visible.value = false;
-}
 </script>
 
 <template>
@@ -46,6 +44,8 @@ const closeDialog = () => {
         <template v-if="dialogType === 'open_trade_account'">
             <CreateAccountForm
                 :accountTypes="accountTypes"
+                :leverageOptions="leverageOptions"
+                @update:visible="visible = false"
             />
         </template>
     </Dialog>

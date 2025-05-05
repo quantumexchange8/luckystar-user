@@ -84,7 +84,7 @@ const tableData = ref([
                     field="created_at"
                     style="min-width: 12rem"
                     sortable
-                    class="hidden md:table-cell"
+                  
                 >
                     <template #header>
                         <span class="block">{{ 'Date' }}</span>
@@ -97,7 +97,7 @@ const tableData = ref([
                 <Column
                     field="desc"
                     style="min-width: 12rem"
-                    class="hidden md:table-cell"
+                  
                 >
                     <template #header>
                         <span class="block">{{ 'Description' }}</span>
@@ -110,7 +110,7 @@ const tableData = ref([
                 <Column
                     field="amount"
                     sortable
-                    class="hidden md:table-cell"
+                  
                 >
                     <template #header>
                         <span class="block">{{ 'Amount ($)' }}</span>

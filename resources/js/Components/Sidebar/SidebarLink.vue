@@ -33,11 +33,11 @@ const Tag = !props.external ? Link : 'a'
         v-if="href"
         :href="href"
         :class="[
-            'p-2.5 flex gap-3 items-center rounded-md transition-colors w-full hover:bg-primary-100 dark:hover:bg-surface-900',
+            'p-3 flex gap-3 items-center rounded-md transition-colors w-full dark:hover:bg-surface-900',
             {
-                'text-surface-700 dark:text-white hover:text-primary-500 dark:hover:text-primary-100':
+                'text-surface-700 dark:text-white hover:text-primary-500 dark:hover:text-primary-100 hover:bg-primary-50':
                     !active,
-                'text-primary bg-primary-50 dark:bg-transparent':
+                'text-white dark:text-primary bg-primary dark:bg-transparent hover:bg-primary-500 dark:hover:bg-surface-900':
                     active,
             },
         ]"
@@ -68,11 +68,11 @@ const Tag = !props.external ? Link : 'a'
         v-else
         type="button"
         :class="[
-            'p-2.5 flex gap-3 items-center rounded-md transition-colors w-full hover:bg-primary-100 dark:hover:bg-surface-900',
+            'p-3 flex gap-3 items-center rounded-md transition-colors w-full hover:bg-primary-500 dark:hover:bg-surface-900',
             {
                 'text-surface-700 dark:text-white hover:text-primary-500 dark:hover:text-primary-100':
                     !active,
-                'text-primary bg-primary-50 dark:bg-transparent':
+               'text-white dark:text-primary bg-primary dark:bg-transparent':
                     active,
             },
         ]"

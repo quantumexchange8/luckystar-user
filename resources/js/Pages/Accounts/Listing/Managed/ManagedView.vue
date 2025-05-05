@@ -6,7 +6,7 @@ import Transfer from '../Partial/Transfer.vue';
 
 <template>
     <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 w-full gap-3 md:gap-5">
-        <Card class="w-full py-4 px-6">
+        <Card class="w-full">
             <template #content>
                 <div class="flex flex-col gap-5 w-full self-stretch">
                     <div class="flex items-center justify-between">
