@@ -1,7 +1,7 @@
 <script setup>
 import {isDark, sidebarState, toggleDarkMode} from '@/Composables'
 import {
-    IconWorld,
+    IconLanguage,
     IconLogout,
     IconMenu2,
     IconMoon,
@@ -71,7 +71,7 @@ const handleLogOut = () => {
         </Button>
 
         <div
-            class="font-semibold text-surface-700 dark:text-surface-300 text-wrap"
+            class="font-semibold text-surface-700 dark:text-surface-300 text-nowrap"
         >
             {{ title }}
         </div>
@@ -96,7 +96,7 @@ const handleLogOut = () => {
                 variant="text"
             >
                 <template #icon>
-                    <IconWorld size="20" stroke-width="1.5" />
+                    <IconLanguage size="20" stroke-width="1.5" />
                 </template>
             </Button>
 
@@ -114,11 +114,11 @@ const handleLogOut = () => {
         </div>
     </nav>
 
-<!--    <Menu-->
-<!--        ref="menu"-->
-<!--        id="overlay_menu"-->
-<!--        :model="locales"-->
-<!--        :popup="true"-->
-<!--        class="w-32"-->
-<!--    />-->
+    <!--    <Menu-->
+    <!--        ref="menu"-->
+    <!--        id="overlay_menu"-->
+    <!--        :model="locales"-->
+    <!--        :popup="true"-->
+    <!--        class="w-32"-->
+    <!--    />-->
 </template>

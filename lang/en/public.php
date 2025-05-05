@@ -31,5 +31,12 @@ return [
     "revoke_pamm_caption" => "Are you sure you want to revoke this account? This will permenantly revoke the account from PAMM",
     "delete_demo_account" => "Delete Demo Account",
     "delete_demo_account_caption" => "Are you sure you want to delete this demo account? This will permenantly delete the demo account.",
-
+    "total_investment_capital" => "Total Investment Capital",
+    "group_investment_capital" => "Group Investment Capital",
+    "total_profit" => "Total Profit",
+    "total_bonus" => "Total Bonus",
+    "cash_wallet" => "Cash Wallet",
+    "bonus_wallet" => "Bonus Wallet",
+    "deposit" => "Deposit",
+    "action" => "Action",
 ];
