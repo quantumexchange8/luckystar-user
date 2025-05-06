@@ -15,12 +15,12 @@ class AccountTypeHasLeverage extends Model
         'setting_leverage_id',
     ];
 
-    public function accountType(): BelongsTo
+    public function account_type(): BelongsTo
     {
         return $this->belongsTo(AccountType::class, 'account_type_id', 'id');
     }
 
-    public function settingLeverage(): BelongsTo
+    public function setting_leverage(): BelongsTo
     {
         return $this->belongsTo(SettingLeverage::class, 'setting_leverage_id', 'id');
     }

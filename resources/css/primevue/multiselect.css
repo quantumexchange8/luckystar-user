@@ -112,7 +112,7 @@
 }
 
 .p-multiselect-empty-message {
-    @apply px-3 py-2
+    @apply px-3 py-2 text-sm
 }
 
 .p-multiselect-label .p-chip {

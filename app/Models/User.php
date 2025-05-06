@@ -12,7 +12,6 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     /**
@@ -20,16 +19,10 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $fillable = [
-        'username',
-        'first_name',
-        'last_name',
-        'identity_number',
-        'email',
-        'dial_code',
-        'phone',
-        'phone_number',
-        'password',
+    protected $guarded = [
+        'id',
+        'created_at',
+        'updated_at',
     ];
 
     /**
@@ -55,6 +48,8 @@ class User extends Authenticatable
         ];
     }
 
+    protected $appends = ['full_name'];
+
     public function setReferralId(): void
     {
         $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -75,6 +70,11 @@ class User extends Authenticatable
         return User::query()->where('hierarchyList', 'like', '%-' . $this->id . '-%')
             ->pluck('id')
             ->toArray();
+    }
+
+    public function getFullNameAttribute(): string
+    {
+        return trim("{$this->first_name} {$this->last_name}");
     }
 
     public function country(): BelongsTo
@@ -115,5 +115,10 @@ class User extends Authenticatable
     public function active_subscriptions(): HasMany
     {
         return $this->hasMany(TradingSubscription::class, 'user_id', 'id')->where('status', 'active');
+    }
+
+    public function active_trading_accounts(): HasMany
+    {
+        return $this->hasMany(TradingAccount::class, 'user_id', 'id')->where('status', 'active');
     }
 }

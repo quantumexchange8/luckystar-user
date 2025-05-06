@@ -5,7 +5,6 @@ import AddAccount from './Partial/AddAccount.vue';
 
 defineProps({
     accountTypes: Array,
-    leverageOptions: Array
 })
 </script>
 
@@ -30,7 +29,6 @@ defineProps({
                 <div class="flex flex-col gap-3 sm:flex-row sm:gap-5">
                     <AddAccount
                         :accountTypes="accountTypes"
-                        :leverageOptions="leverageOptions"
                     />
                 </div>
             </div>

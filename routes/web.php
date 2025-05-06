@@ -23,15 +23,12 @@ Route::get('locale/{locale}', function ($locale) {
     return redirect()->back();
 });
 
-// select option
-Route::get('/get_countries', [SelectOptionController::class, 'getCountries'])->name('getCountries');
-
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    // select option
+    Route::get('/get_countries', [SelectOptionController::class, 'getCountries'])->name('getCountries');
+    Route::get('/get_leverages/{id}', [SelectOptionController::class, 'getLeverages'])->name('getLeverages');
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     /**
      * ==============================
@@ -40,6 +37,8 @@ Route::middleware('auth')->group(function () {
      */
     Route::prefix('account')->group(function () {
         Route::get('/', [AccountController::class, 'index'])->name('account');
+
+        Route::post('createAccount', [AccountController::class, 'createAccount'])->name('createAccount');
     });
 
      /**
@@ -50,6 +49,10 @@ Route::middleware('auth')->group(function () {
     Route::prefix('strategy')->group(function () {
         Route::get('/', [StrategyController::class, 'index'])->name('strategy');
     });
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 require __DIR__.'/auth.php';

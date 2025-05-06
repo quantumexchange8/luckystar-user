@@ -33,7 +33,9 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
+                'wallets' => $request->user() ? $request->user()->wallets : null,
             ],
+            'toast' => session('toast'),
         ];
     }
 }

@@ -8,7 +8,6 @@ import CreateAccountForm from "@/Pages/Accounts/Listing/Partial/CreateAccountFor
 
 defineProps({
     accountTypes: Array,
-    leverageOptions: Array,
 })
 
 const visible = ref(false);
@@ -44,7 +43,6 @@ const openDialog = (type) => {
         <template v-if="dialogType === 'open_trade_account'">
             <CreateAccountForm
                 :accountTypes="accountTypes"
-                :leverageOptions="leverageOptions"
                 @update:visible="visible = false"
             />
         </template>
