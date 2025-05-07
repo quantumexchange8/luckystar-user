@@ -20,6 +20,11 @@ import {
     IconChartPie,
     IconId,
     IconBusinessplan,
+    IconArrowsDiff,
+    IconCreditCardPay,
+    IconUserDollar,
+    IconDownload,
+    IconDatabaseDollar,
 } from '@tabler/icons-vue';
 import SidebarCategoryLabel from "@/Components/Sidebar/SidebarCategoryLabel.vue";
 //
@@ -52,6 +57,10 @@ import SidebarCategoryLabel from "@/Components/Sidebar/SidebarCategoryLabel.vue"
             'px-5 py-3': !sidebarState.isOpen && !sidebarState.isHovered,
         }"
     >
+        <SidebarCategoryLabel
+            :title="'main_menu'"
+        />
+
         <!-- Dashboard -->
         <SidebarLink
             :title="'dashboard'"
@@ -63,9 +72,41 @@ import SidebarCategoryLabel from "@/Components/Sidebar/SidebarCategoryLabel.vue"
             </template>
         </SidebarLink>
 
+        <!-- referral -->
+        <SidebarCollapsible
+            title="referral"
+            :active="route().current('referral.*')"
+       
+        >
+            <template #icon>
+                <IconUsersGroup size="20" stroke-width="1.5" />
+            </template>
+            <SidebarCollapsibleItem
+                title="structure"
+                :href="route('referral.structure.structureIndex')"
+                :active="route().current('referral.structure.structureIndex')"
+            />
+
+            <SidebarCollapsibleItem
+                title="sales"
+                :href="route('referral.sales.salesIndex')"
+                :active="route().current('referral.sales.salesIndex')"
+            />
+        </SidebarCollapsible>
+
+        <!-- download center -->
+        <SidebarLink
+            :title="'download_center'"
+            :href="route('download.index')"
+            :active="route().current('download.index')"
+        >
+            <template #icon>
+                <IconDownload :size="20" stroke-width="1.5" />
+            </template>
+        </SidebarLink>
         
         <SidebarCategoryLabel
-            :title="'marketplace'"
+            :title="'trading'"
         />
 
         <SidebarLink
@@ -93,20 +134,41 @@ import SidebarCategoryLabel from "@/Components/Sidebar/SidebarCategoryLabel.vue"
           
         >
             <template #icon>
-                <IconUsersGroup :size="20" stroke-width="1.5" />
+                <IconDatabaseDollar :size="20" stroke-width="1.5" />
             </template>
         </SidebarLink>
 
         <SidebarCategoryLabel
-            :title="'transaction'"
+            :title="'report'"
         />
 
         <SidebarLink
-            :title="'history'"
-          
+            :title="'transaction'"
+            :href="route('report.transaction')"
+            :active="route().current('report.transaction')"
         >
             <template #icon>
-                <IconClockDollar :size="20" stroke-width="1.5" />
+                <IconCreditCardPay :size="20" stroke-width="1.5" />
+            </template>
+        </SidebarLink>
+
+        <SidebarLink
+            :title="'trade_history'"
+            :href="route('report.trade_history')"
+            :active="route().current('report.trade_history')"
+        >
+            <template #icon>
+                <IconArrowsDiff :size="20" stroke-width="1.5" />
+            </template>
+        </SidebarLink>
+
+        <SidebarLink
+            :title="'bonus'"
+            :href="route('report.bonus')"
+            :active="route().current('report.bonus')"
+        >
+            <template #icon>
+                <IconUserDollar :size="20" stroke-width="1.5" />
             </template>
         </SidebarLink>
     </nav>

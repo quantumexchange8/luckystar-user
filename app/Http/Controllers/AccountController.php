@@ -28,6 +28,7 @@ class AccountController extends Controller
 
         return Inertia::render('Accounts/Listing/AccountListing', [
             'accountTypes' => $account_types,
+            'accountCount' => TradingAccount::where('status', 'active')->count(),
         ]);
     }
 
@@ -127,5 +128,27 @@ class AccountController extends Controller
             'message' => trans('public.toast_create_account_success'),
             'type' => 'success',
         ]);
+    }
+
+    public function get_trading_account_data(Request $request)
+    {
+        if ($request->has('lazyEvent')) {
+            $data = json_decode($request->only(['lazyEvent'])['lazyEvent'], true);
+
+            $query = TradingAccount::query()
+                ->with([
+                    'user',
+                    'account_type'
+                ]);
+
+            $tradingAccounts = $query->paginate($data['rows']);
+
+            return response()->json([
+                'success' => true,
+                'data' => $tradingAccounts,
+            ]);
+        }
+
+        return response()->json(['success' => false, 'data' => []]);
     }
 }

@@ -1,10 +1,9 @@
 <script setup>
-import { IconArrowsExchange } from '@tabler/icons-vue';
-import { Button, Dialog, InputNumber, Select } from 'primevue';
+import { useForm } from '@inertiajs/vue3';
 import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
+import { Button, Dialog, InputNumber, Select } from 'primevue';
 import { ref } from 'vue';
-import { useForm } from '@inertiajs/vue3';
 
 const visible = ref(false);
 
@@ -12,33 +11,30 @@ const openDialog = () => {
     visible.value = true;
 }
 
-const amount = ref(0);
-const form = useForm({
-    account_id: null,
-    amount: null,
-});
-
 const closeDialog = () => {
     visible.value = false;
 }
+
+const amount = ref(0);
+const form = useForm({
+    wallet_id: '',
+    amount: '',
+});
 </script>
 
 <template>
     <Button
-        rounded
-        class="shrink-0 dark:text-white text-surface bg-surface-0 dark:bg-surface-800 border-surface-300 dark:border-surface-700 enabled:hover:bg-white dark:hover:bg-surface-800 enabled:hover:border-surface-500 dark:hover:border-surface-600"
+        class="w-full dark:text-white text-surface bg-surface-0 dark:bg-surface-800 border-surface-300 dark:border-surface-700 enabled:hover:bg-white dark:hover:bg-surface-800 enabled:hover:border-surface-500 dark:hover:border-surface-600"
         @click="openDialog"
     >
-        <template #icon>
-            <IconArrowsExchange size="20" stroke-width="1.5"/>
-        </template>
+        {{ $t('public.deposit') }}
     </Button>
 
     <Dialog
         v-model:visible="visible"
         modal
         class="dialog-xs md:dialog-sm"
-        :header="'Transfer'"
+        :header="$t('public.deposit')"
     >
         <form @submit.prevent="submitForm">
             <div class="flex flex-col gap-5">
@@ -50,28 +46,6 @@ const closeDialog = () => {
                     <div class="text-xl font-semibold">
                         <span>$ 1,234</span>
                     </div>
-                </div>
-                
-                <div class="flex flex-col items-start gap-1 self-stretch">
-                    <InputLabel
-                        for="account_id"
-                        value="Transfer To"
-                        :invalid="form.errors.account_id"
-                    />
-
-                    <Select
-                        class="w-full"
-                    >
-
-                    </Select>
-
-                    <span
-                        class="text-xs font-normal text-surface-500"
-                    >
-                        Balance: $30.00
-                    </span>
-                    
-                    <InputError :message="form.errors.account_id" />
                 </div>
 
                 <!-- amount -->
@@ -94,9 +68,32 @@ const closeDialog = () => {
                         :minFractionDigits="2"
                         fluid
                         autofocus
-                        :invalid="form.errors.amount"
+                        :invalid="!!form.errors.amount"
                     />
+
+                    <span
+                        class="text-xs font-normal text-surface-500"
+                    >
+                        Minimum amount: $30.00
+                    </span>
                     <InputError :message="form.errors.amount" />
+                </div>
+
+                <div class="flex flex-col items-start gap-1 self-stretch">
+                    <InputLabel
+                        for="wallet_id"
+                        value="Select Wallet"
+                        :invalid="form.errors.wallet_id"
+                    />
+
+                    <Select
+                        class="w-full"
+                        :invalid="!!form.errors.wallet_id"
+                    >
+
+                    </Select>
+
+                    <InputError :message="form.errors.wallet_id" />
                 </div>
             </div>
 
