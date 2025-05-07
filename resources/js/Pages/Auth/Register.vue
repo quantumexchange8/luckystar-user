@@ -2,7 +2,7 @@
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
-import { Button, Password, InputText, Select } from 'primevue'; 
+import { Button, Password, InputText, Select } from 'primevue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import AuthHeader from '@/Components/Auth/AuthHeader.vue';
@@ -63,12 +63,12 @@ const submit = () => {
         <form @submit.prevent="submit" class="w-full">
             <div class="flex flex-col gap-5 w-full self-stretch">
                 <div class="flex flex-col gap-1 items-start self-stretch">
-                    <InputLabel 
+                    <InputLabel
                         for="username"
                         value="Username"
                         :invalid="!!form.errors.username"
                     />
-    
+
                     <InputText
                         id="username"
                         type="text"
@@ -78,17 +78,17 @@ const submit = () => {
                         placeholder="Enter Username"
                         :invalid="!!form.errors.username"
                     />
-    
+
                     <InputError :message="form.errors.username" />
                 </div>
 
                 <div class="flex flex-col gap-1 items-start self-stretch">
-                    <InputLabel 
+                    <InputLabel
                         for="first_name"
                         value="First Name"
                         :invalid="!!form.errors.first_name"
                     />
-    
+
                     <InputText
                         id="first_name"
                         type="text"
@@ -97,17 +97,17 @@ const submit = () => {
                         placeholder="Enter First Name"
                         :invalid="!!form.errors.first_name"
                     />
-    
+
                     <InputError :message="form.errors.first_name" />
                 </div>
 
                 <div class="flex flex-col gap-1 items-start self-stretch">
-                    <InputLabel 
+                    <InputLabel
                         for="last_name"
                         value="Last Name"
                         :invalid="!!form.errors.last_name"
                     />
-    
+
                     <InputText
                         id="last_name"
                         type="text"
@@ -116,18 +116,18 @@ const submit = () => {
                         placeholder="Enter Last Name"
                         :invalid="!!form.errors.last_name"
                     />
-    
+
                     <InputError :message="form.errors.last_name" />
                 </div>
 
-                
+
                 <div class="flex flex-col gap-1 items-start self-stretch">
-                    <InputLabel 
+                    <InputLabel
                         for="identity_number"
                         value="Identification No"
                         :invalid="!!form.errors.identity_number"
                     />
-    
+
                     <InputText
                         id="identity_number"
                         type="text"
@@ -136,17 +136,17 @@ const submit = () => {
                         placeholder="Enter Identification No"
                         :invalid="!!form.errors.identity_number"
                     />
-    
+
                     <InputError :message="form.errors.identity_number" />
                 </div>
-    
+
                 <div class="flex flex-col gap-1 items-start self-stretch">
-                    <InputLabel 
-                        for="email" 
-                        value="Email" 
+                    <InputLabel
+                        for="email"
+                        value="Email"
                         :invalid="!!form.errors.email"
                     />
-    
+
                     <InputText
                         id="email"
                         type="email"
@@ -155,14 +155,14 @@ const submit = () => {
                         placeholder="Enter Email"
                         :invalid="!!form.errors.email"
                     />
-    
+
                     <InputError :message="form.errors.email" />
                 </div>
 
                 <div class="flex flex-col gap-1 items-start self-stretch">
-                    <InputLabel 
-                        for="phone" 
-                        value="Phone Number" 
+                    <InputLabel
+                        for="phone"
+                        value="Phone Number"
                         :invalid="!!form.errors.phone"
                     />
 
@@ -198,7 +198,7 @@ const submit = () => {
                             </template>
                         </Select>
 
-                        <InputText 
+                        <InputText
                             id="phone"
                             type="text"
                             class="block w-full"
@@ -210,14 +210,14 @@ const submit = () => {
                     <InputError :message="form.errors.phone"/>
                     <InputError :message="form.errors.dial_code"/>
                 </div>
-    
+
                 <div class="flex flex-col gap-1 items-start self-stretch">
-                    <InputLabel 
-                        for="password" 
-                        value="Password" 
-                        :invalid="!!form.errors.password" 
+                    <InputLabel
+                        for="password"
+                        value="Password"
+                        :invalid="!!form.errors.password"
                     />
-    
+
                     <Password
                         id="password"
                         class="block w-full"
@@ -228,17 +228,17 @@ const submit = () => {
                         placeholder="••••••••"
                         :invalid="!!form.errors.password"
                     />
-    
+
                     <InputError :message="form.errors.password" />
                 </div>
-    
+
                 <div class="flex flex-col gap-1 items-start self-stretch">
                     <InputLabel
                         for="password_confirmation"
                         value="Confirm Password"
                         :invalid="!!form.errors.password"
                     />
-    
+
                     <Password
                         id="password_confirmation"
                         class="block w-full"
@@ -256,19 +256,20 @@ const submit = () => {
                 <div class="flex flex-col items-center">
                     <Button
                         type="submit"
-                        :class="{ 'opacity-25': form.processing }"
-                        class="w-full text-center font-semibold dark:text-surface-950 text-white"
+                        :class="['w-full', { 'opacity-25': form.processing }]"
                         :disabled="form.processing"
-                    >
-                        Register
-                    </Button>
-    
-                    <Link
-                        :href="route('login')"
-                       class="text-sm text-surface-600 hover:text-primary dark:hover:text-primary-500 focus:outline-none dark:text-surface-400"
-                    >
-                        Already registered?
-                    </Link>
+                        :label="$t('public.register')"
+                    />
+
+                    <label class="flex items-center justify-center w-full self-stretch">
+                        <span class="text-sm text-surface-600 dark:text-surface-400">{{ $t('public.already_have_account') }}</span>
+                        <Button
+                            variant="link"
+                            :label="$t('public.login')"
+                            as="a"
+                            :href="route('login')"
+                        />
+                    </label>
                 </div>
             </div>
         </form>

@@ -48,7 +48,10 @@ class User extends Authenticatable
         ];
     }
 
-    protected $appends = ['full_name'];
+    protected $appends = [
+        'full_name',
+        'kyc_status'
+    ];
 
     public function setReferralId(): void
     {
@@ -120,5 +123,19 @@ class User extends Authenticatable
     public function active_trading_accounts(): HasMany
     {
         return $this->hasMany(TradingAccount::class, 'user_id', 'id')->where('status', 'active');
+    }
+
+    public function kycs(): HasMany
+    {
+        return $this->hasMany(Kyc::class, 'user_id', 'id');
+    }
+
+    public function getKycStatusAttribute(): string
+    {
+        if ($this->kycs()->count() === 0) {
+            return 'unverified';
+        }
+
+        return $this->kycs->every(fn ($kyc) => $kyc->status === 'verified') ? 'verified' : 'unverified';
     }
 }

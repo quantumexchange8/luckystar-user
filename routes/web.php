@@ -23,9 +23,10 @@ Route::get('locale/{locale}', function ($locale) {
     return redirect()->back();
 });
 
+Route::get('/get_countries', [SelectOptionController::class, 'getCountries'])->name('getCountries');
+
 Route::middleware('auth')->group(function () {
     // select option
-    Route::get('/get_countries', [SelectOptionController::class, 'getCountries'])->name('getCountries');
     Route::get('/get_leverages/{id}', [SelectOptionController::class, 'getLeverages'])->name('getLeverages');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -50,9 +51,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [StrategyController::class, 'index'])->name('strategy');
     });
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    /**
+     * ==============================
+     *           Profile
+     * ==============================
+     */
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 });
 
 require __DIR__.'/auth.php';

@@ -2,7 +2,7 @@
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
-import { Button, Checkbox, Password, InputText } from 'primevue'; 
+import { Button, Checkbox, Password, InputText } from 'primevue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import AuthHeader from '@/Components/Auth/AuthHeader.vue';
 
@@ -30,34 +30,42 @@ const submit = () => {
 
 <template>
     <GuestLayout>
-        <Head title="Log in" />
+        <Head :title="$t('public.login')" />
 
         <AuthHeader
-            :header="'Welcome back to Lucky Star'"
-            :caption="'Please enter your details'"
+            :header="$t('public.welcome_to_luckystar')"
+            :caption="$t('public.enter_your_details')"
         />
 
         <form @submit.prevent="submit" class="w-full">
             <div class="flex flex-col gap-5 w-full self-stretch">
                 <div class="flex flex-col gap-1 items-start self-stretch">
-                    <InputLabel for="email" value="Email" :invalid="!!form.errors.email"/>
-    
+                    <InputLabel
+                        for="email"
+                        :value="$t('public.email')"
+                        :invalid="!!form.errors.email"
+                    />
+
                     <InputText
                         id="email"
                         type="text"
                         class="block w-full"
                         v-model="form.email"
-                        placeholder="Email"
+                        :placeholder="$t('public.enter_your_email')"
                         autofocus
                         :invalid="!!form.errors.email"
                     />
-    
+
                     <InputError :message="form.errors.email" />
                 </div>
-    
+
                 <div class="flex flex-col gap-1 items-start self-stretch">
-                    <InputLabel for="password" value="Password" :invalid="!!form.errors.password"/>
-    
+                    <InputLabel
+                        for="password"
+                        :value="$t('public.password')"
+                        :invalid="!!form.errors.password"
+                    />
+
                     <Password
                         id="password"
                         class="block w-full"
@@ -65,14 +73,14 @@ const submit = () => {
                         toggleMask
                         :inputStyle="{'width': '100%'}"
                         :style="{'width': '100%'}"
-                        placeholder="Password"
+                        placeholder="••••••••"
                         :invalid="!!form.errors.password"
                         :feedback="false"
                     />
-    
+
                     <InputError :message="form.errors.password" />
                 </div>
-    
+
             </div>
 
             <div class="flex flex-col gap-6 mt-6 w-full self-stretch">
@@ -80,36 +88,39 @@ const submit = () => {
                     <label class="flex items-center">
                         <Checkbox name="remember" v-model:checked="form.remember" :binary="true"/>
                         <span class="ms-2 text-sm text-gray-600 dark:text-gray-400"
-                            >Remember me
+                            >{{ $t('public.remember_me') }}
                         </span>
                     </label>
-    
+
                     <Link
                         v-if="canResetPassword"
                         :href="route('password.request')"
                         class="text-sm text-surface-600 hover:text-primary dark:hover:text-primary-500 focus:outline-none dark:text-surface-400"
                     >
-                        Forgot your password?
+                        {{ $t('public.forgot_your_password') }}
                     </Link>
                 </div>
-    
+
                 <div class="flex flex-col items-center">
                     <Button
                         type="submit"
-                        :class="{ 'opacity-25': form.processing }"
-                        class="w-full text-center font-semibold dark:text-surface-950 text-white"
+                        :class="['w-full', { 'opacity-25': form.processing }]"
                         :disabled="form.processing"
-                    >
-                        Log in
-                    </Button>
-    
-                    <Link
+                        :label="$t('public.login')"
+                    />
+
+                    <label
                         v-if="canResetPassword"
-                        :href="route('register')"
-                        class="text-sm text-surface-600 hover:text-primary dark:hover:text-primary-500 focus:outline-none dark:text-surface-400"
+                        class="flex items-center justify-center w-full self-stretch"
                     >
-                        Register now
-                    </Link>
+                        <span class="text-sm text-surface-600 dark:text-surface-400">{{ $t('public.dont_have_account') }}</span>
+                        <Button
+                            variant="link"
+                            :label="$t('public.register_now')"
+                            as="a"
+                            :href="route('register')"
+                        />
+                    </label>
                 </div>
             </div>
         </form>
