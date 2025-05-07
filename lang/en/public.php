@@ -123,4 +123,5 @@ return [
     "full_name" => "Full Name",
     "relationship" => "Relationship",
     "phone_number" => "Phone Number",
+    "kyc_verification" => "KYC Verification",
 ];
