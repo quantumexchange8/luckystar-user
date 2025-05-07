@@ -7,43 +7,46 @@ import IndividualView from './Individual/IndividualView.vue';
 import ManagedView from './Managed/ManagedView.vue';
 import DemoView from './Demo/DemoView.vue';
 
-defineProps({
+const props = defineProps({
     accountTypes: Array,
+    accountCount: Number,
 })
 
 const tabs = ref([
     {
-        title: 'Individual',
-        component: h(IndividualView),
+        title: 'individual',
+        component: h(IndividualView, {
+            accountCount: props.accountCount,
+        }),
         value: '0'
     },
     {
-        title: 'Managed',
+        title: 'managed',
         component: h(ManagedView),
         value: '1'
     },
     {
-        title: 'Demo',
+        title: 'demo',
         component: h(DemoView),
         value: '2'
     },
 ]);
 
-const selectedType = ref('Individual');
+const selectedType = ref('individual');
 const activeIndex = ref('0');
 
 onMounted(() => {
     const params = new Proxy(new URLSearchParams(window.location.search), {
         get: (searchParams, prop) => searchParams.get(prop),
     });
-    if(params.tab === 'Demo'){
-        selectedType.value = 'Demo';
+    if(params.tab === 'demo'){
+        selectedType.value = 'demo';
         activeIndex.value = '2';
-    } else if(params.tab === 'Managed'){
-        selectedType.value = 'Managed';
+    } else if(params.tab === 'managed'){
+        selectedType.value = 'managed';
         activeIndex.value = '1';
     } else {
-        selectedType.value = 'Individual';
+        selectedType.value = 'individual';
         activeIndex.value = '0';
     }
 });
@@ -54,7 +57,7 @@ onMounted(() => {
         <div class="flex flex-col gap-5">
             <div class="flex flex-col gap-5 items-center self-stretch w-full">
                 <AccountHeader
-                    :accountTypes="accountTypes"
+                    :accountTypes="props.accountTypes"
                 />
             </div>
 
@@ -62,7 +65,7 @@ onMounted(() => {
             <div class="flex flex-col">
                 <Tabs v-model:value="activeIndex">
                     <TabList>
-                        <Tab v-for="tab in tabs" :key="tab.title" :value="tab.value">{{ tab.title }}
+                        <Tab v-for="tab in tabs" :key="tab.title" :value="tab.value">{{ $t(`public.${tab.title}`) }}
                         </Tab>
                     </TabList>
                     <TabPanels>

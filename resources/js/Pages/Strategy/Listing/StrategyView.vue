@@ -2,7 +2,9 @@
 import {  IconAdjustments, IconPremiumRights, IconSearch, IconUserDollar, IconXboxX } from '@tabler/icons-vue';
 import { IconField, InputIcon, InputText, Button, Select, Card, Tag, Paginator } from 'primevue';
 import { ref } from 'vue';
+import { Link } from '@inertiajs/vue3';
 import JoinPamm from './Partial/JoinPamm.vue';
+import StrategyDetail from './Detail/StrategyDetail.vue';
 
 const selectedSort = ref('latest');
 
@@ -183,6 +185,15 @@ const dummyData = ref([
 
                         <div class="flex items-center gap-3 w-full">
                             <JoinPamm />
+                            
+                            <Link
+                                class="w-full"
+                                :href="route('strategy.detail.strategyDetail')"
+                            >   
+                                <Button class="w-full" severity="secondary">
+                                    {{ $t('public.view_detail') }}
+                                </Button>
+                            </Link>
                         </div>
                     </div>
                 </template>

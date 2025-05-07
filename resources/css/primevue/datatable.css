@@ -279,7 +279,7 @@
 }
 
 .p-datatable-column-sorted .p-datatable-sort-icon {
-    @apply bg-primary-100 dark:bg-emphasis
+    @apply bg-primary-100 dark:bg-highlight
 }
 
 .p-datatable-hoverable .p-datatable-selectable-row {
