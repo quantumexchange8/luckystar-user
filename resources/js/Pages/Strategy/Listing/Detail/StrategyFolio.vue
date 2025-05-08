@@ -50,9 +50,10 @@ const tableData = ref([
                     :value="tableData"
                     removableSort
                 >
-                <template #header>
-                    Portfolio Performance
-                </template>
+                    <template #header>
+                        Portfolio Performance
+                    </template>
+                
                     <template>
                         <Column
                             field="created_at"

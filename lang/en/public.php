@@ -124,4 +124,13 @@ return [
     "relationship" => "Relationship",
     "phone_number" => "Phone Number",
     "kyc_verification" => "KYC Verification",
+    "success_amount" => "Success Amount",
+    "reject_amount" => "Reject Amount",
+    "total_amount" => "Total Amount",
+    "highest_bonus" => "Highest Bonus",
+    "joined" => "Joined",
+    "terminated" => "Terminated",
+    "view_strategy" => "View Strategy",
+    "total_downline" => "Total Downline",
+    "active_balance" => "Active Balance",
 ];

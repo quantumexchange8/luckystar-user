@@ -131,7 +131,8 @@ import SidebarCategoryLabel from "@/Components/Sidebar/SidebarCategoryLabel.vue"
 
         <SidebarLink
             :title="'investment'"
-          
+            :href="route('investment.index')"
+            :active="route().current('investment.index')"
         >
             <template #icon>
                 <IconDatabaseDollar :size="20" stroke-width="1.5" />

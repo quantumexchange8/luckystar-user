@@ -72,7 +72,6 @@ const dummyData = ref([
                     <IconXboxX aria-hidden="true" :size="15" />
                 </div>
             </IconField>
-
         </div>
 
         <div class="w-full flex justify-between items-center self-stretch gap-3">
