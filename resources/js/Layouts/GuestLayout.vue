@@ -2,7 +2,7 @@
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import AuthPanel from "@/Components/Auth/AuthPanel.vue";
 import { isDark, toggleDarkMode } from "@/Composables/index.js";
-import { IconMoon, IconSun, IconWorld } from "@tabler/icons-vue";
+import { IconMoon, IconSun, IconLanguage } from "@tabler/icons-vue";
 import Button from "primevue/button";
 </script>
 
@@ -15,14 +15,14 @@ import Button from "primevue/button";
 
         <!-- Right Pane -->
         <div class="flex flex-col w-full lg:w-1/2 bg-surface-100 dark:bg-surface-900 transition-all duration-200 h-screen">
-        
+
             <!-- Top Buttons -->
             <div class="flex items-center justify-end gap-2 p-5 shrink-0">
                 <Button
                     severity="secondary"
                     outlined
                     aria-label="Mode"
-                    size="small"
+                    class="min-w-12"
                     @click="() => { toggleDarkMode() }"
                 >
                     <template #icon>
@@ -35,11 +35,10 @@ import Button from "primevue/button";
                     severity="secondary"
                     outlined
                     aria-label="Mode"
-                    size="small"
-                  
+                    class="min-w-12"
                 >
                     <template #icon>
-                        <IconWorld size="20" stroke-width="1.5" />
+                        <IconLanguage size="16" stroke-width="1.5" />
                     </template>
                 </Button>
             </div>

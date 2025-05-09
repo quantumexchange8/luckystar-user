@@ -30,13 +30,13 @@ const form = useForm({
     username: '',
     first_name: '',
     last_name: '',
-    identity_number: '',
     email: '',
     dial_code: '',
     phone: '',
     phone_number: '',
     password: '',
     password_confirmation: '',
+    referral_code: '',
 });
 
 const submit = () => {
@@ -56,8 +56,8 @@ const submit = () => {
         <Head title="Register" />
 
         <AuthHeader
-            :header="'Register an account'"
-            :caption="'Please enter your details'"
+            :header="$t('public.register_an_account')"
+            :caption="$t('public.enter_your_details')"
         />
 
         <form @submit.prevent="submit" class="w-full">
@@ -65,7 +65,7 @@ const submit = () => {
                 <div class="flex flex-col gap-1 items-start self-stretch">
                     <InputLabel
                         for="username"
-                        value="Username"
+                        :value="$t('public.username')"
                         :invalid="!!form.errors.username"
                     />
 
@@ -75,7 +75,7 @@ const submit = () => {
                         class="block w-full"
                         v-model="form.username"
                         autofocus
-                        placeholder="Enter Username"
+                        :placeholder="$t('public.enter_username')"
                         :invalid="!!form.errors.username"
                     />
 
@@ -85,7 +85,7 @@ const submit = () => {
                 <div class="flex flex-col gap-1 items-start self-stretch">
                     <InputLabel
                         for="first_name"
-                        value="First Name"
+                        :value="$t('public.first_name')"
                         :invalid="!!form.errors.first_name"
                     />
 
@@ -94,7 +94,7 @@ const submit = () => {
                         type="text"
                         class="block w-full"
                         v-model="form.first_name"
-                        placeholder="Enter First Name"
+                        :placeholder="$t('public.enter_first_name')"
                         :invalid="!!form.errors.first_name"
                     />
 
@@ -104,7 +104,7 @@ const submit = () => {
                 <div class="flex flex-col gap-1 items-start self-stretch">
                     <InputLabel
                         for="last_name"
-                        value="Last Name"
+                        :value="$t('public.last_name')"
                         :invalid="!!form.errors.last_name"
                     />
 
@@ -113,37 +113,17 @@ const submit = () => {
                         type="text"
                         class="block w-full"
                         v-model="form.last_name"
-                        placeholder="Enter Last Name"
+                        :placeholder="$t('public.enter_last_name')"
                         :invalid="!!form.errors.last_name"
                     />
 
                     <InputError :message="form.errors.last_name" />
                 </div>
 
-
-                <div class="flex flex-col gap-1 items-start self-stretch">
-                    <InputLabel
-                        for="identity_number"
-                        value="Identification No"
-                        :invalid="!!form.errors.identity_number"
-                    />
-
-                    <InputText
-                        id="identity_number"
-                        type="text"
-                        class="block w-full"
-                        v-model="form.identity_number"
-                        placeholder="Enter Identification No"
-                        :invalid="!!form.errors.identity_number"
-                    />
-
-                    <InputError :message="form.errors.identity_number" />
-                </div>
-
                 <div class="flex flex-col gap-1 items-start self-stretch">
                     <InputLabel
                         for="email"
-                        value="Email"
+                        :value="$t('public.email')"
                         :invalid="!!form.errors.email"
                     />
 
@@ -152,7 +132,7 @@ const submit = () => {
                         type="email"
                         class="block w-full"
                         v-model="form.email"
-                        placeholder="Enter Email"
+                        :placeholder="$t('public.enter_your_email')"
                         :invalid="!!form.errors.email"
                     />
 
@@ -162,7 +142,7 @@ const submit = () => {
                 <div class="flex flex-col gap-1 items-start self-stretch">
                     <InputLabel
                         for="phone"
-                        value="Phone Number"
+                        :value="$t('public.phone_number')"
                         :invalid="!!form.errors.phone"
                     />
 
@@ -208,13 +188,12 @@ const submit = () => {
                         />
                     </div>
                     <InputError :message="form.errors.phone"/>
-                    <InputError :message="form.errors.dial_code"/>
                 </div>
 
                 <div class="flex flex-col gap-1 items-start self-stretch">
                     <InputLabel
                         for="password"
-                        value="Password"
+                        :value="$t('public.password')"
                         :invalid="!!form.errors.password"
                     />
 
@@ -235,7 +214,7 @@ const submit = () => {
                 <div class="flex flex-col gap-1 items-start self-stretch">
                     <InputLabel
                         for="password_confirmation"
-                        value="Confirm Password"
+                        :value="$t('public.confirm_password')"
                         :invalid="!!form.errors.password"
                     />
 
@@ -249,6 +228,26 @@ const submit = () => {
                         placeholder="••••••••"
                         :invalid="!!form.errors.password"
                     />
+                </div>
+
+                <div class="flex flex-col gap-1 items-start self-stretch">
+                    <InputLabel
+                        for="referral_code"
+                        :invalid="!!form.errors.referral_code"
+                    >
+                        {{ $t('public.referral_code') }}
+                    </InputLabel>
+
+                    <InputText
+                        id="referral_code"
+                        type="text"
+                        class="block w-full"
+                        v-model="form.referral_code"
+                        :placeholder="$t('public.enter_referral_code_if_you_have_one')"
+                        :invalid="!!form.errors.referral_code"
+                    />
+
+                    <InputError :message="form.errors.referral_code" />
                 </div>
             </div>
 

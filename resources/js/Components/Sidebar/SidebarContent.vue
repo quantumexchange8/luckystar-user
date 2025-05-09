@@ -76,15 +76,14 @@ import SidebarCategoryLabel from "@/Components/Sidebar/SidebarCategoryLabel.vue"
         <SidebarCollapsible
             title="referral"
             :active="route().current('referral.*')"
-       
         >
             <template #icon>
                 <IconUsersGroup size="20" stroke-width="1.5" />
             </template>
             <SidebarCollapsibleItem
                 title="structure"
-                :href="route('referral.structure.structureIndex')"
-                :active="route().current('referral.structure.structureIndex')"
+                :href="route('referral.structure')"
+                :active="route().current('referral.structure')"
             />
 
             <SidebarCollapsibleItem
@@ -104,7 +103,7 @@ import SidebarCategoryLabel from "@/Components/Sidebar/SidebarCategoryLabel.vue"
                 <IconDownload :size="20" stroke-width="1.5" />
             </template>
         </SidebarLink>
-        
+
         <SidebarCategoryLabel
             :title="'trading'"
         />
@@ -131,7 +130,7 @@ import SidebarCategoryLabel from "@/Components/Sidebar/SidebarCategoryLabel.vue"
 
         <SidebarLink
             :title="'investment'"
-          
+
         >
             <template #icon>
                 <IconDatabaseDollar :size="20" stroke-width="1.5" />

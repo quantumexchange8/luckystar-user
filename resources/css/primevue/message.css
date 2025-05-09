@@ -131,7 +131,7 @@
 }
 
 .p-message-text {
-    @apply text-base font-medium
+    @apply text-sm font-medium
 }
 
 .p-message-icon {

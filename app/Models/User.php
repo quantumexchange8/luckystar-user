@@ -138,4 +138,9 @@ class User extends Authenticatable
 
         return $this->kycs->every(fn ($kyc) => $kyc->status === 'verified') ? 'verified' : 'unverified';
     }
+
+    public function directs(): HasMany
+    {
+        return $this->hasMany(User::class, 'upline_id', 'id');
+    }
 }

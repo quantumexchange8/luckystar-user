@@ -8,12 +8,10 @@ use App\Http\Controllers\ReferralController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SelectOptionController;
 use App\Http\Controllers\StrategyController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
-use Inertia\Inertia;
 
 Route::get('/', function () {
     return Redirect::route('login');
@@ -68,7 +66,8 @@ Route::middleware('auth')->group(function () {
 
         // Structure
         Route::prefix('structure')->group(function () {
-            Route::get('/get_structure', [ReferralController::class, 'structureIndex'])->name('referral.structure.structureIndex');
+            Route::get('/', [ReferralController::class, 'structureIndex'])->name('referral.structure');
+            Route::get('/getStructureData', [ReferralController::class, 'getStructureData'])->name('referral.getStructureData');
         });
 
         // Sales
