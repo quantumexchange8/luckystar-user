@@ -1,6 +1,6 @@
 <script setup>
 import { IconCalendarCheck, IconCalendarCancel, IconUserStar } from '@tabler/icons-vue';
-import { Card, Button } from 'primevue';
+import { Card, Button, Tag } from 'primevue';
 import { ref } from 'vue';
 
 const dummyData = ref([
@@ -14,7 +14,7 @@ const dummyData = ref([
         terminated_date: '2025-12-31',
     },
     {
-        strategyName: 'Value Strategy B',
+        strategyName: 'Value Strategy B',   
         username: 'investor_beta',
         totalGain: 10.0,
         monthlyGain: 2.4,
@@ -39,12 +39,18 @@ const dummyData = ref([
         <Card v-for="(strategy, index) in dummyData" :key="index"    class="flex flex-col gap-3 flex-shrink-0 min-w-80 md:min-w-[480px] lg:min-w-[709px]">
             <template #content>
                 <div class="flex flex-col items-center gap-4 self-stretch">
-                    <div class="w-full flex items-center gap-4 self-stretch">
+                   <div class="relative w-full flex items-center gap-4 self-stretch">
+                       
+                        <div class="absolute top-0 right-0 text-xl font-semibold">
+                            $500
+                        </div>
+
                         <img
                             class="object-cover w-11 h-11 rounded-full"
                             src="https://img.freepik.com/free-icon/user_318-159711.jpg"
                             alt="masterPic"
                         />
+
                         <div class="flex flex-col items-start">
                             <div class="self-stretch truncate text-surface-950 dark:text-white font-bold">
                                 {{ strategy.strategyName }}
@@ -55,15 +61,13 @@ const dummyData = ref([
                         </div>
                     </div>
 
+
                     <div class="flex flex-wrap items-center gap-2 self-stretch">
                         <Tag severity="primary">
-                            $1,000
+                            SUB123123
                         </Tag>
                         <Tag severity="secondary">
-                            12 months
-                        </Tag>
-                        <Tag severity="secondary">
-                            10% fee
+                            15 Days
                         </Tag>
                     </div>
 

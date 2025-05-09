@@ -45,6 +45,7 @@ Route::middleware('auth')->group(function () {
 
         Route::post('createAccount', [AccountController::class, 'createAccount'])->name('createAccount');
         Route::get('get_trading_account_data', [AccountController::class, 'get_trading_account_data'])->name('get_trading_account_data');
+        Route::post('accountDeposit', [AccountController::class, 'accountDeposit'])->name('accountDeposit');
     });
 
     /**

@@ -85,16 +85,6 @@ class User extends Authenticatable
         return $this->belongsTo(Country::class, 'country_id', 'id');
     }
 
-    public function occupation(): BelongsTo
-    {
-        return $this->belongsTo(Occupation::class, 'occupation_id', 'id');
-    }
-
-    public function industry(): BelongsTo
-    {
-        return $this->belongsTo(Industry::class, 'industry_id', 'id');
-    }
-
     public function rank(): BelongsTo
     {
         return $this->belongsTo(GroupRankSetting::class, 'setting_rank_id', 'id');

@@ -5,7 +5,7 @@ import { ref } from 'vue';
 const tableData = ref([
     { 
         created_at: '2025-04-30', 
-        symbol: 'Deposit', 
+        symbol: 'XAUUSD', 
         ticket: '24234',
         action: 'BUY',
         volume: '33.33',
@@ -17,7 +17,7 @@ const tableData = ref([
     },
     { 
         created_at: '2025-04-30', 
-        symbol: 'Deposit', 
+        symbol: 'XAUUSD', 
         ticket: '24234',
         action: 'BUY',
         volume: '33.33',
@@ -29,7 +29,7 @@ const tableData = ref([
     },
     { 
         created_at: '2025-04-30', 
-        symbol: 'Deposit', 
+        symbol: 'XAUUSD', 
         ticket: '24234',
         action: 'BUY',
         volume: '33.33',
