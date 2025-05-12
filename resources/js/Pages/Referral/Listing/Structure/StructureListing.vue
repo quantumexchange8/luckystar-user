@@ -7,7 +7,9 @@ import {
     IconPlus,
     IconMinus,
     IconFocus2,
-    IconMouse
+    IconMouse,
+    IconLoader,
+    IconChevronDown
 } from "@tabler/icons-vue";
 import {generalFormat} from "@/Composables/format.js";
 import debounce from "lodash/debounce.js";
@@ -159,7 +161,6 @@ function showLoadingMessage(text, severity) {
     message.value = text;
     showMessage.value = true;
     type.value = severity;
-    console.log('on')
 
     setTimeout(() => {
         showMessage.value = false;
@@ -311,6 +312,16 @@ watch(search, debounce(function() {
                                     </div>
                                 </div>
                             </div>
+                        </template>
+                        <template #toggleicon>
+                            <div v-if="type === 'info' && showMessage" class="animate-spin">
+                                <IconLoader size="16" stroke-width="1.5" />
+                            </div>
+                            <IconChevronDown
+                                v-else
+                                size="16"
+                                stroke-width="1.5"
+                            />
                         </template>
                         <template #default="slotProps">
                             <span>{{ 'loading' }}</span>

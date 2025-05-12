@@ -57,7 +57,7 @@ onMounted(() => {
         <div class="flex flex-col gap-5">
             <div class="flex flex-col gap-5 items-center self-stretch w-full">
                 <AccountHeader
-                    :accountTypes="props.accountTypes"
+                    :accountTypes="accountTypes"
                 />
             </div>
 

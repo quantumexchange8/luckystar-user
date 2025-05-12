@@ -94,12 +94,13 @@ const toggle = (event) => {
         type="button"
         rounded
         text
-        class="!p-2"
         @click="toggle"
         aria-haspopup="true"
         aria-controls="overlay_tmenu"
     >
-        <IconDots size="20" stroke-width="1.5"/>
+        <template #icon>
+            <IconDots size="16" stroke-width="1.5"/>
+        </template>
     </Button>
 
     <TieredMenu
@@ -153,13 +154,13 @@ const toggle = (event) => {
         </template>
 
         <template v-if="dialogType === 'withdrawal'">
-            <Withdrawal 
+            <Withdrawal
                 @update:visible="visible = false"
             />
         </template>
 
         <template v-if="dialogType === 'change_leverage'">
-            <Leverage 
+            <Leverage
                 @update:visible="visible = false"
             />
         </template>

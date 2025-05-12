@@ -17,7 +17,7 @@ const isLoading = ref(false);
 const first = ref(0);
 const rows = ref(5);
 const tradingAccount = ref([]);
-const {formatAmount} = generalFormat();
+const {formatAmount, formatRgbaColor} = generalFormat();
 
 const lazyParams = ref({});
 
@@ -30,7 +30,7 @@ const loadLazyData = (event) => {
 
     try {
         setTimeout(async () => {
-            
+
             const params = {
                 page: JSON.stringify(event?.page + 1),
                 // sortOrder: event?.sortOrder,
@@ -101,7 +101,7 @@ watchEffect(() => {
                                 </div>
                                 <IconDots size="20" stroke-width="1.5"/>
                             </div>
-                    
+
                             <div class="grid grid-cols-2 gap-2 w-full">
                                 <div class="flex flex-row gap-1 items-center self-stretch">
                                     <span class="w-20"><Skeleton height="1.5rem" width="4rem"></Skeleton></span>
@@ -131,7 +131,7 @@ watchEffect(() => {
                         </div>
                     </template>
                 </Card>
-            </div>    
+            </div>
         </div>
 
         <div v-else-if="!tradingAccount.length">
@@ -143,55 +143,69 @@ watchEffect(() => {
 
         <div v-else>
             <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 w-full gap-3 md:gap-5">
-                <Card 
+                <Card
                     class="w-full"
                     v-for="(account, index) in tradingAccount"
                     :key="index"
                 >
                     <template #content>
-                        <div class="flex flex-col gap-5 w-full self-stretch">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center gap-2 self-stretch">
-                                    <div class="self-stretch flex items-center gap-4 truncate text-sm text-surface-600 dark:text-surface-500">
-                                        <span class="font-bold text-lg">
+                        <div class="flex gap-3 items-center self-stretch relative">
+                            <div
+                                class="absolute -left-2 w-2.5 rounded-full h-full"
+                                :style="{'backgroundColor': `#${account.account_type.color}`}"
+                            ></div>
+                            <div class="flex flex-col gap-5 w-full self-stretch pl-4">
+                                <div class="flex items-start justify-between gap-3">
+                                    <div class="flex flex-col items-center self-stretch">
+                                        <div class="flex items-center gap-2 self-stretch">
+                                            <div class="self-stretch flex items-center gap-4 truncate text-sm text-surface-600 dark:text-surface-500">
+                                        <span class="font-semibold text-lg">
                                             #{{ account.meta_login }}
                                         </span>
-                                        <Tag 
-                                            severity="success"
-                                            :value="account.account_type.name"
-                                        />
+                                                <Tag
+                                                    :style="{
+                                                    backgroundColor: formatRgbaColor(account.account_type.color, 0.2),
+                                                    color: `#${account.account_type.color}`,
+                                                }"
+                                                    :value="account.account_type.name"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-row gap-2 items-center self-stretch text-xs">
+                                            <span class="text-surface-500">{{ $t('public.name') }}:</span>
+                                            <span class="font-medium">{{ account.trading_user.name }}</span>
+                                        </div>
                                     </div>
-            
-                                </div>
-                                <IndividualAction />
-                            </div>
-                    
-                            <div class="grid grid-cols-2 gap-2 w-full">
-                                <div class="flex flex-row gap-1 items-center self-stretch">
-                                    <span class="w-20">Balance:</span>
-                                    <span class="font-medium">{{ formatAmount(account.balance, 2)}}</span>
+                                    <IndividualAction />
                                 </div>
 
-                                <div class="flex flex-row gap-1 items-center self-stretch">
-                                    <span class="w-20">Equity:</span>
-                                    <span class="font-medium">{{ formatAmount(account.equity, 2) }}</span>
+                                <div class="grid grid-cols-2 gap-2 w-full">
+                                    <div class="flex flex-row gap-1 items-center self-stretch text-xs">
+                                        <span class="text-surface-500 w-20">Balance:</span>
+                                        <span class="font-medium">{{ formatAmount(account.balance, 2)}}</span>
+                                    </div>
+
+                                    <div class="flex flex-row gap-1 items-center self-stretch text-xs">
+                                        <span class="text-surface-500 w-20">Equity:</span>
+                                        <span class="font-medium">{{ formatAmount(account.equity, 2) }}</span>
+                                    </div>
+
+                                    <div class="flex flex-row gap-1 items-center self-stretch text-xs">
+                                        <span class="text-surface-500 w-20">Credit:</span>
+                                        <span class="font-medium">{{ formatAmount(account.credit, 2) }}</span>
+                                    </div>
+
+                                    <div class="flex flex-row gap-1 items-center self-stretch text-xs">
+                                        <span class="text-surface-500 w-20">Leverage:</span>
+                                        <span class="font-medium">1:{{ account.margin_leverage }}</span>
+                                    </div>
                                 </div>
 
-                                <div class="flex flex-row gap-1 items-center self-stretch">
-                                    <span class="w-20">Credit:</span>
-                                    <span class="font-medium">{{ formatAmount(account.credit, 2) }}</span>
+                                <div class="flex items-center gap-3 w-full">
+                                    <AccountDeposit />
+
+                                    <Transfer />
                                 </div>
-
-                                <div class="flex flex-row gap-1 items-center self-stretch">
-                                    <span class="w-20">Leverage:</span>
-                                    <span class="font-medium">1:{{ account.margin_leverage }}</span>
-                                </div>
-                            </div>
-
-                            <div class="flex items-center gap-3 w-full">
-                                <AccountDeposit />
-
-                                <Transfer />                        
                             </div>
                         </div>
                     </template>

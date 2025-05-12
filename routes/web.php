@@ -73,7 +73,7 @@ Route::middleware('auth')->group(function () {
         });
 
         // Sales
-        Route::prefix('sakes')->group(function () {
+        Route::prefix('sales')->group(function () {
             Route::get('/get_sales', [ReferralController::class, 'salesIndex'])->name('referral.sales.salesIndex');
         });
     });

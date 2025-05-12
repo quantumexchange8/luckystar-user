@@ -138,7 +138,8 @@ class AccountController extends Controller
             $query = TradingAccount::query()
                 ->with([
                     'user',
-                    'account_type'
+                    'account_type',
+                    'trading_user'
                 ]);
 
             $tradingAccounts = $query->paginate($data['rows']);
@@ -153,6 +154,6 @@ class AccountController extends Controller
     }
 
     public function accountDeposit(){
-        
+
     }
 }

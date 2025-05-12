@@ -24,7 +24,11 @@ const form = useForm({
 
 <template>
     <Button
-        class="w-full dark:text-white text-surface bg-surface-0 dark:bg-surface-800 border-surface-300 dark:border-surface-700 enabled:hover:bg-white dark:hover:bg-surface-800 enabled:hover:border-surface-500 dark:hover:border-surface-600"
+        type="button"
+        severity="secondary"
+        outlined
+        class="w-full"
+        size="small"
         @click="openDialog"
     >
         {{ $t('public.deposit') }}
