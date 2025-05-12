@@ -40,7 +40,7 @@ const props = defineProps({
                         </div>
                         <Divider layout="vertical" />
                         <div class="text-sm text-surface-600">
-                            {{ user.rank ?? 'Member' }}
+                            {{ user.rank.rank_name ?? 'Member' }}
                         </div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@ const props = defineProps({
                 <div class="flex gap-3 items-center">
                     <IconGlobe size="16" stroke-width="1.5" />
                     <div class="text-sm dark:text-white">
-                        {{ user.country.name }}
+                        {{ user.country?.name || '-' }}
                     </div>
                 </div>
                 <div class="flex gap-3 items-center">

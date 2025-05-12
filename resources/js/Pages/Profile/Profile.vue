@@ -4,6 +4,8 @@ import ProfileInformation from "@/Pages/Profile/ProfileInformation.vue";
 import {Tab, TabList, TabPanel, TabPanels, Tabs} from "primevue";
 import {h, onMounted, ref} from "vue";
 import ProfileDetail from "@/Pages/Profile/Detail/ProfileDetail.vue";
+import SecurityChange from "./Security/SecurityChange.vue";
+import PaymentAccount from "./Payment/PaymentAccount.vue";
 
 const props = defineProps({
     user: Object,
@@ -20,12 +22,12 @@ const tabs = ref([
     },
     {
         title: 'security',
-        component: h(ProfileDetail),
+        component: h(SecurityChange),
         value: '1'
     },
     {
         title: 'payment',
-        component: h(ProfileDetail),
+        component: h(PaymentAccount),
         value: '2'
     },
 ]);

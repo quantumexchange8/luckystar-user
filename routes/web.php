@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DownlaodController;
+use App\Http\Controllers\InvestmentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReferralController;
 use App\Http\Controllers\ReportController;
@@ -42,6 +43,7 @@ Route::middleware('auth')->group(function () {
 
         Route::post('createAccount', [AccountController::class, 'createAccount'])->name('createAccount');
         Route::get('get_trading_account_data', [AccountController::class, 'get_trading_account_data'])->name('get_trading_account_data');
+        Route::post('accountDeposit', [AccountController::class, 'accountDeposit'])->name('accountDeposit');
     });
 
     /**
@@ -94,6 +96,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/get_transaction', [ReportController::class, 'transactionIndex'])->name('report.transaction');
         Route::get('/get_trade_history', [ReportController::class, 'tradeHistoryIndex'])->name('report.trade_history');
         Route::get('/get_bonus', [ReportController::class, 'bonusIndex'])->name('report.bonus');
+    });
+
+    /**
+     * ==============================
+     *          Investment
+     * ==============================
+     */
+    Route::prefix('investment')->group(function () {
+        Route::get('/', [InvestmentController::class, 'index'])->name('investment.index');
     });
 
     /**

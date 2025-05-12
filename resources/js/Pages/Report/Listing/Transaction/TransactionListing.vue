@@ -1,20 +1,20 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Tab, TabList, TabPanels, Tabs, TabPanel } from 'primevue';
-import Deposit from './Deposit.vue';
-import Withdrawal from './Withdrawal.vue';
 import { onMounted, ref, h } from 'vue';
 import TransactionOverview from './TransactionOverview.vue';
+import CashWallet from './Wallet/CashWallet.vue';
+import BonusWallet from './Wallet/BonusWallet.vue';
 
 const tabs = ref([
     {
-        title: 'deposit',
-        component: h(Deposit),
+        title: 'cash_wallet',
+        component: h(CashWallet),
         value: '0'
     },
     {
-        title: 'withdrawal',
-        component: h(Withdrawal),
+        title: 'bonus_wallet',
+        component: h(BonusWallet),
         value: '1'
     },
 ]);
@@ -26,11 +26,11 @@ onMounted(() => {
     const params = new Proxy(new URLSearchParams(window.location.search), {
         get: (searchParams, prop) => searchParams.get(prop),
     });
-    if(params.tab === 'withdrawal'){
-        selectedType.value = 'withdrawal';
+    if(params.tab === 'bonus_wallet'){
+        selectedType.value = 'bonus_wallet';
         activeIndex.value = '1';
     } else {
-        selectedType.value = 'deposit';
+        selectedType.value = 'cash_wallet';
         activeIndex.value = '0';
     }
 });
@@ -42,7 +42,7 @@ onMounted(() => {
         <!-- Tabs -->
         <div class="flex flex-col">
             <Tabs v-model:value="activeIndex">
-                <div class="flex flex-col gap-4">
+                <div class="flex flex-col gap-5">
                     <TabList>
                         <Tab v-for="tab in tabs" :key="tab.title" :value="tab.value">
                             {{ $t(`public.${tab.title}`) }}
@@ -51,7 +51,7 @@ onMounted(() => {
 
                     <TransactionOverview />
                     
-                    <TabPanels>
+                    <TabPanels class="pt-0">
                         <TabPanel v-for="tab in tabs" :key="tab.value" :value="tab.value">
                             <component :is="tab.component" />
                         </TabPanel>

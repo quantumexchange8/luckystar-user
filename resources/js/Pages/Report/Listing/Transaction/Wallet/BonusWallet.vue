@@ -5,40 +5,48 @@ import { ref } from 'vue';
 
 const tableData = ref([
     { 
-        created_at: '2025-04-30', 
+        approved_at: '2025-04-30', 
         name: 'Wong',
-        email: 'wong@gmail.com',
-        close_time: '8:30pm',
-        close_date: '2025-05-20',
-        symbol: 'GBPUSDm',
-        volume: '0.01',
+        upline: 'Sam',
+        transaction_number: 'TXN00000002',
+        to_wallet_id: 'Bonus Wallet',
         status: 'rejected',
-        trade_net_profit: '$0.05',
+        amount: '$7762',
     
     },
     { 
-        created_at: '2025-04-30', 
-        name: 'Wong',
-        email: 'wong@gmail.com',
-        close_time: '8:30pm',
-        close_date: '2025-05-20',
-        symbol: 'GBPUSDm',
-        volume: '0.01',
+        approved_at: '2025-04-30', 
+        name: 'Ng',
+        upline: 'Samuel',
+        transaction_number: 'TXN00000003',
+        to_wallet_id: 'Bonus Wallet',
         status: 'success',
-        trade_net_profit: '$0.05',
+        amount: '$7332',
     },
     { 
-        created_at: '2025-04-30', 
+        approved_at: '2025-04-30', 
         name: 'Wong',
-        email: 'wong@gmail.com',
-        close_time: '8:30pm',
-        close_date: '2025-05-20',
-        symbol: 'GBPUSDm',
-        volume: '0.01',
+        upline: 'Sam',
+        transaction_number: 'TXN00000004',
+        to_wallet_id: 'Bonus Wallet',
         status: 'pending',
-        trade_net_profit: '$0.05',
+        amount: '$9332',
     },
 ]);
+
+//status severity
+const getSeverity = (status) => {
+    switch (status) {
+        case 'success':
+            return 'success';
+
+        case 'pending':
+            return 'info';
+
+        case 'rejected':
+            return 'danger';
+    }
+};
 </script>
 
 <template>
@@ -84,22 +92,22 @@ const tableData = ref([
 
                     <template>
                         <Column
-                            field="created_at"
-                            style="min-width: 10rem"
+                            field="approved_at"
+                            style="min-width: 12rem"
                             sortable
                         
                         >
                             <template #header>
-                                <span class="block">{{ 'date' }}</span>
+                                <span class="block">{{ 'approved at' }}</span>
                             </template>
                             <template #body="{ data }">
-                                <span>{{ data.created_at }}</span>
+                                <span>{{ data.approved_at }}</span>
                             </template>
                         </Column>
 
                         <Column
                             field="name"
-                            style="min-width: 10rem"
+                            style="min-width: 12rem"
                             sortable
                         
                         >
@@ -107,69 +115,79 @@ const tableData = ref([
                                 <span class="block">{{ 'name' }}</span>
                             </template>
                             <template #body="{ data }">
-                                <div class="flex flex-col">
-                                    <span class="text-surface-950 dark:text-white">{{ data.name }}</span>
-                                    <span class="text-surface-500">{{ data.email }}</span>
-                                </div>
+                                <span>{{ data.name }}</span>
                             </template>
                         </Column>
 
                         <Column
-                            field="close_time"
-                            style="min-width: 9rem"
+                            field="upline"
+                            style="min-width: 12rem"
                             sortable
                         
                         >
                             <template #header>
-                                <span class="block">{{ 'close time' }}</span>
+                                <span class="block">{{ 'upline' }}</span>
                             </template>
                             <template #body="{ data }">
-                                <div class="flex flex-col">
-                                    <span class="text-surface-950 dark:text-white font-medium">{{ data.close_date }}</span>
-                                    <span class="text-surface-500 text-xs">{{ data.close_time }}</span>
-                                </div>
+                                <span>{{ data.upline }}</span>
                             </template>
                         </Column>
 
                         <Column
-                            field="symbol"
-                            style="min-width: 9rem"
+                            field="transaction_number"
+                            style="min-width: 16rem"
                             sortable
                         
                         >
                             <template #header>
-                                <span class="block">{{ 'symbol' }}</span>
+                                <span class="block">{{ 'transaction number' }}</span>
                             </template>
                             <template #body="{ data }">
-                                <span>{{ data.symbol }}</span>
+                                <span>{{ data.transaction_number }}</span>
                             </template>
                         </Column>
 
                         <Column
-                            field="volume"
-                            style="min-width: 9rem"
+                            field="to_wallet_id"
+                            style="min-width: 12rem"
                             sortable
                         
                         >
                             <template #header>
-                                <span class="block">{{ 'volume' }}</span>
+                                <span class="block">{{ 'to' }}</span>
                             </template>
                             <template #body="{ data }">
-                                <span>{{ data.volume }}</span>
+                                <span>{{ data.to_wallet_id }}</span>
                             </template>
                         </Column>
 
                         <Column
-                            field="trade_net_profit"
-                             style="min-width: 9rem"
+                            field="amount"
+                            style="min-width: 12rem"
                             sortable
                         
                         >
                             <template #header>
-                                <span class="block">{{ 'trade net profit' }}</span>
+                                <span class="block">{{ 'amount' }}</span>
                             </template>
                             <template #body="{ data }">
-                                <span>{{ data.trade_net_profit }}</span>
+                                <span>{{ data.amount }}</span>
+                            </template>
+                        </Column>
+
+                        <Column
+                            field="status"
+                            style="min-width: 12rem"
+                            sortable
+                        
+                        >
+                            <template #header>
+                                <span class="block">{{ 'status' }}</span>
+                            </template>
+                            <template #body="{ data }">
+                                <span>
+                                    <Tag :value="data.status" :severity="getSeverity(data.status)"/>
+                                </span>
                             </template>
                         </Column>
                     </template>
