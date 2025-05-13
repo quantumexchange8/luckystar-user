@@ -201,8 +201,10 @@ watchEffect(() => {
                                     </div>
                                 </div>
 
-                                <div class="flex items-center gap-3 w-full">
-                                    <AccountDeposit />
+                            <div class="flex items-center gap-3 w-full">
+                                <AccountDeposit 
+                                    :account="account"
+                                />
 
                                     <Transfer />
                                 </div>

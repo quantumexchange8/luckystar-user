@@ -153,7 +153,13 @@ class AccountController extends Controller
         return response()->json(['success' => false, 'data' => []]);
     }
 
-    public function accountDeposit(){
+    public function accountDeposit(Request $request) 
+    {
+        Validator::make($request->all(), [
+            'amount' => ['nullable'],
+            'wallet_id' => ['required', 'sometimes'],
+        ])->setAttributeNames([
 
+        ])->validate();
     }
 }
