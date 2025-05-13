@@ -14,15 +14,15 @@ const props = defineProps({
 
 const tabs = ref([
     {
-        title: 'individual',
-        component: h(IndividualView, {
+        title: 'managed',
+        component: h(ManagedView, {
             accountCount: props.accountCount,
         }),
         value: '0'
     },
     {
-        title: 'managed',
-        component: h(ManagedView),
+        title: 'individual',
+        component: h(IndividualView),
         value: '1'
     },
     {
@@ -32,7 +32,7 @@ const tabs = ref([
     },
 ]);
 
-const selectedType = ref('individual');
+const selectedType = ref('managed');
 const activeIndex = ref('0');
 
 onMounted(() => {
@@ -42,11 +42,11 @@ onMounted(() => {
     if(params.tab === 'demo'){
         selectedType.value = 'demo';
         activeIndex.value = '2';
-    } else if(params.tab === 'managed'){
-        selectedType.value = 'managed';
+    } else if(params.tab === 'individual'){
+        selectedType.value = 'individual';
         activeIndex.value = '1';
     } else {
-        selectedType.value = 'individual';
+        selectedType.value = 'managed';
         activeIndex.value = '0';
     }
 });
