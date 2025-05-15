@@ -89,17 +89,6 @@ const submitForm = () => {
         :header="$t('public.deposit')"
     >
         <form @submit.prevent="submitForm" class="flex flex-col gap-5 items-center self-stretch">
-        
-            <!-- <div
-                class="flex flex-col justify-center items-center px-8 py-4 gap-2 self-stretch bg-surface-100 dark:bg-surface-800">
-                <div class="text-surface-500 dark:text-surface-300 text-center text-xs font-medium">
-                    #12345 - Current Account Balance
-                </div>
-                <div class="text-xl font-semibold">
-                    <span>$ 1,234</span>
-                </div>
-            </div> -->
-
             <!-- amount -->
             <div class="flex flex-col items-start gap-1 self-stretch">
                 <InputLabel

@@ -204,7 +204,11 @@ return [
     "bank_statement" => "Bank Statement",
     "residency_certificate" => "Residency Certificate",
     "error" => "Error",
-    "toast_file_type_error" => "File is not accepted"
-
+    "toast_file_type_error" => "File is not accepted",
+    "current_balance" => "Current Account Balance",
+    "transfer" => "Transfer",
+    "select_top_up_profile" => "Select Top Up Profile",
+    "top_up_profile" => "Top Up Profile",
+    
     
 ];

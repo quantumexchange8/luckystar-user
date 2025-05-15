@@ -48,7 +48,7 @@ import { Card, Skeleton } from 'primevue';
                                 </div> -->
 
                                 <div>
-                                    $645
+                                    $230
                                 </div>
                             </div>
                         </div>

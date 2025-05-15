@@ -9,6 +9,7 @@ use App\Http\Controllers\ReferralController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SelectOptionController;
 use App\Http\Controllers\StrategyController;
+use App\Http\Controllers\WalletController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\App;
@@ -26,13 +27,22 @@ Route::get('locale/{locale}', function ($locale) {
 });
 
 Route::get('/get_countries', [SelectOptionController::class, 'getCountries'])->name('getCountries');
+Route::post('deposit_callback', [WalletController::class, 'deposit_callback']);
 
 Route::middleware('auth')->group(function () {
     // select option
     Route::get('/get_leverages/{id}', [SelectOptionController::class, 'getLeverages'])->name('getLeverages');
 
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    Route::get('deposit_return', [WalletController::class, 'deposit_return']);
+
+    /**
+     * ==============================
+     *           Dashboard
+     * ==============================  
+     */
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/get_top_up_profile', [DashboardController::class, 'getTopUpProfile'])->name('getTopUpProfile');
     /**
      * ==============================
      *           Account
@@ -100,6 +110,23 @@ Route::middleware('auth')->group(function () {
 
     /**
      * ==============================
+     *          Transaction
+     * ==============================
+     */
+    Route::prefix('transaction')->group(function () {
+
+        /**
+         * ==============================
+         *            Wallet
+         * ==============================
+         */
+        Route::prefix('wallet')->group(function () {
+            Route::post('/topUp', [WalletController::class, 'topUp'])->name('transaction.wallet.topUp');
+        });
+    });
+
+    /**
+     * ==============================
      *          Investment
      * ==============================
      */
@@ -115,4 +142,4 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
