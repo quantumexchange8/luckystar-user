@@ -153,7 +153,35 @@ class AccountController extends Controller
         return response()->json(['success' => false, 'data' => []]);
     }
 
-    public function accountDeposit(){
+    public function accountDeposit(Request $request)
+    {
+        Validator::make($request->all(), [
+            'amount' => ['required'],
+            'wallet_id' => ['required', 'sometimes'],
+        ])->setAttributeNames([
+            'amount' => trans('public.deposit_amount'),
+            'wallet_id' => trans('public.wallet'),
+        ])->validate();
 
+        $wallet = null;
+        $account_type = AccountType::find($request->account_type_id);
+        $user = User::withCount('active_trading_accounts')->find(Auth::id());
+        
+        // validate sufficient amount
+        if ($request->has('wallet_id')) {
+            $wallet = Wallet::find($request->wallet_id);
+
+            if ($request->amount < $account_type->minimum_deposit) {
+                throw ValidationException::withMessages([
+                    'amount' => trans('public.insufficient_deposit', ['amount' => number_format($account_type->minimum_deposit, 2)]),
+                ]);
+            }
+
+            if ($wallet->balance < $request->amount) {
+                throw ValidationException::withMessages([
+                    'amount' => trans('public.insufficient_balance'),
+                ]);
+            }
+        }
     }
 }

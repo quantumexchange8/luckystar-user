@@ -4,6 +4,7 @@ import {
 } from "primevue";
 import {IconWallet} from "@tabler/icons-vue";
 import {generalFormat} from "@/Composables/format.js";
+import WalletAction from "./Partial/WalletAction.vue";
 
 defineProps({
     wallets: Object,
@@ -57,19 +58,8 @@ const {formatAmount} = generalFormat();
             {{ formatAmount(wallet.balance) }}
         </div>
         <div class="flex gap-3 items-center self-stretch">
-            <Button
-                type="button"
-                size="small"
-                severity="contrast"
-                class="w-full"
-                :label="$t('public.top_up')"
-            />
-            <Button
-                type="button"
-                severity="secondary"
-                size="small"
-                class="w-full"
-                :label="$t('public.action')"
+            <WalletAction 
+                :wallet="wallet"
             />
         </div>
     </div>
