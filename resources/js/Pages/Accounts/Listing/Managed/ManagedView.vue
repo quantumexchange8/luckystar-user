@@ -159,9 +159,9 @@ watchEffect(() => {
                                     <div class="flex flex-col items-center self-stretch">
                                         <div class="flex items-center gap-2 self-stretch">
                                             <div class="self-stretch flex items-center gap-4 truncate text-sm text-surface-600 dark:text-surface-500">
-                                        <span class="font-semibold text-lg">
-                                            #{{ account.meta_login }}
-                                        </span>
+                                                <span class="font-semibold text-lg">
+                                                    #{{ account.meta_login }}
+                                                </span>
                                                 <Tag
                                                     :style="{
                                                     backgroundColor: formatRgbaColor(account.account_type.color, 0.2),
@@ -181,32 +181,33 @@ watchEffect(() => {
 
                                 <div class="grid grid-cols-2 gap-2 w-full">
                                     <div class="flex flex-row gap-1 items-center self-stretch text-xs">
-                                        <span class="text-surface-500 w-20">Balance:</span>
+                                        <span class="text-surface-500 w-20">{{ $t('public.balance') }}:</span>
                                         <span class="font-medium">{{ formatAmount(account.balance, 2)}}</span>
                                     </div>
 
                                     <div class="flex flex-row gap-1 items-center self-stretch text-xs">
-                                        <span class="text-surface-500 w-20">Equity:</span>
+                                        <span class="text-surface-500 w-20">{{ $t('public.equity') }}:</span>
                                         <span class="font-medium">{{ formatAmount(account.equity, 2) }}</span>
                                     </div>
 
                                     <div class="flex flex-row gap-1 items-center self-stretch text-xs">
-                                        <span class="text-surface-500 w-20">Credit:</span>
+                                        <span class="text-surface-500 w-20">{{ $t('public.credit') }}:</span>
                                         <span class="font-medium">{{ formatAmount(account.credit, 2) }}</span>
                                     </div>
 
                                     <div class="flex flex-row gap-1 items-center self-stretch text-xs">
-                                        <span class="text-surface-500 w-20">Leverage:</span>
+                                        <span class="text-surface-500 w-20">{{ $t('public.leverage') }}:</span>
                                         <span class="font-medium">1:{{ account.margin_leverage }}</span>
                                     </div>
                                 </div>
 
-                            <div class="flex items-center gap-3 w-full">
-                                <AccountDeposit 
-                                    :account="account"
-                                />
+                                <div class="flex items-center gap-3 w-full">
+                                    <AccountDeposit 
+                                        :account="account"
+                                        
+                                    />
 
-                                <Transfer />
+                                    <Transfer />
                                 </div>
                             </div>
                         </div>

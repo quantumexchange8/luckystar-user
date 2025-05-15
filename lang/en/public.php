@@ -209,6 +209,11 @@ return [
     "transfer" => "Transfer",
     "select_top_up_profile" => "Select Top Up Profile",
     "top_up_profile" => "Top Up Profile",
-    
-    
+    "minimum_amount" => "Minimum Amount",
+    "balance" => "Balance",
+    "equity" => "Equity",
+    "credit" => "Credit",
+    "leverage" => "Leverage",
+    "pamm" => "PAMM",
+    "mature_in" => "Mature In",
 ];

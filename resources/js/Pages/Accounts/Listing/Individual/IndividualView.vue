@@ -8,55 +8,70 @@ import IndividualAction from './IndividualAction.vue';
     <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 w-full gap-3 md:gap-5">
         <Card class="w-full">
             <template #content>
-                <div class="flex flex-col gap-5 w-full self-stretch">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-2 self-stretch">
-                            <div class="self-stretch flex items-center gap-4 truncate text-sm text-surface-600 dark:text-surface-500">
-                                <span class="font-bold text-lg">
-                                    #12345
-                                </span>
-                                <Tag 
-                                    severity="warn"
-                                    value="Premium Account"
-                                />
+                <div class="flex gap-3 items-center self-stretch relative">
+                   <div
+                        class="absolute -left-2 w-2.5 rounded-full h-full"
+                        :style="{'backgroundColor': '#FDBA74'}"
+                    ></div>
+                    <div class="flex flex-col gap-5 w-full self-stretch pl-4">
+                        <div class="flex items-center justify-between gap-3">
+                            <div class="flex flex-col items-center self-stretch">
+                                <div class="flex items-center gap-2 self-stretch">
+                                    <div class="self-stretch flex items-center gap-4 truncate text-sm text-surface-600 dark:text-surface-500">
+                                        <span class="font-semibold text-lg">
+                                            #12345
+                                        </span>
+                                        <Tag 
+                                            severity="warn"
+                                            value="Premium Account"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="flex flex-row gap-2 items-center self-stretch text-xs">
+                                    <span class="text-surface-500">{{ $t('public.name') }}:</span>
+                                    <span class="font-medium">{{ 'test' }}</span>
+                                </div>
+                            </div>
+                            <IndividualAction />
+                        </div>
+                
+                        <div class="grid grid-cols-2 gap-2 w-full">
+                            <div class="flex flex-row gap-1 items-center self-stretch text-xs">
+                                <span class="text-surface-500 w-20">{{ $t('public.balance') }}:</span>
+                                <span class="font-medium">$123</span>
                             </div>
     
+                            <div class="flex flex-row gap-1 items-center self-stretch text-xs">
+                                <span class="text-surface-500 w-20">{{ $t('public.equity') }}:</span>
+                                <span class="font-medium">$456</span>
+                            </div>
+    
+                            <div class="flex flex-row gap-1 items-center self-stretch text-xs">
+                                <span class="text-surface-500 w-20">{{ $t('public.pamm') }}:</span>
+                                <span class="font-medium">-</span>
+                            </div>
+    
+                            <div class="flex flex-row gap-1 items-center self-stretch text-xs">
+                                <span class="text-surface-500 w-20">{{ $t('public.mature_in') }}:</span>
+                                <span class="font-medium">-</span>
+                            </div>
                         </div>
-                        <IndividualAction />
-                    </div>
-            
-                    <div class="grid grid-cols-2 gap-2 w-full">
-                        <div class="flex flex-row gap-1 items-center self-stretch">
-                            <span class="w-20">Balance:</span>
-                            <span class="font-medium">$123</span>
+                     
+                        <div class="flex items-center gap-3 w-full">
+                            <Button
+                                type="button"
+                                severity="secondary"
+                                outlined
+                                class="w-full"
+                                size="small"
+                            >
+                                {{ $t('public.deposit') }}
+                            </Button>
+    
+                            <Transfer 
+                                
+                           />
                         </div>
-
-                        <div class="flex flex-row gap-1 items-center self-stretch">
-                            <span class="w-20">Equity:</span>
-                            <span class="font-medium">$456</span>
-                        </div>
-
-                        <div class="flex flex-row gap-1 items-center self-stretch">
-                            <span class="w-20">PAMM:</span>
-                            <span class="font-medium">-</span>
-                        </div>
-
-                        <div class="flex flex-row gap-1 items-center self-stretch">
-                            <span class="w-20">Mature in:</span>
-                            <span class="font-medium">-</span>
-                        </div>
-                    </div>
-                 
-                    <div class="flex items-center gap-3 w-full">
-                        <Button
-                            class="w-full dark:text-white text-surface bg-surface-0 dark:bg-surface-800 border-surface-300 dark:border-surface-700 enabled:hover:bg-white dark:hover:bg-surface-800 enabled:hover:border-surface-500 dark:hover:border-surface-600"
-                        >
-                            Deposit
-                        </Button>
-
-                        <Transfer 
-                            
-                       />
                     </div>
                 </div>
             </template>

@@ -11,8 +11,6 @@ const props = defineProps({
     account: Object,
 });
 
-// console.log('account', props.account);
-
 const visible = ref(false);
 
 const openDialog = () => {
@@ -57,7 +55,6 @@ const submitForm = () => {
         form.amount = amount.value;
         form.wallet_id = selectedWallet.value ? selectedWallet.value : null;
     }
-    console.log(form);
 
     form.post(route('accountDeposit'), {
         onSuccess: () => {
@@ -113,7 +110,7 @@ const submitForm = () => {
                 <span
                     class="text-xs font-normal text-surface-500"
                 >
-                    {{ $t('public.minimum_amount') }} $30.00
+                    {{ $t('public.minimum_amount') }} {{ formatAmount(props.account.account_type.minimum_deposit, 2) }}
                 </span>
                 <InputError :message="form.errors.amount" />
             </div>

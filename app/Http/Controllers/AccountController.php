@@ -166,7 +166,7 @@ class AccountController extends Controller
         $wallet = null;
         $account_type = AccountType::find($request->account_type_id);
         $user = User::withCount('active_trading_accounts')->find(Auth::id());
-        
+
         // validate sufficient amount
         if ($request->has('wallet_id')) {
             $wallet = Wallet::find($request->wallet_id);
@@ -183,5 +183,54 @@ class AccountController extends Controller
                 ]);
             }
         }
+
+        $service = new TradingAccountService();
+
+        if ($service->getConnectionStatus() != 0) {
+            return back()->with('toast', [
+                'title' => trans("public.connection_error"),
+                'message' => trans("public.toast_connection_error"),
+                'type' => 'error',
+            ]);
+        }
+
+        $amount = $request->amount;
+        $trading_account = TradingAccount::firstWhere('id', $request->trading_account_id);
+
+        if ($amount >= $account_type->minimum_deposit && $request->has('wallet_id')) {
+            $oldBalance = $wallet->balance;
+            $wallet->decrement('balance', $amount);
+            $newBalance = $wallet->fresh()->balance;
+
+            $deal = $service->createDeal($trading_account, $amount, 'Deposit', MetaService::DEPOSIT, $account_type);
+
+            Transaction::create([
+                'user_id' => $user->id,
+                'category' => 'trading_account',
+                'transaction_type' => 'deposit',
+                'from_wallet_id' => $wallet->id,
+                'to_meta_login' => $trading_account->meta_login,
+                'ticket' => $deal['deal_Id'] ?? null,
+                'transaction_number' => RunningNumberService::getID('transaction'),
+                'amount' => $amount,
+                'from_currency' => 'USD',
+                'to_currency' => 'USD',
+                'conversion_rate' => 1,
+                'conversion_amount' => $amount,
+                'transaction_amount' => $amount,
+                'fund_type' => $user->role == 'user' ? MetaService::REAL_FUND : MetaService::DEMO_FUND,
+                'old_wallet_amount' => $oldBalance,
+                'new_wallet_amount' => $newBalance,
+                'status' => 'success',
+                'comment' => $deal['conduct_Deal']['comment'] ?? 'Deposit',
+                'approval_at' => now(),
+            ]);
+        }
+
+        return back()->with('toast', [
+            'title' => trans("public.success"),
+            'message' => trans('public.toast_create_account_success'),
+            'type' => 'success',
+        ]);
     }
 }
