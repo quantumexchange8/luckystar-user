@@ -56,7 +56,6 @@ class WalletController extends Controller
                 'amount' => $amount,
                 'transaction_amount' => $amount,
                 'old_wallet_amount' => $wallet->balance,
-                'new_wallet_amount' => $wallet->balance + $amount,
                 'transaction_charges' => 0,
                 'conversion_rate' => 0,
                 'status' => 'processing',
@@ -128,7 +127,8 @@ class WalletController extends Controller
 
             if ($result['token'] === $dataToHash) {
                 $transaction->update([
-                    'to_wallet_address' => $result['to_wallet_address'],
+                    'from_token_address' => $result['from_wallet_address'],
+                    'to_token_address' => $result['to_wallet_address'],
                     'txn_hash' => $result['txn_hash'],
                     'transaction_charges' => 0,
                     'status' => $status,
