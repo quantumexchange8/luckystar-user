@@ -4,7 +4,7 @@
 @import './iconfield';
 
 .p-multiselect {
-    @apply inline-flex cursor-pointer relative select-none rounded-md
+    @apply inline-flex cursor-pointer relative select-none rounded-lg
         bg-surface-0 dark:bg-surface-950
         border border-surface-300 dark:border-surface-700
         shadow-input text-sm

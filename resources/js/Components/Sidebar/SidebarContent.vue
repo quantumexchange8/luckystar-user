@@ -51,7 +51,7 @@ import SidebarCategoryLabel from "@/Components/Sidebar/SidebarCategoryLabel.vue"
 
 <template>
     <nav
-        class="relative flex flex-col flex-1 max-h-full gap-1 items-center"
+        class="relative flex flex-col flex-1 max-h-full gap-1 items-center overflow-y-auto"
         :class="{
             'p-3': sidebarState.isOpen || sidebarState.isHovered,
             'px-5 py-3': !sidebarState.isOpen && !sidebarState.isHovered,

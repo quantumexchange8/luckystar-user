@@ -255,7 +255,7 @@ watch(search, debounce(function() {
             </div>
 
             <div class="border border-surface-300 dark:border-surface-600 rounded-xl bg-surface-100 dark:bg-surface-900 bg-[radial-gradient(#d4d4d8_2px,transparent_1px)] dark:bg-[radial-gradient(#3f3f46_2px,transparent_1px)] [background-size:52px_52px] overflow-hidden w-full h-[600px] relative">
-                <div class="absolute top-5 right-5 z-50">
+                <div class="absolute top-5 right-5">
                     <Message
                         v-if="showMessage"
                         :severity="type"
