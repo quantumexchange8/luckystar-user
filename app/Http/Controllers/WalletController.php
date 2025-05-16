@@ -54,7 +54,6 @@ class WalletController extends Controller
                 'to_payment_account_no' => $topUpProfile->account_number,
                 'to_bank_branch_address' => $topUpProfile->to_bank_branch_address,
                 'amount' => $amount,
-                'transaction_amount' => $amount,
                 'old_wallet_amount' => $wallet->balance,
                 'transaction_charges' => 0,
                 'conversion_rate' => 0,
@@ -99,6 +98,7 @@ class WalletController extends Controller
     {
         $data = $request->all();
 
+        Log::debug($data);
         $result = [
             "token" => $data['vCode'],
             "from_wallet_address" => $data['from_wallet'],
@@ -118,6 +118,8 @@ class WalletController extends Controller
             ])
             ->latest()
             ->first();
+
+        Log::debug($transaction);
 
         $selected_profile = TopUpProfile::firstWhere($transaction->to_payment_platform_name);
 
