@@ -18,9 +18,7 @@ class WalletController extends Controller
     public function topUp(TopUpRequest $request)
     {
         $user = Auth::user();
-
         $wallet = Wallet::find($request->wallet_id);
-
         $topUpProfile = TopUpProfile::find($request->topUpProfile_id);
 
         $amount = $request->amount;
@@ -43,7 +41,7 @@ class WalletController extends Controller
             ]);
         } else {
             $transaction = Transaction::create([
-                'category' => 'wallet',
+                'category' => $wallet->type,
                 'user_id' => $user->id,
                 'to_wallet_id' => $wallet->id,
                 'transaction_number' => RunningNumberService::getID('transaction'),
@@ -56,7 +54,10 @@ class WalletController extends Controller
                 'amount' => $amount,
                 'old_wallet_amount' => $wallet->balance,
                 'transaction_charges' => 0,
+                'from_currency' => $topUpProfile->currency,
+                'to_currency' => 'USD',
                 'conversion_rate' => 0,
+                'fund_type' => 'real_fund',
                 'status' => 'processing',
             ]);
         }
@@ -98,7 +99,6 @@ class WalletController extends Controller
     {
         $data = $request->all();
 
-        Log::debug($data);
         $result = [
             "token" => $data['vCode'],
             "from_wallet_address" => $data['from_wallet'],
@@ -119,9 +119,7 @@ class WalletController extends Controller
             ->latest()
             ->first();
 
-        Log::debug($transaction);
-
-        $selected_profile = TopUpProfile::firstWhere($transaction->to_payment_platform_name);
+        $selected_profile = TopUpProfile::firstWhere('payment_app_name', $transaction->to_payment_platform_name);
 
         if ($transaction) {
             $dataToHash = md5($transaction->transaction_number . $selected_profile->payment_app_name . $selected_profile->secondary_key);
@@ -156,8 +154,7 @@ class WalletController extends Controller
                 if ($transaction->status == 'success') {
                     if ($transaction->transaction_type == 'top_up') {
                         $wallet = Wallet::find($transaction->to_wallet_id);
-                        $wallet->balance += $result['amount'];
-                        $wallet->save();
+                        $wallet->increment('balance', $transaction->transaction_amount);
 
                         $transaction->update([
                             'new_wallet_amount' => $wallet->balance
