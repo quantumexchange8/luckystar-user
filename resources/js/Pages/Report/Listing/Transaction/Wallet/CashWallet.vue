@@ -342,11 +342,11 @@ watchEffect(() => {
                                 <span class="block">{{ $t('public.from') }}</span>
                             </template>
                             <template #body="{ data }">
-                                <span>{{ data.from_wallet?.type ? $t(`public.${data.from_wallet.type}`) : '-' }}</span>
+                                <span>{{ data.from_wallet?.type ? $t(`public.${data.from_wallet.type}`) : 'ttpay' }}</span>
                             </template>
                         </Column>
 
-                        <Column
+                        <!-- <Column
                             field="to_wallet_id"
                             style="min-width: 12rem"
                             sortable
@@ -358,7 +358,7 @@ watchEffect(() => {
                             <template #body="{ data }">
                                 <span>{{ data.to_wallet?.type ? $t(`public.${data.to_wallet.type}`) : '-' }}</span>
                             </template>
-                        </Column>
+                        </Column> -->
 
                         <Column
                             field="transaction_type"
@@ -378,13 +378,19 @@ watchEffect(() => {
                             field="amount"
                             style="min-width: 9rem"
                             sortable
-                        
                         >
                             <template #header>
                                 <span class="block">{{ 'amount' }}</span>
                             </template>
                             <template #body="{ data }">
-                                <span>{{ formatAmount(data.amount, 2) }}</span>
+                                <span 
+                                    :class="{
+                                        'text-green-500': data.to_wallet?.type === 'cash_wallet',
+                                        'text-red-500': data.to_wallet?.type !== 'cash_wallet',
+                                    }"
+                                >
+                                  {{ formatAmount(data.amount, 2) }}
+                                </span>
                             </template>
                         </Column>
 

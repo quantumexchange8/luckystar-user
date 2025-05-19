@@ -11,6 +11,8 @@ const props = defineProps({
     account: Object,
 });
 
+const {formatAmount} = generalFormat();
+
 const visible = ref(false);
 
 const openDialog = () => {
@@ -29,8 +31,6 @@ const form = useForm({
     wallet_id: undefined,
     amount: null,
 });
-
-const {formatAmount} = generalFormat();
 
 const selectedAccountType = ref();
 const amount = ref(null);

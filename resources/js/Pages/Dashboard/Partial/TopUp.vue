@@ -11,8 +11,6 @@ const props = defineProps({
     wallet: Object,
 });
 
-console.log('wallet',props.wallet)
-
 const visible = ref(false);
 
 const openDialog = () => {
@@ -30,8 +28,6 @@ const getTopUpProfiles = async () => {
     try {
         const response = await axios.get('/get_top_up_profile');
         topUpOptions.value = response.data.topUpProfiles;
-
-        console.log('topup',response)
 
     } catch(error) {
         console.error(error);
@@ -67,8 +63,6 @@ const submitForm = () => {
             selectedTopUpType.value = null;
         }
     });
-
-    console.log('form', form)
 }
 
 const closeDialog = () => {

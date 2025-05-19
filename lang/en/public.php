@@ -233,4 +233,6 @@ return [
     "filter_by_type" => "Filter By Type",
     "select_type" => "Select Type",
     "clear_all" => "Clear All",
+    "transfer_amount" => "Transfer Amount",
+    "toast_transfer_success" => "Amount Transfer Successfully",
 ];

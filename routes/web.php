@@ -34,7 +34,6 @@ Route::middleware('auth')->group(function () {
     // select option
     Route::get('/get_leverages/{id}', [SelectOptionController::class, 'getLeverages'])->name('getLeverages');
 
-
     Route::get('deposit_return', [WalletController::class, 'deposit_return']);
 
     /**
@@ -124,6 +123,7 @@ Route::middleware('auth')->group(function () {
          */
         Route::prefix('wallet')->group(function () {
             Route::post('/topUp', [WalletController::class, 'topUp'])->name('transaction.wallet.topUp');
+            Route::post('/wallet_transfer', [WalletController::class, 'walletTransfer'])->name('transaction.wallet.transfer');
         });
     });
 
