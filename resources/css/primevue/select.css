@@ -109,7 +109,7 @@ input.p-select-label {
 }
 
 .p-select-option.p-select-option-selected {
-    @apply bg-primary-50 text-primary-500
+    @apply bg-primary-50 text-primary-500 dark:bg-highlight
 }
 
 /* .p-select-option.p-select-option-selected.p-focus {

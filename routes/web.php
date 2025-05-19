@@ -9,6 +9,7 @@ use App\Http\Controllers\ReferralController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SelectOptionController;
 use App\Http\Controllers\StrategyController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\WalletController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Redirect;
@@ -103,7 +104,6 @@ Route::middleware('auth')->group(function () {
      * ==============================
      */
     Route::prefix('report')->group(function () {
-        Route::get('/get_transaction', [ReportController::class, 'transactionIndex'])->name('report.transaction');
         Route::get('/get_trade_history', [ReportController::class, 'tradeHistoryIndex'])->name('report.trade_history');
         Route::get('/get_bonus', [ReportController::class, 'bonusIndex'])->name('report.bonus');
     });
@@ -114,7 +114,9 @@ Route::middleware('auth')->group(function () {
      * ==============================
      */
     Route::prefix('transaction')->group(function () {
-
+        Route::get('/get_transaction', [TransactionController::class, 'index'])->name('transaction');
+        Route::get('/get_cash_wallet_data', [TransactionController::class, 'getCashWalletData'])->name('transaction.getCashWalletData');
+        Route::get('/get_bonus_wallet_data', [TransactionController::class, 'getBonusWalletData'])->name('transaction.getBonusWalletData');
         /**
          * ==============================
          *            Wallet

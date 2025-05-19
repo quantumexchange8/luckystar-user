@@ -25,7 +25,7 @@ class WalletController extends Controller
 
         $latest_transaction = Transaction::where([
             'user_id' => $user->id,
-            'category' => 'wallet',
+            'category' => $wallet->type,
             'transaction_type' => 'top_up',
             'status' => 'processing',
         ])

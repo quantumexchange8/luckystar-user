@@ -7,11 +7,6 @@ use Inertia\Inertia;
 
 class ReportController extends Controller
 {
-    public function transactionIndex()
-    {
-        return Inertia::render('Report/Listing/Transaction/TransactionListing');
-    }
-
     public function TradeHistoryIndex()
     {
         return Inertia::render('Report/Listing/TradeHistory/TradeHistoryListing');

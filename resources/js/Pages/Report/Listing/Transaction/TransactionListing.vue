@@ -1,10 +1,20 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Tab, TabList, TabPanels, Tabs, TabPanel } from 'primevue';
-import { onMounted, ref, h } from 'vue';
+import { onMounted, ref, h, watch } from 'vue';
 import TransactionOverview from './TransactionOverview.vue';
 import CashWallet from './Wallet/CashWallet.vue';
 import BonusWallet from './Wallet/BonusWallet.vue';
+
+const successAmount = ref(null);
+const failAmount = ref(null);
+const totalAmount = ref(null)
+
+const handleOverview = (data) => {
+    successAmount.value = Number(data.successAmount);
+    failAmount.value = Number(data.failAmount);
+    totalAmount.value = Number(data.totalAmount)
+}
 
 const tabs = ref([
     {
@@ -19,7 +29,7 @@ const tabs = ref([
     },
 ]);
 
-const selectedType = ref('deposit');
+const selectedType = ref('cash_wallet');
 const activeIndex = ref('0');
 
 onMounted(() => {
@@ -33,7 +43,9 @@ onMounted(() => {
         selectedType.value = 'cash_wallet';
         activeIndex.value = '0';
     }
+  
 });
+
 </script>
 
 <template>
@@ -49,11 +61,18 @@ onMounted(() => {
                         </Tab>
                     </TabList>
 
-                    <TransactionOverview />
+                    <TransactionOverview 
+                        :successAmount="successAmount"
+                        :failAmount="failAmount"
+                        :totalAmount="totalAmount"
+                    />
                     
                     <TabPanels class="pt-0">
                         <TabPanel v-for="tab in tabs" :key="tab.value" :value="tab.value">
-                            <component :is="tab.component" />
+                            <component 
+                                :is="tabs[activeIndex]?.component"
+                                @updateTransactionOverview="handleOverview"
+                            />
                         </TabPanel>
                     </TabPanels>
                 </div>

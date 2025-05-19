@@ -144,8 +144,8 @@ import SidebarCategoryLabel from "@/Components/Sidebar/SidebarCategoryLabel.vue"
 
         <SidebarLink
             :title="'transaction'"
-            :href="route('report.transaction')"
-            :active="route().current('report.transaction')"
+            :href="route('transaction')"
+            :active="route().current('transaction')"
         >
             <template #icon>
                 <IconCreditCardPay :size="20" stroke-width="1.5" />
