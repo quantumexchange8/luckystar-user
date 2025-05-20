@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TradingMaster extends Model
@@ -11,36 +13,51 @@ class TradingMaster extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'user_id',
         'master_name',
+        'trader_name',
         'meta_login',
+        'account_type_id',
+        'leverage',
         'category',
         'type',
-        'min_investment',
         'sharing_profit',
-        'sa_profit',
         'market_profit',
-        'estimated_monthly_returns',
-        'estimated_lot_size',
+        'company_profit',
+        'minimum_investment',
         'subscription_fee',
-        'extra_fund',
-        'total_fund',
+        'estimated_lot',
+        'estimated_monthly_return',
         'max_drawdown',
-        'settlement_period_type',
+        'cut_loss',
+        'additional_capital',
+        'additional_investors',
+        'investment_period',
+        'investment_period_type',
         'settlement_period',
-        'join_period_type',
-        'join_period',
-        'signal_status',
+        'settlement_period_type',
         'can_top_up',
-        'can_revoke',
-        'visibility_type',
+        'can_terminate',
         'status',
-        'handle_by',
     ];
 
     // Relations
-    public function ongoing_subscriptions(): HasMany
+    public function account_type(): BelongsTo
+    {
+        return $this->belongsTo(AccountType::class, 'account_type_id', 'id');
+    }
+
+    public function active_subscriptions(): HasMany
     {
         return $this->hasMany(TradingSubscription::class, 'master_meta_login', 'meta_login')->where('status', 'active');
+    }
+
+    public function groups(): HasManyThrough
+    {
+        return $this->hasManyThrough(Group::class, GroupHasTradingMaster::class, 'trading_master_id', 'id', 'id', 'group_id');
+    }
+
+    public function management_fees(): HasMany
+    {
+        return $this->hasMany(TradingMasterHasFee::class, 'trading_master_id', 'id');
     }
 }

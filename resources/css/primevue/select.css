@@ -28,7 +28,7 @@
 }
 
 .p-select.p-disabled {
-    @apply bg-surface-200 text-surface-500 dark:bg-surface-700 dark:text-surface-400 opacity-100 cursor-default
+    @apply bg-surface-100 text-surface-400 dark:bg-surface-700 dark:text-surface-400 opacity-100 cursor-default
 }
 
 .p-select-clear-icon {

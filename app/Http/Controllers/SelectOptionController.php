@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\AccountTypeHasLeverage;
 use App\Models\Country;
+use App\Models\TradingAccount;
+use App\Models\TradingSubscription;
+use Auth;
 use Illuminate\Http\Request;
 
 class SelectOptionController extends Controller
@@ -26,6 +29,28 @@ class SelectOptionController extends Controller
 
         return response()->json([
             'leverages' => $leverages,
+        ]);
+    }
+
+    public function getInvestorAccounts(Request $request)
+    {
+        $subscribedMetaLogins = TradingSubscription::where('user_id', Auth::id())
+            ->whereIn('status', ['pending', 'active'])
+            ->pluck('meta_login')
+            ->toArray();
+
+        $accounts = TradingAccount::where([
+            'user_id' => Auth::id(),
+            'account_type_id' => $request->type,
+            'margin_leverage' => $request->leverage,
+        ])
+            ->when(!empty($subscribedMetaLogins), function ($query) use ($subscribedMetaLogins) {
+                $query->whereNotIn('meta_login', $subscribedMetaLogins);
+            })
+            ->get();
+
+        return response()->json([
+            'accounts' => $accounts,
         ]);
     }
 }

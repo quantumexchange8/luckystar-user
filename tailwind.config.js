@@ -1,4 +1,5 @@
 import forms from '@tailwindcss/forms';
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -13,7 +14,7 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['"poppins"', 'sans-serif'],
+                sans: ['Poppins', ...defaultTheme.fontFamily.sans],
             },
             fontSize: {
                 xxs: ['10px', '16px'],

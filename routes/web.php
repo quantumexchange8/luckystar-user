@@ -32,6 +32,7 @@ Route::post('deposit_callback', [WalletController::class, 'deposit_callback']);
 Route::middleware('auth')->group(function () {
     // select option
     Route::get('/get_leverages/{id}', [SelectOptionController::class, 'getLeverages'])->name('getLeverages');
+    Route::get('/getInvestorAccounts', [SelectOptionController::class, 'getInvestorAccounts'])->name('getInvestorAccounts');
 
 
     Route::get('deposit_return', [WalletController::class, 'deposit_return']);
@@ -39,7 +40,7 @@ Route::middleware('auth')->group(function () {
     /**
      * ==============================
      *           Dashboard
-     * ==============================  
+     * ==============================
      */
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/get_top_up_profile', [DashboardController::class, 'getTopUpProfile'])->name('getTopUpProfile');
@@ -63,6 +64,9 @@ Route::middleware('auth')->group(function () {
      */
     Route::prefix('strategy')->group(function () {
         Route::get('/', [StrategyController::class, 'index'])->name('strategy');
+        Route::get('getStrategyData', [StrategyController::class, 'getStrategyData'])->name('strategy.getStrategyData');
+
+        Route::post('investStrategy', [StrategyController::class, 'investStrategy'])->name('strategy.investStrategy');
 
         Route::prefix('detail')->group(function () {
             Route::get('/get_strategy_detail', [StrategyController::class, 'strategyDetail'])->name('strategy.detail.strategyDetail');

@@ -1,9 +1,9 @@
 .p-card {
-    @apply flex flex-col rounded-xl text-sm
-        bg-surface-0 dark:bg-surface-900
-        text-surface-950 dark:text-surface-0
-        border dark:border-surface-600
-        shadow-toast
+    @apply flex flex-col rounded-xl
+    bg-surface-0 dark:bg-surface-900
+    text-surface-700 dark:text-surface-0
+    border dark:border-surface-600
+    shadow-toast
 }
 
 .p-card-caption {
@@ -15,7 +15,7 @@
 }
 
 .p-card-title {
-    @apply text-base font-semibold
+    @apply font-semibold
 }
 
 .p-card-subtitle {
