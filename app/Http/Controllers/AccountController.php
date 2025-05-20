@@ -10,7 +10,7 @@ use App\Models\User;
 use App\Models\Wallet;
 use App\Services\RunningNumberService;
 use App\Services\TradingAccountService;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -28,7 +28,7 @@ class AccountController extends Controller
 
         return Inertia::render('Accounts/Listing/AccountListing', [
             'accountTypes' => $account_types,
-            'accountCount' => TradingAccount::where('status', 'active')->count(),
+            'accountCount' => TradingAccount::where('status', 'active')->where('user_id', Auth::id())->count(),
         ]);
     }
 
@@ -140,7 +140,8 @@ class AccountController extends Controller
                     'user',
                     'account_type',
                     'trading_user'
-                ]);
+                ])
+                    ->where('user_id', Auth::id());
 
             $tradingAccounts = $query->paginate($data['rows']);
 
@@ -157,7 +158,7 @@ class AccountController extends Controller
     {
         Validator::make($request->all(), [
             'amount' => ['required'],
-            'wallet_id' => ['required', 'sometimes'],
+            'wallet_id' => ['required'],
         ])->setAttributeNames([
             'amount' => trans('public.deposit_amount'),
             'wallet_id' => trans('public.wallet'),

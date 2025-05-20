@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\MetaService;
 use App\Http\Requests\TopUpRequest;
+use App\Http\Requests\WalletTransferRequest;
 use App\Models\TopUpProfile;
 use App\Models\Transaction;
 use App\Models\Wallet;
@@ -10,7 +12,9 @@ use App\Services\RunningNumberService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 
 class WalletController extends Controller
@@ -25,7 +29,7 @@ class WalletController extends Controller
 
         $latest_transaction = Transaction::where([
             'user_id' => $user->id,
-            'category' => 'wallet',
+            'category' => $wallet->type,
             'transaction_type' => 'top_up',
             'status' => 'processing',
         ])
@@ -160,12 +164,81 @@ class WalletController extends Controller
                             'new_wallet_amount' => $wallet->balance
                         ]);
 
-//                        Notification::route('mail', $transaction->user->email)->notify(new DepositConfirmationNotification($transaction));
+                        //                        Notification::route('mail', $transaction->user->email)->notify(new DepositConfirmationNotification($transaction));
                     }
                 }
             }
         }
 
         return response()->json(['success' => false, 'message' => 'Deposit Failed']);
+    }
+
+    public function walletTransfer(Request $request)
+    {
+        Validator::make($request->all(), [
+            'amount' => ['required'],
+            'wallet_id' => ['required'],
+            'to_wallet_id' => ['required']
+        ])->setAttributeNames([
+            'amount' => trans('public.transfer_amount'),
+            'wallet_id' => trans('public.wallet'),
+            'to_wallet_id' => trans('public.wallet')
+        ])->validate();
+
+        $user = Auth::user();
+        $wallet = Wallet::find($request->wallet_id);
+        $to_wallet_id = Wallet::find($request->to_wallet_id);
+
+        // validate sufficient bonus wallet amount
+        if ($request->has('wallet_id')) {
+            $wallet = Wallet::find($request->wallet_id);
+
+            if ($wallet->balance < $request->amount) {
+                throw ValidationException::withMessages([
+                    'amount' => trans('public.insufficient_balance'),
+                ]);
+            }
+        }
+
+        $amount = $request->amount;
+
+        if ($request->has('to_wallet_id')) {
+            // deduct wallet_id amount
+            $oldBalance = $wallet->balance;
+            $wallet->decrement('balance', $amount);
+
+            // add amount to to_wallet_id
+            $to_wallet_old_balance = $to_wallet_id->balance;
+            $to_wallet_id->increment('balance', $amount);
+            $to_wallet_new_balance = $to_wallet_id->fresh()->balance;
+
+            Transaction::create([
+                'user_id' => $user->id,
+                'category' => $to_wallet_id->type,
+                'transaction_type' => 'transfer',
+                'from_wallet_id' => $wallet->id,
+                'to_wallet_id' => $to_wallet_id->id,
+                'ticket' => $deal['deal_Id'] ?? null,
+                'transaction_number' => RunningNumberService::getID('transaction'),
+                'amount' => $amount,
+                'from_currency' => 'USD',
+                'to_currency' => 'USD',
+                'conversion_rate' => 1,
+                'conversion_amount' => $amount,
+                'transaction_amount' => $amount,
+                'fund_type' => $user->role == 'user' ? MetaService::REAL_FUND : MetaService::DEMO_FUND,
+                'old_wallet_amount' => $to_wallet_old_balance,
+                'new_wallet_amount' => $to_wallet_new_balance,
+                'status' => 'success',
+                'comment' => $deal['conduct_Deal']['comment'] ?? 'Transfer',
+                'approval_at' => now(),
+            ]);
+        }
+
+        return back()->with('toast', [
+            'title' => trans("public.success"),
+            'message' => trans('public.toast_transfer_success'),
+            'type' => 'success',
+        ]);
     }
 }

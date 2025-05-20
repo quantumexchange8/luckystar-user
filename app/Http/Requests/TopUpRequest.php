@@ -23,7 +23,7 @@ class TopUpRequest extends FormRequest
         return true;
     }
 
-     public function attributes(): array
+    public function attributes(): array
     {
         return [
             'wallet_id' => trans('public.wallet'),

@@ -1,6 +1,15 @@
 <script setup>
 import { IconCloudDollar, IconCurrencyDollar, IconCurrencyDollarOff } from '@tabler/icons-vue';
 import { Card, Skeleton } from 'primevue';
+import { generalFormat } from '@/Composables/format';
+
+const props = defineProps({
+    successAmount: Number,
+    failAmount: Number,
+    totalAmount: Number,
+})
+
+const { formatAmount } = generalFormat();
 </script>
 
 <template>
@@ -13,12 +22,8 @@ import { Card, Skeleton } from 'primevue';
                             {{ $t("public.success_amount") }}
                         </div>
                         <div class="text-xl font-semibold md:text-3xl">
-                            <!-- <div v-if="isLoading">
-                                <Skeleton width="5rem" height="2rem"></Skeleton>
-                            </div> -->
-
                             <div>
-                                $213
+                                {{ formatAmount(successAmount, 2) }}
                             </div>
 
                         </div>
@@ -40,12 +45,8 @@ import { Card, Skeleton } from 'primevue';
                             {{ $t("public.reject_amount") }}
                         </div>
                         <div class="text-xl font-semibold md:text-3xl">
-                            <!-- <div v-if="isLoading">
-                                <Skeleton width="5rem" height="2rem"></Skeleton>
-                            </div> -->
-                            
                             <div>
-                                $444
+                                {{ formatAmount(failAmount, 2) }}
                             </div>
                         </div>
                     </div>
@@ -67,12 +68,8 @@ import { Card, Skeleton } from 'primevue';
                             {{ $t("public.total_amount") }}
                         </div>
                         <div class="text-xl font-semibold md:text-3xl">
-                            <!-- <div v-if="isLoading">
-                                <Skeleton width="5rem" height="2rem"></Skeleton>
-                            </div> -->
-                            
                             <div>
-                                $807
+                                {{ formatAmount(totalAmount, 2) }}
                             </div>
                         </div>
                     </div>
