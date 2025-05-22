@@ -1,146 +1,114 @@
 <script setup>
 import { IconCalendarCheck, IconCalendarCancel, IconUserStar } from '@tabler/icons-vue';
-import { Card, Button, Tag } from 'primevue';
-import { ref } from 'vue';
+import SelectChipGroup from '@/Components/SelectChipGroup.vue';
+import { Card, Button, Tag, Skeleton } from 'primevue';
+import { ref, watch } from 'vue';
 
-const dummyData = ref([
+const props = defineProps({
+    subscribedStrategyCount: Number,
+});
+
+const subscribedStrategy = ref([]);
+const isLoading = ref(false);
+const selectedSubStrategy = ref(null);
+const emit = defineEmits(['update:strategy']);
+
+const getSubscribedStrategy = async () => {
+    isLoading.value = true;
+
+    try {
+        const response = await axios.get('/investment/get_subscribed_strategy');
+        subscribedStrategy.value = response.data.subscribedStrategy || [];
+      
+        if (subscribedStrategy.value.length > 0) {
+            selectedSubStrategy.value = subscribedStrategy.value[0];
+          
+            emit('update:strategy', selectedSubStrategy.value);
+        }
+    } catch (error) {
+        console.error('Error getting subscribedStrategy:', error);
+    } finally {
+        isLoading.value = false;
+    }
+};
+
+getSubscribedStrategy();
+
+watch(selectedSubStrategy, (newVal) => {
+    if (newVal) {
+        emit('update:strategy', newVal);
+    }
+});
+
+const dummy = ref([
     {
-        strategyName: 'Growth Strategy A',
-        username: 'trader_alpha',
-        totalGain: 5.2,
-        monthlyGain: 1.1,
-        account_no: '123455',
-        joined_date: '2025-04-30',
-        terminated_date: '2025-12-31',
+        master_name: 'STR0000001'
     },
-    {
-        strategyName: 'Value Strategy B',   
-        username: 'investor_beta',
-        totalGain: 10.0,
-        monthlyGain: 2.4,
-        account_no: '123455',
-        joined_date: '2025-04-30',
-        terminated_date: '2025-12-31',
+      {
+        master_name: 'STR0000001'
     },
-    // {
-    //     strategyName: 'Momentum Strategy C',
-    //     username: 'swing_chad',
-    //     totalGain: -2.5,
-    //     monthlyGain: -0.8,
-    //     account_no: '123455',
-    //     joined_date: '2025-04-30',
-    //     terminated_date: '2025-12-31',
-    // },
-]);
+      {
+        master_name: 'STR0000001'
+    },
+      {
+        master_name: 'STR0000001'
+    },
+       {
+        master_name: 'STR0000001'
+    },
+      {
+        master_name: 'STR0000001'
+    },
+       {
+        master_name: 'STR0000001'
+    },
+       {
+        master_name: 'STR0000001'
+    },
+      {
+        master_name: 'STR0000001'
+    },
+])
+
 </script>
 
 <template>
-    <div class="flex gap-5 items-center overflow-x-auto w-full">
-        <Card v-for="(strategy, index) in dummyData" :key="index"    class="flex flex-col gap-3 flex-shrink-0 min-w-80 md:min-w-[480px] lg:min-w-[709px]">
-            <template #content>
-                <div class="flex flex-col items-center gap-4 self-stretch">
-                   <div class="relative w-full flex items-center gap-4 self-stretch">
-                       
-                        <div class="absolute top-0 right-0 text-xl font-semibold">
-                            $500
-                        </div>
-
-                        <img
-                            class="object-cover w-11 h-11 rounded-full"
-                            src="https://img.freepik.com/free-icon/user_318-159711.jpg"
-                            alt="masterPic"
-                        />
-
-                        <div class="flex flex-col items-start">
-                            <div class="self-stretch truncate text-surface-950 dark:text-white font-bold">
-                                {{ strategy.strategyName }}
-                            </div>
-                            <div class="self-stretch truncate text-surface-500 text-sm">
-                                {{ strategy.username }}
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="flex flex-wrap items-center gap-2 self-stretch">
-                        <Tag severity="primary">
-                            SUB123123
-                        </Tag>
-                        <Tag severity="secondary">
-                            15 Days
-                        </Tag>
-                    </div>
-
-                    <div class="py-2 flex justify-center items-center self-stretch border-y border-solid border-surface-200 dark:border-surface-700">
-                        <div class="w-full flex flex-col items-center">
-                            <div class="self-stretch text-surface-950 dark:text-white text-center font-semibold">
-                                {{ strategy.totalGain }}%
-                            </div>
-                            <div class="self-stretch text-surface-500 text-center text-xs">
-                                {{ $t('public.total_gain') }}
-                            </div>
-                        </div>
-                        <div class="w-full flex flex-col items-center">
-                            <div class="self-stretch text-surface-950 dark:text-white text-center font-semibold">
-                                {{ strategy.monthlyGain }}%
-                            </div>
-                            <div class="self-stretch text-gray-500 text-center text-xs">
-                                {{ $t('public.monthly_gain') }}
-                            </div>
-                        </div>
-                        <div class="w-full flex flex-col items-center">
-                            <div class="self-stretch text-center font-semibold">
-                                -
-                            </div>
-                            <div class="self-stretch text-gray-500 text-center text-xs">
-                                {{ $t('public.latest') }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col gap-1 w-full">
-                        <div class="py-1 flex items-center gap-3 w-full text-gray-500">
-                            <div class="flex items-center gap-3 w-full">
-                                <IconUserStar size="20" stroke-width="1.25" />
-                                <div class="text-gray-950 dark:text-white text-sm font-medium">
-                                    {{ strategy.account_no }}
-                                </div>
-                            </div>
-                        </div>
-                      
-                        <div class="py-1 flex items-center gap-3 w-full text-gray-500">
-                            <div class="flex items-center gap-3 w-full">
-                                <IconCalendarCheck size="20" stroke-width="1.25" />
-                                <div class="text-gray-950 dark:text-white text-sm font-medium">
-                                    <span class="text-blue-500">{{ strategy.joined_date }}</span> 
-                                    {{ $t('public.joined') }}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="py-1 flex items-center gap-3 w-full text-gray-500">
-                            <div class="flex items-center gap-3 w-full">
-                                <IconCalendarCancel size="20" stroke-width="1.25" />
-                                <div class="text-gray-950 dark:text-white text-sm font-medium">
-                                    <span class="text-red-500 ml-1">{{ strategy.terminated_date }}</span>
-                                    {{ $t('public.terminated') }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="flex items-center gap-3 w-full">
-                        <Button
-                            type="button" 
-                            class="w-full"
-                            size="small"
-                            :label="$t('public.view_strategy')"
-                        />
-                    </div>
-                </div>
-            </template>
-        </Card>
-        
+    <div v-if="isLoading" class="w-full flex flex-row gap-3">
+        <Skeleton
+            v-for="index in 2"
+            :key="index"
+            class="flex-shrink-0"
+            height="2.5rem"
+            width="10rem"
+            borderRadius="2rem"
+        />
     </div>
+
+    <SelectChipGroup
+        v-else
+        v-model="selectedSubStrategy"
+        :items="subscribedStrategy"
+        value-key="id"
+        class="flex-shrink-0 w-full sm:max-w-[300px]"
+    >
+        <template #option="{ item }">
+            {{ item.master_name }}
+        </template>
+    </SelectChipGroup>
+    <!-- <div
+        v-else
+        class="flex gap-3 overflow-x-auto sm:max-w-[300px]"
+        style="min-width: 300px;"
+    >
+        <SelectChipGroup
+            v-model="selectedSubStrategy"
+            :items="subscribedStrategy"
+            value-key="id"
+            class="flex-shrink-0 min-w-[300px]"
+        >
+            <template #option="{ item }">
+                {{ item.master_name }}
+            </template>
+        </SelectChipGroup>
+    </div> -->
 </template>

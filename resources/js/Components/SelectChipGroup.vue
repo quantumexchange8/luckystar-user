@@ -15,15 +15,24 @@ const props = defineProps({
 
 const emit = defineEmits(["update:modelValue"]);
 
+// const selectItem = (item) => {
+//     const value = props.valueKey ? item[props.valueKey] : item;
+//     emit("update:modelValue", value);
+// };
+
+// const isSelected = (item) => {
+//     const value = props.valueKey ? item[props.valueKey] : item;
+//     return props.modelValue === value;
+// };
+
 const selectItem = (item) => {
-    const value = props.valueKey ? item[props.valueKey] : item;
-    emit("update:modelValue", value);
+    emit("update:modelValue", item); 
 };
 
 const isSelected = (item) => {
-    const value = props.valueKey ? item[props.valueKey] : item;
-    return props.modelValue === value;
+    return props.modelValue === item;
 };
+
 </script>
 
 <template>

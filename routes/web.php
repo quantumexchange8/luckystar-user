@@ -138,6 +138,8 @@ Route::middleware('auth')->group(function () {
      */
     Route::prefix('investment')->group(function () {
         Route::get('/', [InvestmentController::class, 'index'])->name('investment.index');
+        Route::get('/get_subscribed_strategy', [InvestmentController::class, 'subscribedStrategy'])->name('investment.subscribedStrategy');
+        Route::get('/get_subscribed_strategy_data', [InvestmentController::class, 'subscribedStrategyData'])->name('investment.subscribedStrategyData');
     });
 
     /**

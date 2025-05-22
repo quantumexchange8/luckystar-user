@@ -152,7 +152,6 @@ return [
     "highest_bonus" => "Highest Bonus",
     "joined" => "Joined",
     "terminated" => "Terminated",
-    "view_strategy" => "View Strategy",
     "total_downline" => "Total Downline",
     "active_balance" => "Active Balance",
     "old_password" => "Old Password",
@@ -251,4 +250,14 @@ return [
     "investment_amount_requirement" => "Investment amount must be greater than or equal to $:amount",
     "account_insufficient_balance" => "Account balance is insufficient",
     "toast_invest_strategy_success" => "Investment strategy request has been submitted successfully",
+    "join_date" => "Join Date",
+    "active" => "Active",
+    "subscription_no" => "Subscription No",
+    "settlement_period" => "Settlement Period",
+    "status" => "Status",
+    "no_subscription_record" => "No Subscription Record",
+    "subscription_loading_caption" => "Loading subscription data. Please wait. ",
+    "terminate" => "Terminate",
+    "trade_report" => "Trade Report",
+    
 ];
