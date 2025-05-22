@@ -107,7 +107,7 @@ class TradingAccountService {
                 'name' => Auth::user()->full_name,
                 'company' => null,
                 'leverage' => $trading_account->margin_leverage,
-                'balance' => $trading_account->balance + $amount,
+                'balance' => $trading_account->balance + $amount, // TODO::filter type to deposit / withdraw
                 'credit' => $trading_account->credit ?? 0,
                 'rights' => 5
             ];

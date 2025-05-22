@@ -46,7 +46,7 @@
 }
 
 .p-radiobutton:not(.p-disabled):has(.p-radiobutton-input:hover).p-radiobutton-checked .p-radiobutton-box .p-radiobutton-icon {
-    @apply bg-primary-contrast
+    @apply bg-primary-100 dark:bg-primary-900
 }
 
 .p-radiobutton:not(.p-disabled):has(.p-radiobutton-input:focus-visible) .p-radiobutton-box {

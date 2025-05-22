@@ -1,6 +1,5 @@
 <script setup>
-import {Image, Divider, Tag} from "primevue";
-import {usePage} from "@inertiajs/vue3";
+import {Image, Divider, Tag, Avatar} from "primevue";
 import {
     IconPhone,
     IconGlobe,
@@ -8,21 +7,31 @@ import {
     IconCalendar,
     IconHome,
 } from "@tabler/icons-vue"
+import {generalFormat} from "@/Composables/format.js";
 
 const props = defineProps({
     user: Object,
-})
+});
+
+const {formatNameLabel} = generalFormat();
 </script>
 
 <template>
     <div class="flex flex-col md:flex-row rounded-xl bg-surface-0 dark:bg-surface-900 text-surface-700 dark:text-surface-0 border dark:border-surface-600 shadow-toast w-full">
         <div class="flex self-stretch w-full md:max-w-60 md:h-60">
             <Image
-                src="https://primefaces.org/cdn/primevue/images/galleria/galleria10.jpg"
+                v-if="user.profile_photo"
+                :src="user.profile_photo"
                 alt="Image"
                 image-class="w-full h-full rounded-t-xl md:rounded-tl-xl md:rounded-tr-none md:rounded-bl-xl object-cover"
                 preview
             />
+            <div
+                v-else
+                class="w-full h-full rounded-t-xl md:rounded-tl-xl md:rounded-tr-none md:rounded-bl-xl object-cover text-3xl bg-surface-300 flex items-center justify-center"
+            >
+                {{ formatNameLabel(user.full_name) }}
+            </div>
         </div>
         <div class="flex flex-col justify-between self-stretch gap-2 p-4 md:p-6 w-full">
             <div class="flex gap-5 items-start self-stretch">

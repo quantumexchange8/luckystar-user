@@ -145,7 +145,13 @@ Route::middleware('auth')->group(function () {
      *           Profile
      * ==============================
      */
-    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::prefix('profile')->group(function () {
+        Route::get('/', [ProfileController::class, 'index'])->name('profile');
+        Route::get('/getKycFiles', [ProfileController::class, 'getKycFiles'])->name('profile.getKycFiles');
+
+        Route::post('uploadIdentityProof', [ProfileController::class, 'uploadIdentityProof'])->name('profile.uploadIdentityProof');
+        Route::post('uploadResidencyProof', [ProfileController::class, 'uploadResidencyProof'])->name('profile.uploadResidencyProof');
+    });
 });
 
 require __DIR__ . '/auth.php';
