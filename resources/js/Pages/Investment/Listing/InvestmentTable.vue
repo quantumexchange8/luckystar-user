@@ -56,7 +56,7 @@ const loadLazyData = (event) => {
             const results = await response.json();
 
             subscribedStrategy.value = results?.data?.data;
-console.log(subscribedStrategy.value)
+
             subscription.value = subscribedStrategy.value[0]?.trading_subscription;
             totalRecords.value = results?.data?.total;
             isLoading.value = false;
@@ -346,9 +346,7 @@ const getSeverity = (status) => {
     
                             <Column
                                 field="join_days"
-                                 style="min-width: 9rem"
-                                
-                            
+                                style="min-width: 5rem"
                             >
                                 <template #header>
                                     <span class="block">{{ 'join days' }}</span>
@@ -371,7 +369,7 @@ const getSeverity = (status) => {
                                 </template>
                             </Column>
 
-                              <Column
+                            <Column
                                 field="action"
                                 frozen
                                 alignFrozen="right"

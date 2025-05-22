@@ -3,6 +3,10 @@ import {  IconSettings } from '@tabler/icons-vue';
 import { Button, Dialog } from 'primevue';
 import { ref } from 'vue';
 
+const props = defineProps({
+    subscription: Object,
+})
+
 const visible = ref(false);
 
 const openDialog = () => {

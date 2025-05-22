@@ -10,8 +10,6 @@ const props = defineProps({
    subscribedStrategy: Array,
 });
 
-console.log('view',props.subscribedStrategy)
-
 const {formatAmount, formatNameLabel} = generalFormat();
 
 const totalBalance = computed(() => {
