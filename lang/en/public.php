@@ -190,7 +190,7 @@ return [
     "upload_kyc_info_2" => "To serve you better we ask that you provide original identifying documents. It also helps to ensure that the bonus rewards you receive are sent correctly.",
     "front_identity" => "Front Identity",
     "back_identity" => "Back Identity",
-    "drag_and_drop" => "Drag and drop files to here to upload.",
+    "drag_and_drop" => "Drag and drop file.",
     "choose_file" => "Choose File",
     "replace_file" => "Replace File",
     "max_size" => "Max Size",
@@ -260,4 +260,11 @@ return [
     "terminate" => "Terminate",
     "trade_report" => "Trade Report",
     
+    "toast_upload_identity_success" => "Proof of identity has been uploaded successfully",
+    "invalid_action" => "Invalid Action",
+    "toast_file_submitted_warning" => "File has been submitted. Please wait for approval.",
+    "document_type" => "Document Type",
+    "residency_proof" => "Residency Proof",
+    "toast_upload_residency_success" => "Proof of residency has been uploaded successfully",
+    "view_file" => "View File",
 ];

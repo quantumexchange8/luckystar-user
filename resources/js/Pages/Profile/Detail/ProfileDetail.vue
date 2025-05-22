@@ -27,14 +27,14 @@ defineProps({
             <TradingBackground
                 :user="user"
             />
-        </div>
 
-        <div class="flex flex-col gap-3 md:gap-5 items-center self-stretch w-full">
             <!-- Trading Background -->
             <BeneficiaryInformation
                 :user="user"
             />
+        </div>
 
+        <div class="flex flex-col gap-3 md:gap-5 items-center self-stretch w-full">
             <!-- KYC Verification -->
             <KycVerification
                 :user="user"

@@ -134,46 +134,58 @@ const validateFile = (fileInput, identity_type) => {
     }
 };
 
+const emit = defineEmits(['update:identity_status']);
+
 const submitForm = () => {
-    console.log(form);
-    form.post(route('/'), {
+    form.post(route('profile.uploadIdentityProof'), {
         onSuccess: () => {
             frontFile.value = null;
             backFile.value = null;
             passportFile.value = null;
+            emit('update:identity_status', {
+                identity_status: 'pending',
+                proof_type: form.document_type,
+            });
         },
+        preserveScroll: true,
+        preserveState: true,
     })
 }
 </script>
 
 <template>
     <div class="flex flex-col gap-5 w-full">
-       <div class="flex items-center gap-5">
-            <div class="flex items-center gap-2 text-sm">
-                <div class="flex p-2 justify-center items-center">
-                    <RadioButton 
-                        v-model="form.document_type" 
-                        inputId="photo_id" 
-                        name="photo_id" 
-                        value="photo_id" 
+        <div class="flex flex-col gap-1 items-start self-stretch">
+            <InputLabel
+                for="proof_type"
+                :value="$t('public.choose_document_type')"
+            />
+            <div class="flex items-center gap-5">
+                <div class="flex items-center gap-2 text-sm">
+                    <RadioButton
+                        v-model="form.document_type"
+                        inputId="photo_id"
+                        name="photo_id"
+                        value="photo_id"
                     />
+                    <label for="photo_id">{{ $t('public.photo_id') }}</label>
                 </div>
-                <label for="photo_id">{{ $t('public.photo_id') }}</label>
-            </div>
-            <div class="flex items-center gap-2 text-sm">
-                <div class="flex p-2 justify-center items-center">
-                    <RadioButton 
-                        v-model="form.document_type" 
-                        inputId="passport" 
-                        name="passport" 
-                        value="passport" 
+                <div class="flex items-center gap-2 text-sm">
+                    <RadioButton
+                        v-model="form.document_type"
+                        inputId="passport"
+                        name="passport"
+                        value="passport"
                     />
+                    <label for="passport">{{ $t('public.passport') }}</label>
                 </div>
-                <label for="passport">{{ $t('public.passport') }}</label>
             </div>
         </div>
 
-        <div v-if="form.document_type === 'photo_id'" class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-5 w-full">
+        <div
+            v-if="form.document_type === 'photo_id'"
+            class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-5 w-full"
+        >
             <!-- front identity -->
             <div class="flex flex-col gap-1 items-start self-stretch">
                 <InputLabel for="front_identity">{{ $t('public.front_identity' )}}</InputLabel>
@@ -328,7 +340,7 @@ const submitForm = () => {
         </div>
 
         <!-- passport -->
-        <div v-else-if="form.document_type === 'passport'" class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-5 w-full">
+        <div v-else-if="form.document_type === 'passport'" class="w-full">
             <div class="flex flex-col gap-1 items-start self-stretch">
                 <InputLabel for="passport_identity">{{ $t('public.passport' )}}</InputLabel>
                 <div
