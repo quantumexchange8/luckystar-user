@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -33,6 +34,9 @@ class TradingSubscription extends Model
         'handle_by',
     ];
 
+    protected $appends = ['join_days'];
+
+
     protected function casts(): array
     {
         return [
@@ -57,5 +61,14 @@ class TradingSubscription extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function getJoinDaysAttribute()
+    {
+        if (!$this->approval_at) {
+            return '-';
+        }
+
+        return floor(Carbon::parse($this->approval_at)->diffInDays(now()));
     }
 }

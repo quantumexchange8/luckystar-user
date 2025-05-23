@@ -60,4 +60,9 @@ class TradingMaster extends Model
     {
         return $this->hasMany(TradingMasterHasFee::class, 'trading_master_id', 'id');
     }
+
+    public function trading_subscription(): HasMany
+    {
+        return $this->hasMany(TradingSubscription::class, 'master_meta_login', 'meta_login');
+    }
 }

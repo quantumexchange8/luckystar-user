@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
-use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Wallet;
+use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -20,6 +22,10 @@ class TransactionController extends Controller
         if ($request->has('lazyEvent')) {
             $data = json_decode($request->only(['lazyEvent'])['lazyEvent'], true);
 
+            $walletIds = Wallet::where('user_id', Auth::id())
+                ->where('type', 'cash_wallet')
+                ->pluck('id');
+
             $query = Transaction::query()
                 ->with([
                     'user:id,first_name,last_name,email,upline_id',
@@ -29,7 +35,10 @@ class TransactionController extends Controller
                 ])
                 ->where('user_id', Auth::id())
                 ->whereNot('status', 'processing')
-                ->where('category', 'cash_wallet');
+                ->where(function ($q) use ($walletIds) {
+                    $q->whereIn('from_wallet_id', $walletIds)
+                        ->orWhereIn('to_wallet_id', $walletIds);
+                });
 
             //global filter
             if (!empty($data['filters']['global']['value'])) {
@@ -103,6 +112,10 @@ class TransactionController extends Controller
         if ($request->has('lazyEvent')) {
             $data = json_decode($request->only(['lazyEvent'])['lazyEvent'], true);
 
+            $walletIds = Wallet::where('user_id', Auth::id())
+                ->where('type', 'bonus_wallet')
+                ->pluck('id');
+
             $query = Transaction::query()
                 ->with([
                     'user:id,first_name,last_name,email,upline_id',
@@ -112,7 +125,10 @@ class TransactionController extends Controller
                 ])
                 ->where('user_id', Auth::id())
                 ->whereNot('status', 'processing')
-                ->where('category', 'bonus_wallet');
+                ->where(function ($q) use ($walletIds) {
+                    $q->whereIn('from_wallet_id', $walletIds)
+                        ->orWhereIn('to_wallet_id', $walletIds);
+                });
 
             //global filter
             if (!empty($data['filters']['global']['value'])) {

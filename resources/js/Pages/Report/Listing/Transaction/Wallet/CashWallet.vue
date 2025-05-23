@@ -346,7 +346,7 @@ watchEffect(() => {
                             </template>
                         </Column>
 
-                        <!-- <Column
+                        <Column
                             field="to_wallet_id"
                             style="min-width: 12rem"
                             sortable
@@ -358,7 +358,7 @@ watchEffect(() => {
                             <template #body="{ data }">
                                 <span>{{ data.to_wallet?.type ? $t(`public.${data.to_wallet.type}`) : '-' }}</span>
                             </template>
-                        </Column> -->
+                        </Column>
 
                         <Column
                             field="transaction_type"
@@ -415,7 +415,7 @@ watchEffect(() => {
         </template>
     </Card>
 
-     <Popover ref="op">
+    <Popover ref="op">
         <div class="flex flex-col gap-6 w-60">
             <!-- Filter Date -->
             <div class="flex flex-col gap-2 items-center self-stretch">

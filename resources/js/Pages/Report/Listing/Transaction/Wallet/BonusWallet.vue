@@ -384,7 +384,14 @@ watchEffect(() => {
                                 <span class="block">{{ 'amount' }}</span>
                             </template>
                             <template #body="{ data }">
-                                <span>{{ formatAmount(data.amount, 2) }}</span>
+                                <span 
+                                    :class="{
+                                        'text-green-500': data.to_wallet?.type === 'bonus_wallet',
+                                        'text-red-500': data.to_wallet?.type !== 'bonus_wallet',
+                                    }"
+                                >
+                                  {{ formatAmount(data.amount, 2) }}
+                                </span>
                             </template>
                         </Column>
 

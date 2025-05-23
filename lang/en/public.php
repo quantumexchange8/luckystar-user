@@ -251,6 +251,15 @@ return [
     "investment_amount_requirement" => "Investment amount must be greater than or equal to $:amount",
     "account_insufficient_balance" => "Account balance is insufficient",
     "toast_invest_strategy_success" => "Investment strategy request has been submitted successfully",
+    "join_date" => "Join Date",
+    "active" => "Active",
+    "subscription_no" => "Subscription No",
+    "settlement_period" => "Settlement Period",
+    "status" => "Status",
+    "no_subscription_record" => "No Subscription Record",
+    "subscription_loading_caption" => "Loading subscription data. Please wait. ",
+    "terminate" => "Terminate",
+    "trade_report" => "Trade Report",
     "toast_upload_identity_success" => "Proof of identity has been uploaded successfully",
     "invalid_action" => "Invalid Action",
     "toast_file_submitted_warning" => "File has been submitted. Please wait for approval.",
@@ -273,4 +282,5 @@ return [
     "female" => "Female",
     "user_not_reach_eighteen_years" => "The person is not yet 18 years old.",
     "ic_passport_no_help_text" => "Enter IC/Passport No with no space or special character like '-' or '_'.",
+    "terminated_at" => "Terminated At"
 ];
