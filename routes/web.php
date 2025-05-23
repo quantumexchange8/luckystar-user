@@ -151,6 +151,8 @@ Route::middleware('auth')->group(function () {
 
         Route::post('uploadIdentityProof', [ProfileController::class, 'uploadIdentityProof'])->name('profile.uploadIdentityProof');
         Route::post('uploadResidencyProof', [ProfileController::class, 'uploadResidencyProof'])->name('profile.uploadResidencyProof');
+        Route::post('updateProfileInformation', [ProfileController::class, 'updateProfileInformation'])->name('profile.updateProfileInformation');
+        Route::post('updateGeneralInformation', [ProfileController::class, 'updateGeneralInformation'])->name('profile.updateGeneralInformation');
     });
 });
 

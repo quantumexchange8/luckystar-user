@@ -38,9 +38,9 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         Validator::make($request->all(), [
-            'username' => ['required', 'alpha_dash',  'regex:/^[a-zA-Z0-9\p{Han}._\- ]+$/u', 'max:255', 'unique:'.User::class],
-            'first_name' => ['required', 'regex:/^[a-zA-Z0-9\p{Han}. ]+$/u', 'max:255'],
-            'last_name' => ['required', 'regex:/^[a-zA-Z0-9\p{Han}. ]+$/u', 'max:255'],
+            'username' => ['required', 'alpha_dash',  'regex:/^[\p{L}\p{N}\p{M}. @]+$/u', 'max:255', 'unique:'.User::class],
+            'first_name' => ['required', 'regex:/^[\p{L}\p{N}\p{M}. @]+$/u', 'max:255'],
+            'last_name' => ['required', 'regex:/^[\p{L}\p{N}\p{M}. @]+$/u', 'max:255'],
             'email' => ['required', 'string', 'email'],
             'dial_code' => ['required'],
             'phone' => ['required', 'max:255', 'unique:' . User::class],

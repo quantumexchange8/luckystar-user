@@ -1,9 +1,9 @@
 <script setup>
-import GeneralInformation from "@/Pages/Profile/Detail/Partials/GeneralInformation.vue";
-import TradingBackground from "@/Pages/Profile/Detail/Partials/TradingBackground.vue";
-import JobInformation from "@/Pages/Profile/Detail/Partials/JobInformation.vue";
-import BeneficiaryInformation from "@/Pages/Profile/Detail/Partials/BeneficiaryInformation.vue";
-import KycVerification from "@/Pages/Profile/Detail/Partials/KycVerification.vue";
+import GeneralInformation from "@/Pages/Profile/Detail/GeneralInformation.vue";
+import TradingBackground from "@/Pages/Profile/Detail/TradingBackground.vue";
+import JobInformation from "@/Pages/Profile/Detail/JobInformation.vue";
+import BeneficiaryInformation from "@/Pages/Profile/Detail/BeneficiaryInformation.vue";
+import KycVerification from "@/Pages/Profile/Detail/KycVerification.vue";
 
 defineProps({
     user: Object,

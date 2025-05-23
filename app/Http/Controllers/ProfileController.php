@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Country;
 use App\Models\Kyc;
 use App\Models\User;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Http\RedirectResponse;
+use Carbon\Carbon;
+use DateInvalidOperationException;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
-use Inertia\Response;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
+use DateInterval;
+use DateTime;
 
 class ProfileController extends Controller
 {
@@ -204,5 +205,120 @@ class ProfileController extends Controller
             'message' => trans('public.toast_upload_residency_success'),
             'type' => 'success',
         ]);
+    }
+
+    /**
+     * @throws FileDoesNotExist
+     * @throws FileIsTooBig
+     */
+    public function updateProfileInformation(Request $request)
+    {
+        Validator::make($request->all(), [
+            'first_name' => ['required', 'regex:/^[\p{L}\p{N}\p{M}. @]+$/u', 'max:255'],
+            'last_name' => ['required', 'regex:/^[\p{L}\p{N}\p{M}. @]+$/u', 'max:255'],
+            'dial_code' => ['required'],
+            'phone' => ['required'],
+            'country_id' => ['required'],
+            'address' => ['required'],
+        ])->setAttributeNames([
+            'first_name' => trans('public.first_name'),
+            'last_name' => trans('public.last_name'),
+            'dial_code' => trans('public.dial_code') . '/' .  trans('public.phone'),
+            'phone' => trans('public.dial_code') . '/' .  trans('public.phone'),
+            'country_id' => trans('public.nationality'),
+            'address' => trans('public.address'),
+        ])->validate();
+
+        $user = $request->user();
+        $country = Country::find($request->country_id);
+
+        $user->update([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'dial_code' => $request->dial_code,
+            'phone' => $request->phone,
+            'phone_number' => $request->dial_code . $request->phone,
+            'country_id' => $country->id,
+            'nationality' => $country->nationality,
+            'address' => $request->address,
+        ]);
+
+        if ($request->hasFile('profile_photo')) {
+            $user->clearMediaCollection('profile_photo');
+            $user->addMedia($request->profile_photo)->toMediaCollection('profile_photo');
+        }
+
+        if ($request->profile_action == 'remove') {
+            $user->clearMediaCollection('profile_photo');
+        }
+
+        $this->check_required_fields();
+
+        return back()->with('toast', [
+            'title' => trans('public.success'),
+            'message' => trans('public.toast_update_profile_success'),
+            'type' => 'success',
+        ]);
+    }
+
+    /**
+     * @throws DateInvalidOperationException
+     * @throws Exception
+     */
+    public function updateGeneralInformation(Request $request)
+    {
+        Validator::make($request->all(), [
+            'identity_number' => ['required', 'regex:/^[A-Za-z0-9]+$/'],
+            'gender' => ['required'],
+            'dob' => ['required'],
+        ])->setAttributeNames([
+            'identity_number' => trans('public.ic_passport_no'),
+            'gender' => trans('public.gender'),
+            'dob' => trans('public.date_of_birth'),
+        ])->validate();
+
+        $user = $request->user();
+        $dobDate = Carbon::parse($request->dob);
+        $dobDate->modify('+1 day');
+        $today = new DateTime();
+        $todayMinus18Years = $today->sub(new DateInterval('P18Y'));
+
+        if ($dobDate > $todayMinus18Years) {
+            throw ValidationException::withMessages(['dob' => trans('public.user_not_reach_eighteen_years')]);
+        }
+
+        $user->update([
+            'identity_number' => $request->identity_number,
+            'gender' => $request->gender,
+            'dob' => $dobDate,
+        ]);
+
+        $this->check_required_fields();
+
+        return back()->with('toast', [
+            'title' => trans('public.success'),
+            'message' => trans('public.toast_update_profile_success'),
+            'type' => 'success',
+        ]);
+    }
+
+    private function check_required_fields()
+    {
+        $user = Auth::user();
+
+        $requiredFields = ['first_name', 'last_name', 'dial_code', 'phone', 'phone_number', 'country_id', 'nationality', 'address', 'identity_number', 'gender', 'dob' ];;
+        $incomplete = false;
+
+        foreach ($requiredFields as $field) {
+            if (empty($user->$field)) {
+                $incomplete = true;
+                break;
+            }
+        }
+
+        if (!$incomplete) {
+            $user->profile_status = 'completed';
+            $user->save();
+        }
     }
 }

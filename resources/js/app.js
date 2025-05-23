@@ -8,6 +8,7 @@ import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 import PrimeVue from 'primevue/config';
 import { i18nVue } from 'laravel-vue-i18n';
 import { ConfirmationService, ToastService } from 'primevue';
+import iosZoomFix from '../js/Composables/ios-zoom-fix.js';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -19,7 +20,7 @@ createInertiaApp({
             import.meta.glob('./Pages/**/*.vue'),
         ),
     setup({ el, App, props, plugin }) {
-        return createApp({ render: () => h(App, props) })
+        const app = createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
             .use(PrimeVue, {
@@ -33,8 +34,11 @@ createInertiaApp({
                 }
             })
             .use(ConfirmationService)
-            .use(ToastService)
-            .mount(el);
+            .use(ToastService);
+
+        app.mount(el);
+
+        iosZoomFix();
     },
     progress: {
         color: '#4B5563',

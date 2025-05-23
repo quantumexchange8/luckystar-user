@@ -1,13 +1,15 @@
 <script setup>
-import {Image, Divider, Tag, Avatar} from "primevue";
+import {Image, Divider, Tag} from "primevue";
 import {
     IconPhone,
     IconGlobe,
     IconMail,
     IconCalendar,
-    IconHome,
+    IconHome, IconAlertSquareRoundedFilled,
 } from "@tabler/icons-vue"
 import {generalFormat} from "@/Composables/format.js";
+import dayjs from "dayjs";
+import UpdateProfileInformation from "@/Pages/Profile/UpdateProfileInformation.vue";
 
 const props = defineProps({
     user: Object,
@@ -28,12 +30,16 @@ const {formatNameLabel} = generalFormat();
             />
             <div
                 v-else
-                class="w-full h-full rounded-t-xl md:rounded-tl-xl md:rounded-tr-none md:rounded-bl-xl object-cover text-3xl bg-surface-300 flex items-center justify-center"
+                class="w-full h-full rounded-t-xl md:rounded-tl-xl md:rounded-tr-none md:rounded-bl-xl object-cover text-3xl bg-surface-300 dark:bg-surface-700 flex items-center justify-center"
             >
                 {{ formatNameLabel(user.full_name) }}
             </div>
         </div>
-        <div class="flex flex-col justify-between self-stretch gap-2 p-4 md:p-6 w-full">
+        <div class="flex flex-col justify-between self-stretch gap-2 p-4 md:p-6 w-full relative">
+            <UpdateProfileInformation
+                :user="user"
+            />
+
             <div class="flex gap-5 items-start self-stretch">
                 <div class="flex flex-col gap-1 items-start self-stretch">
                     <div class="text-xl font-bold">
@@ -49,7 +55,7 @@ const {formatNameLabel} = generalFormat();
                         </div>
                         <Divider layout="vertical" />
                         <div class="text-sm text-surface-600">
-                            {{ user.rank.rank_name ?? 'Member' }}
+                            {{ $t(`public.${user.rank.rank_name}`) ?? 'Member' }}
                         </div>
                     </div>
                 </div>
@@ -59,13 +65,17 @@ const {formatNameLabel} = generalFormat();
                 <div class="flex gap-3 items-center">
                     <IconPhone size="16" stroke-width="1.5" />
                     <div class="text-sm dark:text-white">
-                        {{ user.phone_number }}
+                        {{ user.dial_code }} {{ user.phone }}
                     </div>
                 </div>
                 <div class="flex gap-3 items-center">
                     <IconGlobe size="16" stroke-width="1.5" />
-                    <div class="text-sm dark:text-white">
-                        {{ user.country?.name || '-' }}
+                    <div v-if="user.country" class="text-sm dark:text-white">
+                        {{ user.country.name }}
+                    </div>
+                    <div v-else class="flex items-center text-red-500 gap-1 text-xs">
+                        <IconAlertSquareRoundedFilled size="12" stroke-width="1.5" />
+                        {{ $t('public.missing_field') }}
                     </div>
                 </div>
                 <div class="flex gap-3 items-center">
@@ -77,13 +87,17 @@ const {formatNameLabel} = generalFormat();
                 <div class="flex gap-3 items-center">
                     <IconCalendar size="16" stroke-width="1.5" />
                     <div class="text-sm dark:text-white">
-                        {{ user.dob ?? '-' }}
+                        {{ dayjs(user.created_at).format('YYYY/MM/DD') }}
                     </div>
                 </div>
                 <div class="flex gap-3 items-center col-span-2">
                     <IconHome size="16" stroke-width="1.5" />
-                    <div class="text-sm dark:text-white">
-                        {{ user.address ?? '-' }}
+                    <div v-if="user.address" class="text-sm dark:text-white">
+                        {{ user.address }}
+                    </div>
+                    <div v-else class="flex items-center text-red-500 gap-1 text-xs">
+                        <IconAlertSquareRoundedFilled size="12" stroke-width="1.5" />
+                        {{ $t('public.missing_field') }}
                     </div>
                 </div>
             </div>

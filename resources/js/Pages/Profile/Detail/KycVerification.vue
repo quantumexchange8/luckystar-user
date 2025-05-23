@@ -2,8 +2,8 @@
 import {Button, Card, Tag, Message, Image, ProgressSpinner} from "primevue";
 import InputLabel from "@/Components/InputLabel.vue";
 import {IconEdit, IconFileCheck} from "@tabler/icons-vue";
-import UploadKyc from "./UploadKyc.vue";
-import UploadResidency from "./UploadResidency.vue";
+import UploadKyc from "./Partials/UploadKyc.vue";
+import UploadResidency from "./Partials/UploadResidency.vue";
 import {ref, watchEffect} from "vue";
 import {usePage} from "@inertiajs/vue3";
 
