@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\TradingMaster;
 use App\Models\TradingSubscription;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Illuminate\Support\Carbon;
 
 class InvestmentController extends Controller
 {
@@ -23,7 +23,6 @@ class InvestmentController extends Controller
             'subscribedStrategyCount' => $joined_master_count,
         ]);
     }
-
 
     public function subscribedStrategy()
     {

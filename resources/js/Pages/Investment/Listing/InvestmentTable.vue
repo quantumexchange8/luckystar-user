@@ -56,7 +56,7 @@ const loadLazyData = (event) => {
             const results = await response.json();
 
             subscribedStrategy.value = results?.data?.data;
-
+            console.log(subscribedStrategy.value);
             subscription.value = subscribedStrategy.value[0]?.trading_subscription;
             totalRecords.value = results?.data?.total;
             isLoading.value = false;
@@ -174,24 +174,30 @@ const getSeverity = (status) => {
         </div>
 
         <div v-else class="flex flex-col gap-5 items-stretch self-stretch w-full">
-            <div class="flex flex-col md:flex-row items-stretch gap-5">
-                <div class="flex flex-col gap-5 w-full">
-                    <InvestmentListing 
-                        :subscribedStrategyCount="subscribedStrategyCount"
-                        @update:strategy="strategy = $event"
-                    />
-    
+           <div class="flex flex-col md:flex-row items-stretch gap-5">
+                <div class="flex flex-col gap-5 w-full md:w-1/2">
+                    <div class="overflow-x-auto">
+                        <div class="min-w-max">
+                            <InvestmentListing 
+                                :subscribedStrategyCount="subscribedStrategyCount"
+                                @update:strategy="strategy = $event"
+                            />
+                        </div>
+                    </div>
+
                     <InvestmentView 
                         :subscribedStrategy="subscribedStrategy"
                         :subscription="subscription"
                     />
                 </div>
-    
-                <InvestmentRecord 
-                    :subscribedStrategy="subscribedStrategy"
-                />
+
+                <div class="w-full md:w-1/2">
+                    <InvestmentRecord 
+                        :subscribedStrategy="subscribedStrategy"
+                    />
+                </div>
             </div>
-           
+
             <Card class="w-full">
                 <template #content>
                     <DataTable
@@ -366,6 +372,26 @@ const getSeverity = (status) => {
                                 </template>
                                 <template #body="{ data }">
                                     <Tag :value="$t(`public.${data.status}`)" :severity="getSeverity(data.status)"/>
+                                </template>
+                            </Column>
+
+                            <Column
+                                field="terminated_at"
+                                style="min-width: 5rem"
+                        
+                            >
+                                <template #header>
+                                    <span class="block">{{ $t('public.terminated_at') }}</span>
+                                </template>
+                                <template #body="{ data }">
+                                     <span v-if="dayjs(data.terminated_at).isValid()">
+                                        {{ dayjs(data.terminated_at).format('YYYY-MM-DD') }}
+                                        <div class="text-xs text-surface-500 mt-1">
+                                            {{ dayjs(data.terminated_at).add(8, 'hour').format('hh:mm:ss A') }}
+                                        </div>
+                                    </span>
+
+                                    <span v-else>-</span>
                                 </template>
                             </Column>
 

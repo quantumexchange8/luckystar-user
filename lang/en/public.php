@@ -259,7 +259,6 @@ return [
     "subscription_loading_caption" => "Loading subscription data. Please wait. ",
     "terminate" => "Terminate",
     "trade_report" => "Trade Report",
-    
     "toast_upload_identity_success" => "Proof of identity has been uploaded successfully",
     "invalid_action" => "Invalid Action",
     "toast_file_submitted_warning" => "File has been submitted. Please wait for approval.",
@@ -267,4 +266,5 @@ return [
     "residency_proof" => "Residency Proof",
     "toast_upload_residency_success" => "Proof of residency has been uploaded successfully",
     "view_file" => "View File",
+    "terminated_at" => "Terminated At"
 ];

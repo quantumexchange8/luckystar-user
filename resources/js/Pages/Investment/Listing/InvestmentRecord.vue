@@ -28,7 +28,7 @@ const dummy = ref([
 </script>
 
 <template>
-    <Card class="w-full">
+    <Card class="w-full h-full">
         <template #content>
             <div class="w-full">
                 <DataTable

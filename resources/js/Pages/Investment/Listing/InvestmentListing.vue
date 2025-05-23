@@ -39,47 +39,15 @@ watch(selectedSubStrategy, (newVal) => {
         emit('update:strategy', newVal);
     }
 });
-
-const dummy = ref([
-    {
-        master_name: 'STR0000001'
-    },
-      {
-        master_name: 'STR0000001'
-    },
-      {
-        master_name: 'STR0000001'
-    },
-      {
-        master_name: 'STR0000001'
-    },
-       {
-        master_name: 'STR0000001'
-    },
-      {
-        master_name: 'STR0000001'
-    },
-       {
-        master_name: 'STR0000001'
-    },
-       {
-        master_name: 'STR0000001'
-    },
-      {
-        master_name: 'STR0000001'
-    },
-])
-
 </script>
 
 <template>
     <div v-if="isLoading" class="w-full flex flex-row gap-3">
         <Skeleton
-            v-for="index in 2"
+            v-for="index in 4"
             :key="index"
-            class="flex-shrink-0"
             height="2.5rem"
-            width="10rem"
+            width="10.5rem"
             borderRadius="2rem"
         />
     </div>
@@ -89,26 +57,12 @@ const dummy = ref([
         v-model="selectedSubStrategy"
         :items="subscribedStrategy"
         value-key="id"
-        class="flex-shrink-0 w-full sm:max-w-[300px]"
+        class="w-full"
     >
         <template #option="{ item }">
-            {{ item.master_name }}
+            <span class="pr-4">
+                {{ item.master_name }}
+            </span>
         </template>
     </SelectChipGroup>
-    <!-- <div
-        v-else
-        class="flex gap-3 overflow-x-auto sm:max-w-[300px]"
-        style="min-width: 300px;"
-    >
-        <SelectChipGroup
-            v-model="selectedSubStrategy"
-            :items="subscribedStrategy"
-            value-key="id"
-            class="flex-shrink-0 min-w-[300px]"
-        >
-            <template #option="{ item }">
-                {{ item.master_name }}
-            </template>
-        </SelectChipGroup>
-    </div> -->
 </template>
