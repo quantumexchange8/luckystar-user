@@ -24,11 +24,11 @@ const {formatAmount} = generalFormat();
 const totalRecords = ref(0);
 const first = ref(0);
 const strategy = ref('');
-const subscription = ref([]);
 
 const filters = ref({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
     meta_login: { value: strategy.value.meta_login, matchMode: FilterMatchMode.EQUALS },
+    master_meta_login: { value: strategy.value.meta_login, matchMode: FilterMatchMode.EQUALS },
     start_join_date: { value: null, matchMode: FilterMatchMode.EQUALS },
     end_join_date: { value: null, matchMode: FilterMatchMode.EQUALS },
     status: { value: null, matchMode: FilterMatchMode.EQUALS },
@@ -56,15 +56,14 @@ const loadLazyData = (event) => {
             const results = await response.json();
 
             subscribedStrategy.value = results?.data?.data;
-            console.log(subscribedStrategy.value);
-            subscription.value = subscribedStrategy.value[0]?.trading_subscription;
+            console.log(subscribedStrategy.value)
+          
             totalRecords.value = results?.data?.total;
             isLoading.value = false;
 
         }, 100);
     }  catch (e) {
         subscribedStrategy.value = [];
-        subscription.value = [];
         totalRecords.value = 0;
         isLoading.value = false;
     }
@@ -115,6 +114,7 @@ const toggle = (event) => {
 
 watch(strategy, (newStrategy) => {
     filters.value.meta_login = newStrategy.meta_login;
+    filters.value.master_meta_login = newStrategy.master_meta_login;
 
     lazyParams.value = {
         first: dt.value.first,
@@ -187,7 +187,7 @@ const getSeverity = (status) => {
 
                     <InvestmentView 
                         :subscribedStrategy="subscribedStrategy"
-                        :subscription="subscription"
+                        :isLoading="isLoading"
                     />
                 </div>
 
@@ -201,7 +201,7 @@ const getSeverity = (status) => {
             <Card class="w-full">
                 <template #content>
                     <DataTable
-                        :value="subscription"
+                        :value="subscribedStrategy"
                         lazy
                         paginator
                         removableSort
@@ -272,7 +272,7 @@ const getSeverity = (status) => {
                             </div>
                         </template>
     
-                        <template v-if="subscription?.length > 0">
+                        <template v-if="subscribedStrategy?.length > 0">
                             <Column
                                 field="approval_at"
                                 style="min-width: 10rem"
@@ -355,10 +355,10 @@ const getSeverity = (status) => {
                                 style="min-width: 5rem"
                             >
                                 <template #header>
-                                    <span class="block">{{ 'join days' }}</span>
+                                    <span class="block">{{ $t('public.join_days') }}</span>
                                 </template>
                                 <template #body="{ data }">
-                                    <span>{{ data.join_days }}</span>
+                                    <span>{{  }}</span>
                                 </template>
                             </Column>
     

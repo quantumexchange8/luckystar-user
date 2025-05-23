@@ -44,7 +44,7 @@ watch(selectedSubStrategy, (newVal) => {
 <template>
     <div v-if="isLoading" class="w-full flex flex-row gap-3">
         <Skeleton
-            v-for="index in 4"
+            v-for="index in props.subscribedStrategyCount"
             :key="index"
             height="2.5rem"
             width="10.5rem"
@@ -61,7 +61,7 @@ watch(selectedSubStrategy, (newVal) => {
     >
         <template #option="{ item }">
             <span class="pr-4">
-                {{ item.master_name }}
+             {{ item.trading_master.master_name }} - {{ item.meta_login }}
             </span>
         </template>
     </SelectChipGroup>

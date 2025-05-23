@@ -8,34 +8,37 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class InvestmentController extends Controller
 {
     public function index()
     {
-        $joined_master_count = TradingSubscription::whereHas('trading_account', function ($q) {
-            $q->where('user_id', Auth::id());
-        })
-            ->distinct('master_meta_login')
-            ->count('master_meta_login');
+        $subscribed_strategy_count = DB::table('trading_subscriptions')
+            ->where('user_id', Auth::id())
+            ->select('meta_login', 'master_meta_login')
+            ->distinct()
+            ->get()
+            ->count();
 
         return Inertia::render('Investment/Listing/InvestmentTable', [
-            'subscribedStrategyCount' => $joined_master_count,
+            'subscribedStrategyCount' => $subscribed_strategy_count,
         ]);
     }
 
     public function subscribedStrategy()
     {
-        $subscribed_strategy = TradingMaster::with([
-            'trading_subscription' => function ($q) {
-                $q->with(['trading_account', 'user'])->whereHas('trading_account', function ($qa) {
-                    $qa->where('user_id', Auth::id());
-                });
-            }
+        $distinctSubscriptionIds = TradingSubscription::where('user_id', Auth::id())
+            ->selectRaw('MIN(id) as id') // pick the first ID for each unique pair
+            ->groupBy('meta_login', 'master_meta_login')
+            ->pluck('id');
+
+        $subscribed_strategy = TradingSubscription::with([
+            'trading_master',
+            'trading_account',
+            'user',
         ])
-            ->whereHas('trading_subscription.trading_account', function ($q) {
-                $q->where('user_id', Auth::id());
-            })
+            ->whereIn('id', $distinctSubscriptionIds)
             ->get();
 
         return response()->json([
@@ -48,91 +51,48 @@ class InvestmentController extends Controller
         if ($request->has('lazyEvent')) {
             $data = json_decode($request->only(['lazyEvent'])['lazyEvent'], true);
             $meta_login = $data['filters']['meta_login'];
+            $master_meta_login = $data['filters']['master_meta_login'];
 
-            $query = TradingMaster::whereHas('trading_subscription', function ($q) {
-                $q->whereHas('trading_account', function ($q2) {
-                    $q2->where('user_id', Auth::id());
-                });
-            });
+            $query = TradingSubscription::with([
+                'trading_master',
+                'trading_account',
+                'user',
+            ])
+                ->where([
+                    'user_id' => Auth::id(),
+                    'meta_login' => $meta_login,
+                    'master_meta_login' => $master_meta_login,
+                ]);
 
-            if ($meta_login) {
-                $query->where('trading_masters.meta_login', $meta_login);
-            }
-
-            // Now eager load related models
-            $query->with([
-                'trading_subscription' => function ($q) {
-                    $q->whereHas('trading_account', function ($q2) {
-                        $q2->where('user_id', Auth::id());
-                    });
-                },
-                'trading_subscription.trading_account',
-                'trading_subscription.user'
-            ]);
-
-            // seaching
             if ($data['filters']['global']['value']) {
                 $keyword = $data['filters']['global']['value'];
 
-                // Filter masters having at least one matching subscription
-                $query->whereHas('trading_subscription', function ($q) use ($keyword) {
-                    $q->where(function ($subQuery) use ($keyword) {
-                        $subQuery->where('subscription_number', 'like', '%' . $keyword . '%')
-                            ->orWhere('meta_login', 'like', '%' . $keyword . '%');
-                    });
+                $query->where(function ($q) use ($keyword) {
+                    $q->where('master_meta_login', 'like', '%' . $keyword . '%')
+                        ->orWhere('meta_login', 'like', '%' . $keyword . '%')
+                        ->orWhere('subscription_number', 'like', '%' . $keyword . '%');
                 });
-
-                $query->with(['trading_subscription' => function ($q) use ($keyword) {
-                    $q->where(function ($subQuery) use ($keyword) {
-                        $subQuery->where('subscription_number', 'like', '%' . $keyword . '%')
-                            ->orWhere('meta_login', 'like', '%' . $keyword . '%');
-                    });
-                }]);
-            } else {
-                // no search keyword, load all subscriptions normally
-                $query->with('trading_subscription');
             }
 
-            // date
+            // global
             if (!empty($data['filters']['start_join_date']['value']) && !empty($data['filters']['end_join_date']['value'])) {
                 $start_join_date = Carbon::parse($data['filters']['start_join_date']['value'])->addDay()->startOfDay();
                 $end_join_date = Carbon::parse($data['filters']['end_join_date']['value'])->addDay()->endOfDay();
 
-                // Filter parents by subscription approval_at range (only masters with matching subscriptions)
-                $query->whereHas('trading_subscription', function ($q) use ($start_join_date, $end_join_date) {
-                    $q->whereBetween('approval_at', [$start_join_date, $end_join_date]);
-                });
-
-                // Eager load only subscriptions in date range
-                $query->with(['trading_subscription' => function ($q) use ($start_join_date, $end_join_date) {
-                    $q->whereBetween('approval_at', [$start_join_date, $end_join_date]);
-                }]);
+                $query->whereBetween('approval_at', [$start_join_date, $end_join_date]);
             }
 
-            // status filter
-            if ($data['filters']['status']['value']) {
-                $query->whereHas('trading_subscription', function ($q) use ($data) {
-                    $q->where('status', $data['filters']['status']['value']);
-                });
-
-                $query->with('trading_subscription', function ($q) use ($data) {
-                    $q->where('status', $data['filters']['status']['value']);
-                });
-            }
-
-            // // sorting
+            // date
             if ($data['sortField'] && $data['sortOrder']) {
                 $order = $data['sortOrder'] == 1 ? 'asc' : 'desc';
-
-                $query->whereHas('trading_subscription', function ($q) use ($data, $order) {
-                    $q->orderBy($data['sortField'], $order);
-                });
-                
-                $query->with('trading_subscription', function ($q) use ($data, $order) {
-                    $q->orderBy($data['sortField'], $order);
-                });
+                $query->orderBy($data['sortField'], $order);
             } else {
-                $query->latest();
+                $query->orderByDesc('approval_at');
+            }
+
+            // status
+            if ($data['filters']['status']['value']) {
+                $query->where('status', $data['filters']['status']['value']);
             }
 
             $subscribedStrategy = $query->paginate($data['rows']);
